@@ -8,6 +8,7 @@
         <section class="login_content">
           <form @submit="handleSubmit">
             <h1>Login</h1>
+            <p v-if="error" class="text-danger"> {{error}}</p>
             <div>
               <input
                 type="text"
@@ -64,6 +65,7 @@ export default {
     return {
       email: "",
       password: "",
+      error :null
     };
   },
   methods: {
@@ -75,13 +77,19 @@ export default {
         password: this.password
       };
 
-      const response = await axios.post('/api/login',input);
+  
    
-      localStorage.setItem('token',response.data.data.token);
+    
+    axios.post('/api/login',input)
+    .then(resp => {
+    localStorage.setItem('token',resp.data.data.token);
+     this.error =null
       this.$router.push('/dashboard');
-    //  const response = await axios.post('http://127.0.0.1:8000/api/login',input).then((response) => {
-    //     console.log(response);
-    //   });
+    })
+    .catch(err => {
+            console.log(err);
+          this.error = "Please check the credentials"
+    });
      
     },
   },
