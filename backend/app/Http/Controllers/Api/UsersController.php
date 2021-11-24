@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Device;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -47,9 +48,13 @@ class UsersController extends Controller
      */
     public function register(Request $request)
     {
-        try{
-            $validator = $this->validate($request, ['name' => 'required|min:3', 'email' => 'required|email|unique:users', 'password' => 'required|min:6', ]);
 
+
+       
+        // try{
+            $validator = $this->validate($request, ['name' => 'required|min:3', 'email' => 'required|email|unique:users', 'password' => 'required|min:6', ]);
+            $errors = $validator->errors();
+         
             $input = $request->all();
             $input['password'] = bcrypt($input['password']);
             $user = User::create($input);
@@ -57,10 +62,10 @@ class UsersController extends Controller
             $success['name'] = $user->name;
 
             return $this->sendResponse($success, 'User register successfully.');
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Page not found'], 404);
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => 'Page not found'], 404);
 
-        }   
+        // }   
     }
 
 
@@ -144,10 +149,26 @@ class UsersController extends Controller
      */
     public function addUser(Request $request)
     {
-        try{
+      
+        // try{
             if ($request->isMethod('post'))
             {
-                $validator = $this->validate($request, ['name' => 'required|min:3', 'email' => 'required|email|unique:users', 'address' => 'required', ]);
+
+                $validator = Validator::make( $request->all(),[
+                    'name' => 'required|min:3',
+                    'email' => 'required|email|unique:users', 
+                    'address' => 'required',
+                    'phone'=>  'required'
+
+                ]);
+                
+
+                 if($validator->fails()){
+                    $this->errorOutput['code'] = 201;
+                    $this->errorOutput['message'] = $validator->errors()->first();
+                    $this->output($this->errorOutput);
+
+                 }
 
                 $input = $request->all();
 
@@ -166,10 +187,10 @@ class UsersController extends Controller
                 }
 
             }
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Page not found'], 404);
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => 'Page not found'], 404);
 
-        }
+        // }
     }
 
 
@@ -190,13 +211,13 @@ class UsersController extends Controller
                     if ($user->status == 1)
                     {
 
-                        $user->update(['status' => 0]);
+                        $user->update(['status' => '0']);
                         $this->successOutputData['data'] = $user;
                         $this->output($this->successOutputData);
                     }
                     else
                     {
-                        $user->update(['status' => 1]);
+                        $user->update(['status' => '1']);
                         $this->successOutputData['data'] = $user;
                         $this->output($this->successOutputData);
                     }
@@ -224,23 +245,23 @@ class UsersController extends Controller
     public function moveToTrash(Request $request, $id)
     {
         try{
-            if ($request->isMethod('put'))
+            if ($request->isMethod('get'))
             {
 
                 $user = User::find($id);
 
                 if ($user)
                 {
-                    if ($user->move_to_trash == 1)
+                    if ($user->move_to_trash == '1')
                     {
 
-                        $user->update(['move_to_trash' => 0]);
+                        $user->update(['move_to_trash' => '0']);
                         $this->successOutputData['data'] = $user;
                         $this->output($this->successOutputData);
                     }
                     else
                     {
-                        $user->update(['move_to_trash' => 1]);
+                        $user->update(['move_to_trash' => '1']);
                         $this->successOutputData['data'] = $user;
                         $this->output($this->successOutputData);
                     }
@@ -269,7 +290,7 @@ class UsersController extends Controller
     {
         try
         {
-            if ($request->isMethod('patch'))
+            if ($request->isMethod('get'))
             {
 
                 $user = User::find($id);
@@ -310,7 +331,7 @@ class UsersController extends Controller
 
                     if ($user)
                     {
-                        $user->update(['name' => $input['name'], 'email' => $input['email'], 'address' => $input['address'], ]);
+                        $user->update(['name' => $input['name'], 'email' => $input['email'], 'address' => $input['address'],'phone' => $input['phone'] ]);
 
                         $this->successOutputData['data'] = $user;
                         $this->output($this->successOutputData);
@@ -328,6 +349,82 @@ class UsersController extends Controller
             }
 
     }
+    public function index()
+    {
+        
+      
+               
+                    $user = User::where('move_to_trash','=','0')->where('id','!=',1)->orderBy('id','desc')->get();
+                 
+                    
+                    if ($user)
+                    {
+                  
+                        $this->successOutputData['data'] = $user;
+                        $this->output($this->successOutputData);
+                    }
+                    else
+                    {
+                        $this->errorOutput['custom'] = "Record not found";
+                        $this->output($this->errorOutput);
+                    }
 
+
+                   
+                
+           
+
+    }
+
+    public function getDevice(){
+
+        $device = Device::select('id','name')->get();
+        if ($device)
+        {
+            $this->successOutputData['data'] = $device;
+            $this->output($this->successOutputData);
+        }
+        else
+        {
+            $this->errorOutput['custom'] = "Record not found";
+            $this->output($this->errorOutput);
+        }
+
+    }
+
+    public function changePass(Request $request,$id){
+
+        $validator = Validator::make( $request->all(),[
+            'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'required',
+           
+
+        ]);
+    
+         if($validator->fails()){
+            $this->errorOutput['code'] = 201;
+            $this->errorOutput['message'] = $validator->errors()->first();
+            $this->output($this->errorOutput);
+         }
+
+                  $input = $request->all();
+                  $user = User::find($id);
+                    $input = $request->all();
+                  
+
+                    if ($user)
+                    {
+                        $user->update(['password' => bcrypt($input['password'])]);
+                        $this->successOutputData['data'] = $user;
+                        $this->output($this->successOutputData);
+                    }
+                    else
+                    {
+                        $this->errorOutput['custom'] = "Record not update";
+                        $this->output($this->errorOutput);
+                    }
+
+
+
+    }
 }
-

@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -162,6 +163,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 		Laravel\Passport\PassportServiceProvider::class,
+        FruitCake\Cors\CorsServiceProvider::class,
 
         /*
          * Package Service Providers...

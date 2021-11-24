@@ -80,7 +80,7 @@ export default {
   
    
     
-    axios.post('/api/login',input)
+    axios.post('http://localhost:8000/api/login',input)
     .then(resp => {
     localStorage.setItem('token',resp.data.data.token);
      this.error =null

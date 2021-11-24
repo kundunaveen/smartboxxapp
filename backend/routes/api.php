@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UsersController;
+use App\Http\Controllers\Api\BookingsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,15 +18,18 @@ use App\Http\Controllers\Api\UsersController;
 */
 Route::post('/register', [UsersController::class,'register']);
 Route::post('/login', [UsersController::class,'login']);
-Route::get('/get_details', [UsersController::class,'getDetails']);
+
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('/get_details', [UsersController::class,'getDetails']);
+  Route::get('/get_details', [UsersController::class,'getDetails']);
+    Route::get('/users', [UsersController::class,'index']);
     Route::post('/add_user', [UsersController::class,'addUser']);
     Route::put('/status_change/{id}', [UsersController::class,'statusChange']);
-    Route::put('/move_to_trash/{id}', [UsersController::class,'moveToTrash']);
-    Route::patch('/get_user/{id}', [UsersController::class,'view']);
+    Route::get('/move_to_trash/{id}', [UsersController::class,'moveToTrash']);
+    Route::get('/get_user/{id}', [UsersController::class,'view']);
+    Route::get('/get_device', [UsersController::class,'getDevice']);
     Route::put('/update_user/{id}', [UsersController::class,'update']);
+    Route::post('/add_booking', [BookingsController::class,'store']);
+    Route::put('/change_pass/{id}', [UsersController::class,'changePass']);
   });
-
 
