@@ -29,7 +29,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/get_user/{id}', [UsersController::class,'view']);
     Route::get('/get_device', [UsersController::class,'getDevice']);
     Route::put('/update_user/{id}', [UsersController::class,'update']);
-    Route::post('/add_booking', [BookingsController::class,'store']);
+    
     Route::put('/change_pass/{id}', [UsersController::class,'changePass']);
+    Route::get('/get_booking', [BookingsController::class,'getBooking']);
+    Route::post('/add_booking', [BookingsController::class,'store']);
+    Route::delete('/booking_delete/{id}', [BookingsController::class,'delete']);
+    Route::get('/view_booking/{id}', [BookingsController::class,'view']);
+    Route::put('/update_booking/{id}', [BookingsController::class,'update']);
   });
 

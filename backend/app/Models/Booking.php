@@ -10,6 +10,7 @@ class Booking extends Model
     use HasFactory;
     protected $table = 'booking';
     protected $fillable = [
+        'user_id',
         'uuid',
         'device_id',
         'slot_type',
@@ -21,4 +22,9 @@ class Booking extends Model
         'mobile',
         'address'
     ];
+
+    public function device(){
+        return $this->hasOne(Device::class,'id','device_id');
+
+    }
 }

@@ -19,7 +19,7 @@
               <div class="panel-body">
                 <div class="row">
                   <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                    <form role="form" @submit.prevent="updateProduct">
+                    <form role="form" @submit.prevent="updateUser">
                       <div class="form-group">
                         <label>Name</label>
                         <input
@@ -95,11 +95,10 @@ export default {
   },
   async created() {
     const response = await axios.get(`/api/get_user/${this.$route.params.id}`);
-    console.log("test", response);
     this.user = response.data.data;
   },
   methods: {
-    updateProduct() {
+    updateUser() {
       axios
         .put(
           `/api/update_user/${this.$route.params.id}`,

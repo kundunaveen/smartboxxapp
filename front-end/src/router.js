@@ -9,6 +9,9 @@ import AddUser from './components/pages/AddUser.vue'
 import EditUser from './components/pages/EditUser.vue'
 import ChangePass from './components/pages/ChangePass.vue'
 import AddBooking from './components/pages/Booking/AddBooking.vue'
+import EditBooking from './components/pages/Booking/EditBooking.vue'
+
+
 
 
 Vue.use(Router)
@@ -46,7 +49,12 @@ export default new Router({
             name: 'pass',
             path: '/change_pass/:id',
             component: ChangePass
-        }
+        },
+        {
+            name: 'bookingedit',
+            path: '/booking-edit/:id',
+            component: EditBooking
+        },
         
         
     ]

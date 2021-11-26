@@ -46,8 +46,8 @@
               <br />
 
               <div>
-                <h1><i class="fa fa-paw"></i> Booking</h1>
-                <p>©2016 All Rights Reserved.Booking.com. Privacy and Terms</p>
+                <h1><i class="fa fa-paw"></i> smartboxapp</h1>
+                <p>©2016 All Rights Reserved.smartboxapp.com. Privacy and Terms</p>
               </div>
             </div>
           </form>

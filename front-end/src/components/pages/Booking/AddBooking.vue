@@ -19,6 +19,8 @@
               <div class="panel-body">
                 <div class="row">
                   <div class="col-lg-6 col-lg-offset-3 col-lg-6">
+                    
+                         <p v-if="error" class="text-danger "> {{error}}</p>
                     <form role="form" @submit="handleSubmit">
                       <div class="form-group">
                         <label>Device Type</label>
@@ -59,6 +61,7 @@
                               name="optionsRadios"
                               id="optionsRadios2"
                               value="1"
+                              
                               v-model="slot_type"
                             />Multiple Day
                           </label>
@@ -76,7 +79,9 @@
                           <div class="col-lg-6" v-show="slot_type === '1'">
                             <label>Multiple Day</label>
                             <date-picker
+                          
                               v-model="time3"
+                              ng-model-options="{timezone: 'utc'}"
                               range
                               style="width: 100%"
                             ></date-picker>
@@ -151,6 +156,7 @@ export default {
       address:"",
       time1: "",
       time3: "",
+      error: null,
     };
   },
   components: {
@@ -170,19 +176,19 @@ export default {
         device_id:this.device_id,
         slot_type: this.slot_type,
         start_date: this.time1,
-        rage_date: this.time3,
+        range_date: this.time3,
         address: this.address,
         mobile:this.mobile
       };
-
+  console.log('input',input);
       axios
         .post("/api/add_booking", input)
         .then((res) => {
-          if(res.status==200){
+          if(res.data.status=='success'){
                this.error = null;
           this.$router.push("/booking");
           }else{
-            this.error = res.data.message;
+            this.error = res.data.custom;
           }
           
         
@@ -193,6 +199,9 @@ export default {
           this.error = "Record not save please check";
         });
     },
+
+ 
+
   },
 };
 </script>

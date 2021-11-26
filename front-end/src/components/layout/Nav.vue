@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.html">Startmin</a>
+      <router-link class="navbar-brand" to="/">smartboxxapp</router-link>
     </div>
 
     <button

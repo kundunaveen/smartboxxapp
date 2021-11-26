@@ -41,7 +41,7 @@
                       >
                       <a href="javascript:void(0)"
                         
-                        @click="deleteProduct(user.id)"
+                        @click="deleteUser(user.id)"
                       >
                         Delete
                       </a>
@@ -87,7 +87,7 @@ export default {
     Head,
   },
   methods: {
-    deleteProduct(id) {
+    deleteUser(id) {
       swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover !",
