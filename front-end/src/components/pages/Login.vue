@@ -80,11 +80,12 @@ export default {
   
    
     
-    axios.post('http://localhost:8000/api/login',input)
+    axios.post('/api/login',input)
     .then(resp => {
     localStorage.setItem('token',resp.data.data.token);
      this.error =null
-      this.$router.push('/dashboard');
+      // this.$router.push('/dashboard');
+      location.href = "/dashboard"
     })
     .catch(err => {
             console.log(err);

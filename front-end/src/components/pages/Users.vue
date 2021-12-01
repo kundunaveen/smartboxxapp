@@ -3,7 +3,7 @@
     <Nav />
     <div id="page-wrapper" style="min-height: 606px">
       <div class="container-fluid">
-        <Head />
+       <Head :msg="message"/>
         <div class="pull-right">
           <router-link to="/add-user" class="active"><i class="fa fa-plus fa-fw"></i>
           <i class="fa fa-user fa-fw"></i> Add User
@@ -71,6 +71,7 @@ import swal from "sweetalert";
 
 import Nav from "./../layout/Nav.vue";
 import Head from "./../layout/Head.vue";
+
 import axios from "axios";
 
 
@@ -80,6 +81,7 @@ export default {
   data() {
     return {
       users: [],
+         message: "Users"
     };
   },
   components: {
