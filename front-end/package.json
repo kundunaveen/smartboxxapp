@@ -2,6 +2,7 @@
   "name": "booking-system",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://65.2.143.196/anadev/smartboxxapp/front-end/",
   "scripts": {
     "serve": "vue-cli-service serve --port 3000",
     "build": "vue-cli-service build",
