@@ -54,8 +54,24 @@ class UsersController extends Controller
 
        
         // try{
-            $validator = $this->validate($request, ['name' => 'required|min:3', 'email' => 'required|email|unique:users', 'password' => 'required|min:6', ]);
-            $errors = $validator->errors();
+            // $validator = $this->validate($request, ['name' => 'required|min:3', 'email' => 'required|email|unique:users', 'password' => 'required|min:6', ]);
+            // $errors = $validator->errors();
+
+            
+            $validator = Validator::make( $request->all(),[
+                'name' => 'required|min:3',
+                'email' => 'required|email|unique:users', 
+                'password' => 'required|min:6'
+
+            ]);
+            
+
+             if($validator->fails()){
+                $this->errorOutput['code'] = 201;
+                $this->errorOutput['message'] = $validator->errors()->first();
+                $this->output($this->errorOutput);
+
+             }
          
             $input = $request->all();
             $input['password'] = bcrypt($input['password']);
