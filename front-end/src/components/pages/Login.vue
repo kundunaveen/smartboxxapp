@@ -84,8 +84,8 @@ export default {
     .then(resp => {
     localStorage.setItem('token',resp.data.data.token);
      this.error =null
-      // this.$router.push('/dashboard');
-      location.href = "/dashboard"
+      this.$router.push('/dashboard');
+      // location.href = "/dashboard"
     })
     .catch(err => {
             console.log(err);

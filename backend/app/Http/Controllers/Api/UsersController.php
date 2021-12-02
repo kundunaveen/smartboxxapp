@@ -15,21 +15,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class UsersController extends Controller
 {
     
-    public $successOutput = array(
-        'status' => 'success',
-        'message' => 'updated successfully',
-        'custom' => ''
-    );
-    public $successOutputData = array(
-        'status' => 'success',
-        'message' => 'updated successfully',
-        'data' => ''
-    );
-    public $errorOutput = array(
-        'status' => 'error',
-        'message' => 'Not updated successfully',
-        'custom' => ''
-    );
+   
     public $paramMissings = array(
         'status' => 'error',
         'message' => 'params missing',
@@ -38,8 +24,8 @@ class UsersController extends Controller
 
     public function output($array = null)
     {
-        echo json_encode($array);
-        exit();
+        return response()->json($array, 200);
+      
     }
 
 
@@ -50,40 +36,30 @@ class UsersController extends Controller
      */
     public function register(Request $request)
     {
-
-
-       
-        // try{
-            // $validator = $this->validate($request, ['name' => 'required|min:3', 'email' => 'required|email|unique:users', 'password' => 'required|min:6', ]);
-            // $errors = $validator->errors();
-
-            
+        try{
             $validator = Validator::make( $request->all(),[
-                'name' => 'required|min:3',
-                'email' => 'required|email|unique:users', 
-                'password' => 'required|min:6'
+           'name' => 'required|min:3',
+           'email' => 'required|email|unique:users', 
+           'password' => 'required|min:6'
 
-            ]);
-            
+       ]);
+        
+       if ($validator->fails()) {
+        return response()->json(['Status' => 
+           false,'message'=>$validator->errors()->first(),'Data' => '','Status_code' =>"401" ]);            
+         }
+    
+       $input = $request->all();
+       $input['password'] = bcrypt($input['password']);
+       $user = User::create($input);
+       $success['token'] = $user->createToken('MyApp')->accessToken;
+       $success['name'] = $user->name;
 
-             if($validator->fails()){
-                $this->errorOutput['code'] = 201;
-                $this->errorOutput['message'] = $validator->errors()->first();
-                $this->output($this->errorOutput);
+       return $this->sendResponse($success, 'User register successfully.');
+   } catch (\Exception $e) {
+       return response()->json(['error' => 'Page not found'], 404);
 
-             }
-         
-            $input = $request->all();
-            $input['password'] = bcrypt($input['password']);
-            $user = User::create($input);
-            $success['token'] = $user->createToken('MyApp')->accessToken;
-            $success['name'] = $user->name;
-
-            return $this->sendResponse($success, 'User register successfully.');
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => 'Page not found'], 404);
-
-        // }   
+   }   
     }
 
 
@@ -168,47 +144,37 @@ class UsersController extends Controller
     public function addUser(Request $request)
     {
       
-        // try{
-            if ($request->isMethod('post'))
-            {
+        try{
 
-                $validator = Validator::make( $request->all(),[
-                    'name' => 'required|min:3',
-                    'email' => 'required|email|unique:users', 
-                    'address' => 'required',
-                    'phone'=>  'required'
-
+            $validator = Validator::make($request->all(), [         
+                'name' => 'required|min:3',
+                'email' => 'required|email|unique:users', 
+                'address' => 'required',
+                'phone'=>  'required'
                 ]);
-                
 
-                 if($validator->fails()){
-                    $this->errorOutput['code'] = 201;
-                    $this->errorOutput['message'] = $validator->errors()->first();
-                    $this->output($this->errorOutput);
-
-                 }
-
+                if ($validator->fails()) {
+                    return response()->json(['Status' => 
+                  false,'message'=>$validator->errors()->first(),'Data' => '','Status_code' =>"401" ]);            
+                }
+           
                 $input = $request->all();
-
+               
                 $input['password'] = bcrypt('welcome');
                 $user = User::create($input);
                 $success['name'] = $user->name;
-                if ($user)
-                {
-                    $this->successOutputData['data'] = $user;
-                    $this->output($this->successOutputData);
+                if ($user) {
+                    return $this->sendResponse($user, 'User add successfully');
+                } else {
+                    return $this->sendResponse($user, 'User not add successfully');
                 }
-                else
-                {
-                    $this->errorOutput['custom'] = "Record not Inserted";
-                    $this->output($this->errorOutput);
-                }
+               
 
-            }
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => 'Page not found'], 404);
+         
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Page not found'], 404);
 
-        // }
+        }
     }
 
 
@@ -230,21 +196,21 @@ class UsersController extends Controller
                     {
 
                         $user->update(['status' => '0']);
-                        $this->successOutputData['data'] = $user;
-                        $this->output($this->successOutputData);
+                        return $this->sendResponse($user, 'Status Update successfully');
+                   
                     }
                     else
                     {
                         $user->update(['status' => '1']);
-                        $this->successOutputData['data'] = $user;
-                        $this->output($this->successOutputData);
+                        return $this->sendResponse($user, 'Status Update successfully');
+                      
                     }
 
                 }
                 else
                 {
-                    $this->errorOutput['custom'] = "Status not update successfully.Please try again.";
-                    $this->output($this->errorOutput);
+                    return $this->sendError('Not Found.', ['error' => 'Record not found please check given id']);
+                   
                 }
 
             }
@@ -262,40 +228,29 @@ class UsersController extends Controller
      */
     public function moveToTrash(Request $request, $id)
     {
-        try{
-            if ($request->isMethod('get'))
-            {
-
+        try {
+            if ($request->isMethod('get')) {
                 $user = User::find($id);
-
-                if ($user)
-                {
-                    if ($user->move_to_trash == '1')
-                    {
-
+                if ($user) {
+                    if ($user->move_to_trash == '1') {
                         $user->update(['move_to_trash' => '0']);
-                        $this->successOutputData['data'] = $user;
-                        $this->output($this->successOutputData);
-                    }
-                    else
-                    {
+                return $this->sendResponse($user, 'Move to trash successfully');
+                       
+                        
+                    } else {
                         $user->update(['move_to_trash' => '1']);
-                        $this->successOutputData['data'] = $user;
-                        $this->output($this->successOutputData);
+                        return $this->sendResponse($user, 'Move to trash successfully');
+                       
+                        
                     }
-
+                } else {
+                    return $this->sendError('Not Found.', ['error' => 'User not found']);
                 }
-                else
-                {
-                    $this->errorOutput['custom'] = "User not found";
-                    $this->output($this->errorOutput);
-                }
-
             }
-        } catch (\Exception $e) {
+        }
+        catch(\Exception $e) {
             return response()->json(['error' => 'Page not found'], 404);
-
-        }    
+        }
     }
 
 
@@ -306,28 +261,19 @@ class UsersController extends Controller
      */
     public function view(Request $request, $id)
     {
-        try
-        {
-            if ($request->isMethod('get'))
-            {
-
+        try {
+            if ($request->isMethod('get')) {
                 $user = User::find($id);
-
-                if ($user)
-                {
-                    $this->successOutputData['data'] = $user;
-                    $this->output($this->successOutputData);
+                if ($user) {
+                
+                    return $this->sendResponse($user, 'User record is');
+                } else {
+                    return $this->sendError('Not Found.', ['error' => 'User not found']);
                 }
-                else
-                {
-                    $this->errorOutput['custom'] = "Record not found";
-                    $this->output($this->errorOutput);
-                }
-
             }
-        } catch (\Exception $e) {
+        }
+        catch(\Exception $e) {
             return response()->json(['error' => 'Page not found'], 404);
-
         }
 
     }
@@ -341,51 +287,43 @@ class UsersController extends Controller
 
     public function update(Request $request, $id)
     {
-        try{
-                if ($request->isMethod('put'))
-                {
-                    $user = User::find($id);
-                    $input = $request->all();
-
-                    if ($user)
-                    {
-                        $user->update(['name' => $input['name'], 'email' => $input['email'], 'address' => $input['address'],'phone' => $input['phone'] ]);
-
-                        $this->successOutputData['data'] = $user;
-                        $this->output($this->successOutputData);
-                    }
-                    else
-                    {
-                        $this->errorOutput['custom'] = "Record not update";
-                        $this->output($this->errorOutput);
-                    }
-
+        try {
+            if ($request->isMethod('put')) {
+                $user = User::find($id);
+                $input = $request->all();
+                if ($user) {
+                    $user->update(['name' => $input['name'], 'email' => $input['email'], 'address' => $input['address'], 'phone' => $input['phone']]);
+                    return $this->sendResponse($user, 'Record update successfullly');
+              
+                    
+                } else {
+                    return $this->sendError('Not Found.', ['error' => 'Record not found of the given id.']);
+                    
                 }
-            } catch (\Exception $e) {
-                return response()->json(['error' => 'Page not found'], 404);
-
             }
+        }
+        catch(\Exception $e) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
 
     }
+
+
+
     public function index()
     {
         
-      
-               
-                    $user = User::where('move_to_trash','=','0')->where('id','!=',1)->orderBy('id','desc')->get();
-                 
-                    
-                    if ($user)
-                    {
-                  
-                        $this->successOutputData['data'] = $user;
-                        $this->output($this->successOutputData);
-                    }
-                    else
-                    {
-                        $this->errorOutput['custom'] = "Record not found";
-                        $this->output($this->errorOutput);
-                    }
+        try {
+            $user = User::where('move_to_trash', '=', '0')->where('id', '!=', 1)->orderBy('id', 'desc')->get();
+            if ($user) {
+                return $this->sendResponse($user, 'User List');
+            } else {
+                return $this->sendResponse($user, 'No record found');
+            }
+        }
+        catch(\Exception $e) {
+            return response()->json(['error' => 'Somthig is wrong.'], 404);
+        }      
 
 
                    
@@ -399,13 +337,12 @@ class UsersController extends Controller
         $device = Device::select('id','name')->get();
         if ($device)
         {
-            $this->successOutputData['data'] = $device;
-            $this->output($this->successOutputData);
+            return $this->sendResponse($device, 'Device List');
         }
         else
         {
-            $this->errorOutput['custom'] = "Record not found";
-            $this->output($this->errorOutput);
+            return $this->sendResponse($device, 'No record found');
+        
         }
 
     }
@@ -419,11 +356,10 @@ class UsersController extends Controller
 
         ]);
     
-         if($validator->fails()){
-            $this->errorOutput['code'] = 201;
-            $this->errorOutput['message'] = $validator->errors()->first();
-            $this->output($this->errorOutput);
-         }
+        if ($validator->fails()) {
+            return response()->json(['Status' => 
+          false,'message'=>$validator->errors()->first(),'Data' => '','Status_code' =>"401" ]);            
+        }
 
                   $input = $request->all();
                   $user = User::find($id);
@@ -433,13 +369,12 @@ class UsersController extends Controller
                     if ($user)
                     {
                         $user->update(['password' => bcrypt($input['password'])]);
-                        $this->successOutputData['data'] = $user;
-                        $this->output($this->successOutputData);
+                        return $this->sendResponse($user, ' Password update successfully');
+                     
                     }
                     else
                     {
-                        $this->errorOutput['custom'] = "Record not update";
-                        $this->output($this->errorOutput);
+                        return $this->sendResponseError($user, 'Password not update successfully');
                     }
 
 

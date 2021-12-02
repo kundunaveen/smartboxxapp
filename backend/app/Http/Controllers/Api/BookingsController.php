@@ -10,41 +10,94 @@ use DateTime;
 use DatePeriod;
 use DateInterval;
 use Carbon\Carbon;
+use Validator;
+
 
 class BookingsController extends Controller
 {
 
-    public $errorOutput = array(
-        'status' => 'error',
-        'message' => 'successfully.',
-        'custom' => ''
-    );
+    // public $errorOutput = array(
+    //     'status' => 'error',
+    //     'message' => 'successfully.',
+    //     'custom' => ''
+    // );
 
-    public $successOutput = array(
-        'status' => 'success',
-        'message' => 'successfully.',
-        'custom' => ''
-    );
+    // public $successOutput = array(
+    //     'status' => 'success',
+    //     'message' => 'successfully.',
+    //     'custom' => ''
+    // );
 
-    public function output($array = null)
+
+
+    // public function output($array = null)
+    // {
+    //     echo json_encode($array);
+    //     exit();
+    // }
+
+
+    /**
+     * success response method.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sendResponse($result, $message)
     {
-        echo json_encode($array);
-        exit();
-    }
-    public function index()
-    {
+        $response = ['success' => true, 'data' => $result, 'message' => $message,'code'=>'200' ];
 
+        return response()->json($response, 200);
     }
+
+    /**
+     * success response method.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sendResponseError($result, $message)
+    {
+        $response = ['success' => true, 'data' => $result, 'message' => $message,'code'=>'201'];
+
+        return response()->json($response, 201);
+    }
+
+    /**
+     * return error response.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sendError($error, $errorMessages = [], $code = 404)
+    {
+        try{
+            $response = ['success' => false, 'message' => $error,'code'=>$code ];
+
+            if (!empty($errorMessages))
+            {
+                $response['data'] = $errorMessages;
+            }
+
+          return response()->json($response, $code);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Page not found'], 404);
+
+        }
+    }
+
+   
 
     public function store(Request $request)
     {
-        // try{
+        try{
         if ($request->isMethod('post'))
         {
              
-            
-            $validator = $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'slot_type' => 'required', 'mobile' => 'required', 'address' => 'required']);
+            if ($validator->fails()) {
+                return response()->json(['Status' => 
+              false,'message'=>$validator->errors()->first(),'Data' => '','Status_code' =>"401" ]);            
+            }
+
             $input = $request->all();
                
             if ($input['slot_type'] == '1')
@@ -61,8 +114,7 @@ class BookingsController extends Controller
 
                 if (count($alreadyExist) > 0)
                 {
-                    $this->errorOutput['custom'] = "Slot not available Please select another date";
-                    $this->output($this->errorOutput);
+                     return $this->sendResponseError($alreadyExist, 'Slot not available Please select another date');
                 }
 
             }
@@ -74,8 +126,8 @@ class BookingsController extends Controller
 
                 if (count($alreadyExist) > 0)
                 {
-                    $this->errorOutput['custom'] = "Slot not available Please select another date";
-                    $this->output($this->errorOutput);
+                   return $this->sendResponseError($alreadyExist, 'Slot not available Please select another date');
+
                 }
 
             }
@@ -104,22 +156,20 @@ class BookingsController extends Controller
                     availability::create($availability);
 
                 }
-               
+                return $this->sendResponse($booking, 'Booking add successfully');
               
-                $this->successOutputData['status'] = 'success';
-                $this->successOutputData['data'] = $booking;
-                $this->output($this->successOutputData);
+              
             }
             else
             {
-                $this->errorOutput['custom'] = "Record not Inserted";
-                $this->output($this->errorOutput);
+                return $this->sendResponseError($booking, 'Booking not add successfully');
+
             }
 
         }
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => 'Page not found'], 404);
-        // }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
         
 
         
@@ -127,18 +177,17 @@ class BookingsController extends Controller
 
     public function getBooking()
     {
-
+        try { 
         $booking = Booking::with('device')->get();
-        if ($booking)
-        {
-            $this->successOutputData['data'] = $booking;
-            $this->output($this->successOutputData);
+        if ($booking) {
+            return $this->sendResponse($booking, 'Booking List');
+        } else {
+            return $this->sendResponse($booking, 'No record found');
         }
-        else
-        {
-            $this->errorOutput['custom'] = "Record not found";
-            $this->output($this->errorOutput);
-        }
+    }
+    catch(\Exception $e) {
+        return response()->json(['error' => 'Somthig is wrong.'], 404);
+    }    
 
     }
 
@@ -150,14 +199,12 @@ class BookingsController extends Controller
         if ($booking)
         {
             $booking->delete();
-            $this->errorOutput['custom'] = "Record delete successfully";
-            $this->successOutputData['data'] = $booking;
-            $this->output($this->successOutputData);
+            return $this->sendResponse($booking, 'Record delete successfully');
+            
         }
         else
         {
-            $this->errorOutput['custom'] = "Record not found";
-            $this->output($this->errorOutput);
+            return $this->sendResponseError($booking, 'Record not delete successfully');
         }
     }
 
@@ -167,19 +214,15 @@ class BookingsController extends Controller
         {
             if ($request->isMethod('get'))
             {
-
                 $user = Booking::find($id);
-
                 if ($user)
-                {
-                    $this->successOutputData['status'] = 'success';
-                    $this->successOutputData['data'] = $user;
-                    $this->output($this->successOutputData);
+                { 
+                    return $this->sendResponse($user, 'Booking List');
                 }
                 else
                 {
-                    $this->errorOutput['custom'] = "Record not found";
-                    $this->output($this->errorOutput);
+                    return $this->sendResponseError($user, 'Record not found');
+
                 }
 
             }
@@ -194,7 +237,7 @@ class BookingsController extends Controller
 
     public function update(Request $request, $id)
     {
-        // try{
+        try{
         if ($request->isMethod('put'))
         {
             $booking = Booking::find($id);
@@ -209,8 +252,8 @@ class BookingsController extends Controller
                 $alreadyExist = availability::where('booking_id','!=',$id)->whereDate('date', '=', $input['start_date'])->get();
                 if (count($alreadyExist) > 0)
                 {
-                    $this->errorOutput['custom'] = "Slot not available Please select another date";
-                    $this->output($this->errorOutput);
+                    return $this->sendResponse($alreadyExist, 'Slot not available Please select another date');
+                   
                 }else{
                 
                         $existFind = availability::where(['booking_id'=>$id])->get();
@@ -249,8 +292,7 @@ class BookingsController extends Controller
                 $alreadyExist = availability::where('booking_id','!=',$id)->whereDate('date', '=', $input['start_date'])->get();
                 if (count($alreadyExist) > 0)
                 {
-                    $this->errorOutput['custom'] = "Slot not available Please select another date";
-                    $this->output($this->errorOutput);
+                    return $this->sendResponseError($alreadyExist, 'Slot not available Please select another date');
                 }else{
                     $existFind = availability::where(['booking_id'=>$id])->get();
                     if(count($existFind)>0){
@@ -274,22 +316,18 @@ class BookingsController extends Controller
 
             if ($booking)
             {
+                return $this->sendResponse($booking, 'Record update');
 
-                $this->successOutputData['status'] = "success";
-                $this->successOutputData['custom'] = "Record update";
-                $this->successOutputData['data'] = $booking;
-                $this->output($this->successOutputData);
             }
             else
             {
-                $this->errorOutput['custom'] = "Record not update";
-                $this->output($this->errorOutput);
+                return $this->sendResponseError($booking, 'Record not update');
             }
 
         }
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => 'Page not found'], 404);
-        // }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
         
     }
 }

@@ -109,14 +109,13 @@ export default {
       axios
         .post("/api/add_user", input)
         .then((res) => {
-          if(res.status==200){
+            if(res.data.success==true){
                this.error = null;
           this.$router.push("/users");
           }else{
             this.error = res.data.message;
           }
-          
-        
+     
        
         })
         .catch((err) => {

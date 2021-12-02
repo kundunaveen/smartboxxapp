@@ -180,15 +180,16 @@ export default {
         address: this.address,
         mobile:this.mobile
       };
-  console.log('input',input);
+
       axios
         .post("/api/add_booking", input)
         .then((res) => {
-          if(res.data.status=='success'){
+          console.log('res.data',res.data);
+          if(res.data.code=='200'){
                this.error = null;
           this.$router.push("/booking");
           }else{
-            this.error = res.data.custom;
+            this.error = res.data.message;
           }
           
         

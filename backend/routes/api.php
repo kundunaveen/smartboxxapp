@@ -19,9 +19,9 @@ use App\Http\Controllers\Api\BookingsController;
 Route::post('/register', [UsersController::class,'register']);
 Route::post('/login', [UsersController::class,'login']);
 
-
 Route::group(['middleware' => 'auth:api'], function () {
-  Route::get('/get_details', [UsersController::class,'getDetails']);
+  Route::get('/users', [UsersController::class,'index']);
+    Route::get('/get_details', [UsersController::class,'getDetails']);
     Route::get('/users', [UsersController::class,'index']);
     Route::post('/add_user', [UsersController::class,'addUser']);
     Route::put('/status_change/{id}', [UsersController::class,'statusChange']);
