@@ -173,7 +173,7 @@ export default {
         )
         .then((res) => {
 
-           if(res.data.status=='success'){
+           if(res.data.success==true){
                this.error = null;
           this.$router.push("/booking");
           }else{
