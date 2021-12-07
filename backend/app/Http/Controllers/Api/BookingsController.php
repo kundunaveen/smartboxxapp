@@ -11,6 +11,7 @@ use DatePeriod;
 use DateInterval;
 use Carbon\Carbon;
 use Validator;
+use App\Models\Device;
 
 
 class BookingsController extends Controller
@@ -92,7 +93,12 @@ class BookingsController extends Controller
         {
              
         $validator = Validator::make($request->all(), [
-            'slot_type' => 'required', 'mobile' => 'required', 'address' => 'required']);
+            'slot_type' => 'required', 'mobile' => 'required', 'address' => 'required','code' => 'required',
+                'country'=>  'required',
+                'state'=>  'required',
+                'city'=>  'required',
+                'zip'=>  'required',
+                ]);
             if ($validator->fails()) {
                 return response()->json(['Status' => 
               false,'message'=>$validator->errors()->first(),'Data' => '','Status_code' =>"401" ]);            
@@ -120,15 +126,46 @@ class BookingsController extends Controller
             }
             else
             {
-                $input['start_date'] = $input['start_date'];
-                
-                $alreadyExist = availability::whereDate('date',$input['start_date'])->get();
+              $s = $input['start_time'];
+              $e =$input['end_time'];
+                if($s==$e){
+                  return $this->sendResponseError($s.'|'. $e, 'Slot time should not be same');
+                }
 
+               
+
+                  if((strpos($s, 'am') !== false) && (strpos($e, 'am') !== false)){
+                   $s_new  = str_replace("am","",$s);
+                   $e_new  = str_replace("am","",$e);
+                  
+                   if($s_new>$e_new){
+                    return $this->sendResponseError($s.'|'. $e, 'Start time should be greter then end time');
+                  }
+                }
+
+                if((strpos($s, 'pm') !== false) && (strpos($e, 'pm') !== false)){
+                    $s_new  = str_replace("pm","",$s);
+                    $e_new  = str_replace("pm","",$e);
+                    if($s_new>$e_new){
+                     return $this->sendResponseError($s.'|'. $e, 'Start time should be greter then end time');
+                   }
+                 }
+
+
+
+             
+                
+                $alreadyExist = availability::whereTime('start_time', '<=',  date('H:i:s', strtotime($s)))->whereTime('end_time', '>=',  date('H:i:s', strtotime($e)))->WhereDate('date',$input['start_date'])->get();
+               
                 if (count($alreadyExist) > 0)
                 {
-                   return $this->sendResponseError($alreadyExist, 'Slot not available Please select another date');
+                   return $this->sendResponseError($alreadyExist, 'Slot not available Please select another date and time');
 
                 }
+
+
+
+
 
             }
 
@@ -151,8 +188,11 @@ class BookingsController extends Controller
                      availability::create($availability);
                     }
                 }else{
+                    
                     $availability['booking_id'] = $booking->id;
                     $availability['date'] =  $input['start_date'];
+                    $availability['start_time'] =  date('H:i:s', strtotime($input['start_time'])) ;
+                    $availability['end_time'] = date('H:i:s', strtotime($input['end_time']));
                     availability::create($availability);
 
                 }
@@ -237,7 +277,7 @@ class BookingsController extends Controller
 
     public function update(Request $request, $id)
     {
-        try{
+        // try{
         if ($request->isMethod('put'))
         {
             $booking = Booking::find($id);
@@ -280,10 +320,16 @@ class BookingsController extends Controller
                 
 
                 $booking->update(['slot_type' => $input['slot_type'],
+                                  'code' => $input['code'],
                                    'device_id' => $input['device_id'],
                                     'address' => $input['address'],
-                                     'mobile' => $input['mobile'],
-                                      'start_date' => $input['start_date'], 'end_date' => $input['end_date'] ]);
+                                    'country' => $input['country'],
+                                    'state' => $input['state'],
+                                    'city' => $input['city'],
+                                    'zip' => $input['zip'],
+                                    'mobile' => $input['mobile'],
+                                    'start_date' => $input['start_date'], 
+                                    'end_date' => $input['end_date'] ]);
 
             }
             else
@@ -308,10 +354,16 @@ class BookingsController extends Controller
                 }
 
                 $booking->update(['slot_type' => $input['slot_type'], 
-                                 'device_id' => $input['device_id'],
-                                  'address' => $input['address'],
-                                   'mobile' => $input['mobile'], 
-                                   'start_date' => $input['start_date'], 'end_date' => NULL]);
+                                  'device_id' => isset($input['device_id'])?$input['device_id']:$booking['device_id'],
+                                  'address' => isset($input['address'])?$input['address']:$booking['address'],
+                                   'mobile' => isset($input['mobile'])?$input['mobile']:$booking['mobile'], 
+                                   'country' => isset($input['country'])?$input['country']:$booking['country'],
+                                   'state' =>isset($input['state'])?$input['state']:$booking['state'],
+                                   'city' => isset($input['city'])?$input['city']:$booking['city'],
+                                   'zip' => isset($input['zip'])?$input['zip']:$booking['zip'],
+                                   'code' => isset($input['code'])?$input['code']:$booking['code'],
+                                   'start_date' => $input['start_date'],
+                                    'end_date' => NULL]);
             }
 
             if ($booking)
@@ -325,10 +377,170 @@ class BookingsController extends Controller
             }
 
         }
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Page not found'], 404);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => 'Page not found'], 404);
+        // }
         
     }
+
+
+    public function deviceList(Request $request){
+     try {
+            $device = Device::orderBy('id', 'desc')->get();
+            if ($device) {
+                return $this->sendResponse($device, 'device List');
+            } else {
+                return $this->sendResponse($device, 'No record found');
+            }
+        }
+        catch(\Exception $e) {
+            return response()->json(['error' => 'Somthig is wrong.'], 404);
+        } 
+
+    }
+
+
+    public function deleteDevice(Request $request, $id)
+    {
+
+        $device = Device::find($id);
+
+        if ($device)
+        {
+            $device->delete();
+            return $this->sendResponse($device, 'Record delete successfully');
+            
+        }
+        else
+        {
+            return $this->sendResponseError($device, 'Record not delete successfully');
+        }
+    }
+
+
+    public function addDevice(Request $request)
+    {
+        // try{
+            
+            $validator = Validator::make($request->all(), [         
+
+               'name' => 'required', 
+               'description' => 'required',
+               
+                
+                ]);
+             
+                if ($validator->fails()) {
+                    return response()->json(['Status' => 
+                  false,'message'=>$validator->errors()->first(),'Data' => '','Status_code' =>"401" ]);            
+                }
+
+                $input = $request->all();
+                $device = Device::create($input);
+
+                if ($device) {
+                    return $this->sendResponse($device, 'Device add successfully');
+                } else {
+                    return $this->sendResponse($device, 'Device not add successfully');
+                }
+      
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => 'Page not found'], 404);
+        // }
+        
+
+        
+    }
+    public function statusChange(Request $request, $id)
+    {
+        try{
+            if ($request->isMethod('put'))
+            {
+
+                $device = Device::find($id);
+                if ($device)
+                {
+                    if ($device->status == 'active')
+                    {
+
+                        $device->update(['status' => 'deactive']);
+                        return $this->sendResponse($device, 'Status Update successfully');
+                   
+                    }
+                    else
+                    {
+                        $device->update(['status' => 'active']);
+                        return $this->sendResponse($device, 'Status Update successfully');
+                      
+                    }
+
+                }
+                else
+                {
+                    return $this->sendError('Not Found.', ['error' => 'Record not found please check given id']);
+                   
+                }
+
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Page not found'], 404);
+
+        }
+    }
+
+    public function viewDevice(Request $request, $id)
+    {
+        try
+        {
+            if ($request->isMethod('get'))
+            {
+                $device = Device::find($id);
+                if ($device)
+                { 
+                    return $this->sendResponse($device, 'device details');
+                }
+                else
+                {
+                    return $this->sendResponseError($device, 'Record not found');
+
+                }
+
+            }
+        }
+        catch(\Exception $e)
+        {
+            return response()->json(['error' => 'Page not found'], 404);
+
+        }
+
+    }
+
+    public function updateDevice(Request $request, $id)
+    {
+        try {
+            if ($request->isMethod('put')) {
+                $device = Device::find($id);
+                $input = $request->all();
+                if ($device) {
+                    $device->update(['name' => $input['name'], 'description' => $input['description'],
+                 
+                ]);
+                    return $this->sendResponse($device, 'Record update successfullly');
+              
+                    
+                } else {
+                    return $this->sendError('Not Found.', ['error' => 'Record not found of the given id.']);
+                    
+                }
+            }
+        }
+        catch(\Exception $e) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
+
+    }
+    
+
+
 }
 

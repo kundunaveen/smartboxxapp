@@ -5,8 +5,8 @@
       <div class="container-fluid">
        <Head :msg="message"/>
         <div class="pull-right">
-          <router-link to="/add-user" class="active"><i class="fa fa-plus fa-fw"></i>
-          <i class="fa fa-user fa-fw"></i> Add User
+          <router-link to="/add-smartbox" class="active"><i class="fa fa-plus fa-fw"></i>
+          <i class="fa fa-user fa-fw"></i> Add Box
           </router-link>
         </div>
 
@@ -17,81 +17,74 @@
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
-                  <th>Email</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody v-if='users'>
-                <tr v-for="(user, index) in users" :key="user.id">
+                <tbody v-if='devices'>
+                <tr v-for="(device, index) in devices" :key="device.id">
                   <td>{{ index+1 }}</td>
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>
-                  <input type="checkbox" v-bind:checked="user.status =='1'" data-toggle="toggle" data-size="xs" @change="check(user.id)">
-
-                  </td>
-
+                  <td>{{ device.name }}</td>
+                  <td><input type="checkbox" v-bind:checked="device.status =='active'" data-toggle="toggle" data-size="xs" @change="check(device.id)"></td>
                   <td>
                     <div class="btn-group" role="group">
                       <router-link
-                        :to="{ name: 'edit', params: { id: user.id } }"
+                        :to="{ name: 'device-edit', params: { id: device.id } }"
                         
                         >Edit</router-link
                       >
                       <a href="javascript:void(0)"
                         
-                        @click="deleteUser(user.id)"
+                        @click="deleteDevice(device.id)"
                       >
                         Delete
                       </a>
-                       <router-link
-                        :to="{ name: 'pass', params: { id: user.id } }"
-                        
-                        >password</router-link
-                      >
+                      
                     </div>
                   </td>
                 </tr>
               </tbody>
-               <tbody v-if="!users.length">
+                 <tbody v-if="!devices.length">
                 <tr>
                  <td> No record found !</td>
                 </tr>
               </tbody>
+            
             </table>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </template>
+
 <script>
 import swal from "sweetalert";
-
-import Nav from "./../layout/Nav.vue";
-import Head from "./../layout/Head.vue";
-import Vue from 'vue' 
-import Toaster from 'v-toaster' 
-import 'v-toaster/dist/v-toaster.css'
 import axios from "axios";
-
- Vue.use(Toaster, {timeout: 5000})
+import Nav from "./../../layout/Nav.vue";
+import Head from "./../../layout/Head.vue";
 
 export default {
-  name: "Users",
-  data() {
-    return {
-      users: [],
-         message: "Users"
-    };
-  },
-  components: {
+  name: "SmartBoxList",
+   components: {
     Nav,
     Head,
   },
-  methods: {
-    deleteUser(id) {
+  
+    data(){
+    return{
+        devices:[],
+        message: "Smartbox"
+    }
+  },
+  async created() {
+    const response = await axios.get("/api/device_list");
+    console.log("response.data.data", response.data);
+    this.devices = response.data.data;
+  },
+   methods:{
+      deleteDevice(id) {
       swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover !",
@@ -100,37 +93,24 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          axios.get(`/api/move_to_trash/${id}`).then(() => {
-             this.$router.push("/users");
-            let i = this.users.map((data) => data.id).indexOf(id);
-            this.users.splice(i, 1);
-             this.$toaster.success('Record delete successfully.')
+          axios.delete(`/api/device_delete/${id}`).then(() => {
+            let i = this.devices.map((data) => data.id).indexOf(id);
+            this.devices.splice(i, 1);
+            this.$toaster.success('Record delete successfully.')
           });
         } else {
           swal("Your Record safe now!");
         }
       });
     },
-    check(id){
-        axios.put(`/api/status_change/${id}`).then(() => {
+     check(id){
+        axios.put(`/api/device_status_change/${id}`).then(() => {
            swal("Status update!", "Status has been change!", "success");
             this.$toaster.success('Status has been change! successfully.')
 
          
           });
     }
-    ,
   },
-  async created() {
-    const response = await axios.get("/api/users");
-    console.log("response.data.data", response.data);
-    this.users = response.data.data;
-  },
-};
-
-
+}
 </script>
-
-<style>
-
-</style>

@@ -28,7 +28,7 @@
                   <td>{{ index+1 }}</td>
                   <td>{{ booking.uuid }}</td>
                   <td>{{ booking.device.name }}</td>
-                   <td>{{ booking.start_date }}<span v-if="booking.end_date"> to {{booking.end_date }}</span></td>
+                   <td>{{ booking.start_date }} / {{ booking.start_time}} to {{ booking.end_time }}<span v-if="booking.end_date"> to {{booking.end_date }}</span></td>
                      <td><button type="button" class="btn btn-success">{{booking.status }}</button></td>
                    <td>{{ booking.address }}</td>
                   <td>
@@ -70,6 +70,10 @@ import "datatables.net-dt/css/jquery.dataTables.min.css";
 import Nav from "./../layout/Nav.vue";
 import Head from "./../layout/Head.vue";
 import axios from "axios";
+import Vue from 'vue' 
+import Toaster from 'v-toaster' 
+import 'v-toaster/dist/v-toaster.css'
+ Vue.use(Toaster, {timeout: 5000})
 
 export default {
   name: "Booking",
@@ -96,6 +100,7 @@ export default {
           axios.delete(`/api/booking_delete/${id}`).then(() => {
             let i = this.bookings.map((data) => data.id).indexOf(id);
             this.bookings.splice(i, 1);
+            this.$toaster.success('Record delete successfully.')
           });
         } else {
           swal("Your Record safe now!");

@@ -64,6 +64,11 @@
 <script>
 import Nav from "./../layout/Nav.vue";
 import axios from "axios";
+import Vue from 'vue' 
+import Toaster from 'v-toaster' 
+import 'v-toaster/dist/v-toaster.css'
+Vue.use(Toaster, {timeout: 5000})
+
 export default {
   name: "ChangePass",
   data() {
@@ -87,8 +92,10 @@ export default {
         .then((res) => {
           console.log("users", res.data.status);
           if (res.data.status == "error"){
+                 this.$toaster.error(res.data.message)
             this.error = res.data.message;
           } else {
+            this.$toaster.success('Password update successfully.')
             this.error = null;
             this.$router.push("/users");
           }

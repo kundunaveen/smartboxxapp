@@ -24,7 +24,12 @@ class User extends Authenticatable
         'phone',
         'move_to_trash',
         'status',
-        'address'
+        'address',
+        'code',
+        'state',
+        'city',
+        'zip',
+        'country'
     ];
 
     /**

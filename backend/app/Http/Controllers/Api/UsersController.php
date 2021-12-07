@@ -143,14 +143,20 @@ class UsersController extends Controller
      */
     public function addUser(Request $request)
     {
-      
+     
         try{
 
             $validator = Validator::make($request->all(), [         
                 'name' => 'required|min:3',
                 'email' => 'required|email|unique:users', 
                 'address' => 'required',
-                'phone'=>  'required'
+                'phone'=>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+                'code'=>  'required',
+                'country'=>  'required',
+                'state'=>  'required',
+                'city'=>  'required',
+                'zip'=>  'required',
+                
                 ]);
 
                 if ($validator->fails()) {
@@ -292,7 +298,13 @@ class UsersController extends Controller
                 $user = User::find($id);
                 $input = $request->all();
                 if ($user) {
-                    $user->update(['name' => $input['name'], 'email' => $input['email'], 'address' => $input['address'], 'phone' => $input['phone']]);
+                    $user->update(['name' => $input['name'], 'email' => $input['email'], 'address' => $input['address'], 'phone' => $input['phone'],
+                    'code' => $input['code'],
+                    'state' => $input['state'],
+                    'city' => $input['city'],
+                    'zip' => $input['zip'],
+                    'country' => $input['country']
+                ]);
                     return $this->sendResponse($user, 'Record update successfullly');
               
                     
@@ -333,8 +345,9 @@ class UsersController extends Controller
     }
 
     public function getDevice(){
-
-        $device = Device::select('id','name')->get();
+ 
+        $device = Device::select('id','name')->where('status','=','active')->get();
+        
         if ($device)
         {
             return $this->sendResponse($device, 'Device List');
@@ -380,4 +393,6 @@ class UsersController extends Controller
 
 
     }
+
+  
 }

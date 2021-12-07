@@ -10,6 +10,11 @@ import EditUser from './components/pages/EditUser.vue'
 import ChangePass from './components/pages/ChangePass.vue'
 import AddBooking from './components/pages/Booking/AddBooking.vue'
 import EditBooking from './components/pages/Booking/EditBooking.vue'
+import Smartbox from './components/pages/Smartbox/Index.vue'
+import AddSmartbox from './components/pages/Smartbox/AddDevice.vue'
+import EditSmartbox from './components/pages/Smartbox/EditDevice.vue'
+
+Smartbox
 
 
 
@@ -18,7 +23,7 @@ Vue.use(Router)
 
 export default new Router({
     mode:'history',
-    base: '/dist',
+    // base: '/dist',
     routes:[
         {   
             path:'/',component:Login
@@ -56,6 +61,20 @@ export default new Router({
             path: '/booking-edit/:id',
             component: EditBooking
         },
+        {
+            name: 'device-edit',
+            path: '/smartbox-edit/:id',
+            component: EditSmartbox
+        },
+        
+        {
+            path: '/smartbox-list',
+            component: Smartbox
+        },
+        {
+            path:'/add-smartbox',component:AddSmartbox
+        }
+        
         
         
     ]

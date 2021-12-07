@@ -20,7 +20,12 @@ class Booking extends Model
         'end_time',
         'standard',
         'mobile',
-        'address'
+        'address',
+        'code',
+        'state',
+        'city',
+        'zip',
+        'country'
     ];
 
     public function device(){

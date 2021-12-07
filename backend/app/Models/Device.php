@@ -10,5 +10,12 @@ class Device extends Model
     use HasFactory;
 
     protected $table = 'device';
+    protected $fillable = [
+        "name",
+        "description",
+        "lat",
+        "long",
+        "status"
+    ];
 
 }

@@ -128,6 +128,11 @@
               ><i class="fa fa-ticket fa-fw"></i> Booking Mgmt</router-link
             >
           </li>
+            <li>
+            <router-link to="/smartbox-list" class="active"
+              ><i class="fa fa-ticket fa-fw"></i> Smartbox Mgmt</router-link
+            >
+          </li>
         </ul>
       </div>
     </div>

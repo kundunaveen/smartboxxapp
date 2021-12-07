@@ -36,5 +36,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('/booking_delete/{id}', [BookingsController::class,'delete']);
     Route::get('/view_booking/{id}', [BookingsController::class,'view']);
     Route::put('/update_booking/{id}', [BookingsController::class,'update']);
+    Route::get('/device_list', [BookingsController::class,'deviceList']);
+    Route::delete('/device_delete/{id}', [BookingsController::class,'deleteDevice']);
+    Route::post('/add_device', [BookingsController::class,'addDevice']);
+    Route::put('/device_status_change/{id}', [BookingsController::class,'statusChange']);
+    Route::get('/view_device/{id}', [BookingsController::class,'viewDevice']);
+    Route::put('/update_device/{id}', [BookingsController::class,'updateDevice']);
+    
   });
 

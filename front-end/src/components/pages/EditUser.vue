@@ -9,13 +9,10 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="panel panel-default">
-              <div class="panel-heading">Edit User<router-link
-                        type="reset"
-                        
-                        to="/users"
-                      >
-                        Back
-                      </router-link></div>
+              <div class="panel-heading">
+                <router-link type="reset" to="/users"> Back </router-link> Edit
+                User
+              </div>
               <div class="panel-body">
                 <div class="row">
                   <div class="col-lg-6 col-lg-offset-3 col-lg-6">
@@ -40,31 +37,113 @@
                       </div>
                       <div class="form-group">
                         <label>Mobile</label>
-                        <input
-                        type="number"
-                          class="form-control"
-                          placeholder="Enter Mobile"
-                          v-model="user.phone"
-                          required=""
-                        />
+
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <select
+                              name="code"
+                              class="form-select form-control"
+                              v-model="user.code"
+                              required=""
+                            >
+                              <option value="" v-if="iteams">Country</option>
+                              <option
+                                v-bind:value="iteam.dial_code"
+                                v-for="iteam in iteams"
+                                :key="iteam.code"
+                              >
+                                {{ iteam.name }} {{ iteam.dial_code }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-lg-6">
+                            <input
+                              type="number"
+                              class="form-control"
+                              placeholder="EX: 7737719645"
+                              v-model="user.phone"
+                              required=""
+                            />
+                          </div>
+                        </div>
                       </div>
 
                       <div class="form-group">
-                        <label>Address</label>
-                        <textarea
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <label>Street</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX:877 Mulberry Lane"
+                              v-model="user.address"
+                              required=""
+                            />
+                          </div>
+                          <div class="col-lg-6">
+                            <label>City</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX:877 Mulberry Lane"
+                              v-model="user.city"
+                              required=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                         <div class="row">
+                          <div class="col-lg-6">
+                             <label>State</label>
+                        <input
+                          type="text"
                           class="form-control"
-                          rows="3"
-                          v-model="user.address"
+                          placeholder="EX: Dehli"
+                          v-model="user.state"
+                          required=""
+                        />
+                          </div>
+                          <div class="col-lg-6">
+                            <label>Country</label>
+                        <select
+                          name="code"
+                          class="form-select form-control"
+                          v-model="user.country"
                           required=""
                         >
-                        {user.address}
-                        </textarea>
+                          <option value="" v-if="iteams">
+                            --select Country--
+                          </option>
+                          <option
+                            v-bind:value="iteam.name"
+                            v-for="iteam in iteams"
+                            :key="iteam.code"
+                          >
+                            {{ iteam.name }}
+                          </option>
+                        </select>
+                          </div>
+                         </div>
+
+                       
+                      </div>
+                     
+                      <div class="form-group">
+                        <label>Zip</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="EX:India"
+                          v-model="user.zip"
+                          required=""
+                        />
                       </div>
 
                       <button type="submit" class="btn btn-default">
                         Update
                       </button>
-                      
                     </form>
                   </div>
                   <!-- /.col-lg-6 (nested) -->
@@ -86,11 +165,18 @@
 <script>
 import Nav from "./../layout/Nav.vue";
 import axios from "axios";
+import countries from "./../../assets/countries";
+import Vue from "vue";
+import Toaster from "v-toaster";
+import "v-toaster/dist/v-toaster.css";
+Vue.use(Toaster, { timeout: 5000 });
+
 export default {
   name: "EditUser",
   data() {
     return {
       user: {},
+      iteams: countries,
     };
   },
   async created() {
@@ -100,13 +186,10 @@ export default {
   methods: {
     updateUser() {
       axios
-        .put(
-          `/api/update_user/${this.$route.params.id}`,
-          this.user
-        )
+        .put(`/api/update_user/${this.$route.params.id}`, this.user)
         .then(() => {
-
-             this.$router.push('/users');
+          this.$toaster.success("Record update successfully.");
+          this.$router.push("/users");
         });
     },
   },

@@ -9,21 +9,17 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="panel panel-default">
-              <div class="panel-heading">Add New Booking<router-link
-                        type="reset"
-                        
-                        to="/booking"
-                      >
-                        Back
-                      </router-link></div>
+              <div class="panel-heading">
+                <router-link type="reset" to="/booking"> Back </router-link>Add
+                New Booking
+              </div>
               <div class="panel-body">
                 <div class="row">
                   <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                    
-                         <p v-if="error" class="text-danger "> {{error}}</p>
+                    <p v-if="error" class="text-danger">{{ error }}</p>
                     <form role="form" @submit="handleSubmit">
                       <div class="form-group">
-                        <label>Device Type</label>
+                        <label>Select smartbox</label>
 
                         <select
                           name="device_id"
@@ -31,6 +27,9 @@
                           v-model="device_id"
                           required=""
                         >
+                          <option value="" v-if="devices">
+                            -- Select box --
+                          </option>
                           <option
                             v-bind:value="device.id"
                             v-for="device in devices"
@@ -61,7 +60,6 @@
                               name="optionsRadios"
                               id="optionsRadios2"
                               value="1"
-                              
                               v-model="slot_type"
                             />Multiple Day
                           </label>
@@ -70,16 +68,61 @@
                       <div class="form-group">
                         <div class="row">
                           <div class="col-lg-6" v-show="slot_type === '0'">
+                          
                             <label>single Day</label>
                             <date-picker
                               v-model="time1"
                               valueType="format"
                             ></date-picker>
                           </div>
+                          <div class="col-lg-6" v-show="slot_type === '0'">
+                            <label>Select Time</label>
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <select
+                                  name="start_slot"
+                                  class="form-select form-control"
+                                  v-model="startSlot"
+                                  required=""
+                                >
+                                  <option value="" >
+                                    -- Start  Time--
+                                  </option>
+
+                                  <option
+                                    v-bind:value="slot.time +''+ slot.standard "
+                                    v-for="slot in startslots"
+                                    :key="slot.time"
+                                  >
+                                    {{ slot.time }}  {{ slot.standard }}
+                                  </option>
+                                </select>
+                              </div>
+                              <div class="col-lg-6">
+                                <select
+                                  name="end_slot"
+                                  class="form-select form-control"
+                                  v-model="endSlot"
+                                  required=""
+                                >
+                                  <option value="" >
+                                    -- End TIme--
+                                  </option>
+                                    <option
+                                    v-bind:value="slot.time +''+ slot.standard"
+                                    v-for="slot in endslots"
+                                    :key="slot.time"
+                                  >
+                                    {{ slot.time }}  {{ slot.standard }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+
                           <div class="col-lg-6" v-show="slot_type === '1'">
                             <label>Multiple Day</label>
                             <date-picker
-                          
                               v-model="time3"
                               ng-model-options="{timezone: 'utc'}"
                               range
@@ -89,38 +132,102 @@
                         </div>
                       </div>
 
-                      <!-- <div class="form-group" v-show="x === '0'">
-                        <label>Slot</label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          placeholder="Enter Email"
-                          required=""
-                        />
-                      </div> -->
                       <div class="form-group">
                         <label>Mobile</label>
-                        <input
-                          type="number"
-                          class="form-control"
-                          placeholder="Enter Mobile"
-                          required=""
-                          v-model="mobile"
-                        />
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <select
+                              name="code"
+                              class="form-select form-control"
+                              v-model="code"
+                              required=""
+                            >
+                              <option value="" v-if="iteams">
+                                --select country code--
+                              </option>
+                              <option
+                                v-bind:value="iteam.dial_code"
+                                v-for="iteam in iteams"
+                                :key="iteam.code"
+                              >
+                                {{ iteam.name }} {{ iteam.dial_code }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-lg-6">
+                            <input
+                              type="number"
+                              class="form-control"
+                              placeholder="EX: 7737719645"
+                              v-model="mobile"
+                              required=""
+                            />
+                          </div>
+                        </div>
                       </div>
 
                       <div class="form-group">
-                        <label>Address</label>
-                        <textarea
+                        <label>Street</label>
+                        <input
+                          type="text"
                           class="form-control"
-                          rows="3"
-                          required=""
+                          placeholder="EX:877 Mulberry Lane"
                           v-model="address"
-                        ></textarea>
+                          required=""
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>City</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="EX:877 Mulberry Lane"
+                          v-model="city"
+                          required=""
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>State</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="EX: Dehli"
+                          v-model="state"
+                          required=""
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>Country</label>
+                        <select
+                          name="code"
+                          class="form-select form-control"
+                          v-model="country"
+                          required=""
+                        >
+                          <option value="" v-if="iteams">
+                            --select Country--
+                          </option>
+                          <option
+                            v-bind:value="iteam.name"
+                            v-for="iteam in iteams"
+                            :key="iteam.code"
+                          >
+                            {{ iteam.name }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Zip</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="EX:India"
+                          v-model="zip"
+                          required=""
+                        />
                       </div>
 
                       <button type="submit" class="btn btn-default">Add</button>
-                    
                     </form>
                   </div>
                   <!-- /.col-lg-6 (nested) -->
@@ -144,6 +251,12 @@ import Nav from "./../../layout/Nav.vue";
 import axios from "axios";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
+import Vue from "vue";
+import Toaster from "v-toaster";
+import "v-toaster/dist/v-toaster.css";
+import countries from "./../../../assets/countries";
+import slot from "./../../../assets/slot";
+Vue.use(Toaster, { timeout: 5000 });
 
 export default {
   name: "AddBooking",
@@ -151,12 +264,22 @@ export default {
     return {
       slot_type: "0",
       devices: "",
-      device_id:"",
-      mobile:"",
-      address:"",
+      device_id: "",
+      mobile: "",
+      address: "",
       time1: "",
       time3: "",
       error: null,
+      iteams: countries,
+      startslots:slot,
+      endslots:slot,
+      code: "",
+      city: "",
+      state: "",
+      country: "",
+      zip: "",
+      startSlot:"",
+      endSlot:""
     };
   },
   components: {
@@ -168,41 +291,43 @@ export default {
     console.log("response.data.data", response.data);
     this.devices = response.data.data;
   },
-   methods: {
+  methods: {
     async handleSubmit(e) {
       e.preventDefault();
 
       const input = {
-        device_id:this.device_id,
+        device_id: this.device_id,
         slot_type: this.slot_type,
         start_date: this.time1,
         range_date: this.time3,
         address: this.address,
-        mobile:this.mobile
+        mobile: this.mobile,
+        code: this.code,
+        city: this.city,
+        state: this.state,
+        country: this.country,
+        zip: this.zip,
+        start_time: this.startSlot,
+        end_time: this.endSlot,
       };
 
       axios
         .post("/api/add_booking", input)
         .then((res) => {
-          console.log('res.data',res.data);
-          if(res.data.code=='200'){
-               this.error = null;
-          this.$router.push("/booking");
-          }else{
+          if (res.data.code == "200") {
+            this.error = null;
+            this.$toaster.success("Add record successfully.");
+            this.$router.push("/booking");
+          } else {
+            this.$toaster.error(res.data.message);
             this.error = res.data.message;
           }
-          
-        
-       
         })
         .catch((err) => {
           console.log(err.errors);
           this.error = "Record not save please check";
         });
     },
-
- 
-
   },
 };
 </script>
