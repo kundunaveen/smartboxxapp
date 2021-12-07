@@ -2,7 +2,7 @@
   "name": "booking-system",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:8000/",
+  "proxy": "http://localhost:8000/",
   "scripts": {
     "serve": "vue-cli-service serve --port 3000",
     "build": "vue-cli-service build",
@@ -19,6 +19,7 @@
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "sweetalert": "^2.1.2",
+    "v-toaster": "^1.0.3",
     "vue": "^2.6.11",
     "vue-axios": "^3.4.0",
     "vue-router": "^3.5.3",
