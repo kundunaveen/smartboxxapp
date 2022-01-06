@@ -23,7 +23,7 @@ Vue.use(Router)
 
 export default new Router({
     mode:'history',
-    // base: '/dist',
+    base: '/dist',
     routes:[
         {   
             path:'/',component:Login
