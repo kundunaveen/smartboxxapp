@@ -130,17 +130,17 @@
             >
           </li>
           <li>
-            <router-link to="/users" class="active"
-              ><i class="fa fa-users fa-fw"></i> User Mgmt</router-link
+            <router-link to="/users" class=""
+              ><i class="fa fa-users fa-fw"></i> User Mgmt </router-link
             >
           </li>
           <li>
-            <router-link to="/booking" class="active"
+            <router-link to="/booking" class=""
               ><i class="fa fa-ticket fa-fw"></i> Booking Mgmt</router-link
             >
           </li>
           <li>
-            <router-link to="/smartbox-list" class="active"
+            <router-link to="/smartbox-list" class=""
               ><i class="fa fa-ticket fa-fw"></i> Smartbox Mgmt</router-link
             >
           </li>
@@ -177,12 +177,12 @@
             ></a>
             <ul class="nav nav-second-level collapse">
               <li>
-                <router-link to="/page-type" class="active"
+                <router-link to="/page-type" class=""
                   ><i class="fa fa-file-archive-o fa-fw"></i> Page Type</router-link
                 >
               </li>
               <li>
-                <router-link to="/pages" class="active"
+                <router-link to="/pages" class=""
                   ><i class="fa fa-file   fa-fw"></i> Pages</router-link
                 >
               </li>
@@ -205,6 +205,7 @@ export default {
       localStorage.removeItem("token");
       this.$router.push("/");
     },
+    
   },
   data() {
     return {

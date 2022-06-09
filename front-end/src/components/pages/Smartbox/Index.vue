@@ -14,50 +14,61 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <table class="table" id="datatable">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody v-if="devices">
-                <tr v-for="(device, index) in devices" :key="device.id">
-                  <td>{{ index + 1 }}</td>
-                  <td>{{ device.name }}</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      v-bind:checked="device.status == 'active'"
-                      data-toggle="toggle"
-                      data-size="xs"
-                      @change="check(device.id)"
-                    />
-                  </td>
-                  <td>
-                    <div class="btn-group" role="group">
-                      <router-link
-                        :to="{ name: 'device-edit', params: { id: device.id } }"
-                        >Edit</router-link
-                      >
-                      <a
-                        href="javascript:void(0)"
-                        @click="deleteDevice(device.id)"
-                      >
-                        Delete
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody v-if="!devices.length">
-                <tr>
-                  <td>No record found !</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="panel panel-default">
+              <div class="panel-heading mypnl_heading">
+                <span>Smartbox</span>
+              </div>
+              <table
+                class="table table-bordered table-responsive"
+                id="datatable"
+              >
+                <thead>
+                  <tr>
+                    <th class="text-center"> ID</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody v-if="devices">
+                  <tr v-for="(device, index) in devices" :key="device.id">
+                    <td class="text-center">{{ index + 1 }}</td>
+                    <td class="text-center">{{ device.name }}</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        v-bind:checked="device.status == 'active'"
+                        data-toggle="toggle"
+                        data-size="xs"
+                        @change="check(device.id)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <div class="btn-group" role="group">
+                        <router-link
+                          :to="{
+                            name: 'device-edit',
+                            params: { id: device.id },
+                          }"
+                          >Edit</router-link
+                        >
+                        <a
+                          href="javascript:void(0)"
+                          @click="deleteDevice(device.id)"
+                        >
+                          Delete
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-if="!devices.length">
+                  <tr>
+                    <td>No record found !</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

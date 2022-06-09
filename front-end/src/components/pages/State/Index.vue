@@ -14,47 +14,55 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <table class="table" id="datatable">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Country</th>
-                  <th>Name</th>
+            <div class="panel panel-default">
+              <div class="panel-heading mypnl_heading">
+                <span>States</span>
+              </div>
+              <table
+                class="table table-bordered table-responsive"
+                id="datatable"
+              >
+                <thead>
+                  <tr>
+                   <th class="text-center">ID</th>
+                   <th class="text-center">Country</th>
+                   <th class="text-center">Name</th>
 
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody v-if="states">
-                <tr v-for="(state, index) in states" :key="state.id">
-                  <td>{{ index + 1 }}</td>
-                  <td>{{ state.country.name }}</td>
-                  <td>{{ state.name }}</td>
+                   <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody v-if="states">
+                  <tr v-for="(state, index) in states" :key="state.id">
+                   <td class="text-center">{{ index + 1 }}</td>
+                   <td class="text-center">{{ state.country.name }}</td>
+                   <td class="text-center">{{ state.name }}</td>
 
-                  <td>
-                    <div class="btn-group" role="group">
-                      <router-link
-                        :to="{
-                          name: 'state-edit',
-                          params: { id: state.id },
-                        }"
-                        >Edit</router-link
-                      >
-                      <a
-                        href="javascript:void(0)"
-                        @click="deleteDevice(state.id)"
-                      >
-                        Delete
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody v-if="!states.length">
-                <tr>
-                  <td>No record found !</td>
-                </tr>
-              </tbody>
-            </table>
+                   <td class="text-center">
+                      <div class="btn-group" role="group">
+                        <router-link
+                          :to="{
+                            name: 'state-edit',
+                            params: { id: state.id },
+                          }"
+                          >Edit</router-link
+                        >
+                        <a
+                          href="javascript:void(0)"
+                          @click="deleteDevice(state.id)"
+                        >
+                          Delete
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-if="!states.length">
+                  <tr>
+                   <td class="text-center">No record found !</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -79,7 +87,7 @@ export default {
     return {
       states: [],
       message: "States",
-      loading:false
+      loading: false,
     };
   },
   async created() {

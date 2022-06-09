@@ -22,7 +22,7 @@
 
             <div>
               <button class="btn btn-default submit" type="submit">
-                Submit
+                {{save_button}}
               </button>
               <router-link class="reset_pass" to="/">Login</router-link>
             </div>
@@ -54,6 +54,7 @@ export default {
       email: "",
       error: null,
       success: null,
+      save_button : 'Submit'
     };
   },
   methods: {
@@ -63,6 +64,7 @@ export default {
       const input = {
         email: this.email,
       };
+      this.save_button = 'Wait..'
 
       await axios
         .post("/api/send_link", input)
@@ -76,13 +78,13 @@ export default {
             this.success = resp.data.message;
             this.error = null;
           }
-          // localStorage.setItem("token", resp.data.data.token);
 
-          // this.$router.push("/forgot");
+           this.save_button = 'Submit'
         })
         .catch((err) => {
           console.log("err", err);
-          // this.errors.push(error.response.data.errors)
+     
+            this.save_button = 'Submit'
           this.error = "Somthing went wrong";
         });
     },

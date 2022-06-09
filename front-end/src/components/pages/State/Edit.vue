@@ -41,16 +41,16 @@
                         </select>
                       </div>
 
-                      <div class="form-group">
-                        <label>Name</label>
-                        <input
-                          class="form-control"
-                          placeholder="Ex:California"
-                          v-model="country.name"
-                          required=""
-                          autocomplete="on|off"
-                        />
-                      </div>
+                        <div class="form-group">
+                          <label>Name</label>
+                          <input
+                            class="form-control"
+                            placeholder="Ex:California"
+                            v-model="country.name"
+                            required=""
+                            autocomplete="on|off"
+                          />
+                        </div>
 
                       <button type="submit" class="btn btn-default">
                         Update

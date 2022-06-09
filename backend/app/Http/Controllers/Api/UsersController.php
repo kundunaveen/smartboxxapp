@@ -273,7 +273,7 @@ class UsersController extends Controller
     public function update(Request $request, $id = null)
     {
         try {
-            
+
             if (($request->isMethod('put')) || ($request->isMethod('post'))) {
 
                 if (isset($id)) {
@@ -284,7 +284,7 @@ class UsersController extends Controller
                 $user = User::find($id);
 
                 $input = $request->all();
-              
+
                 if ($input['status'] == 1) {
                     $status = '1';
                 } else {
@@ -317,7 +317,42 @@ class UsersController extends Controller
     }
 
 
+    public function search(Request $request)
+    {
 
+        try {
+
+            $query = User::where('move_to_trash', '=', '0')->where('id', '!=', 1);
+            if (isset($request['status']) && $request['status'] != null) {
+
+                $query->where('status', $request['status']);
+            }
+           
+            if (isset($request['search']) && $request['search'] != null) {
+
+                $query->where('phone', '=', $request['search']);
+            }
+            if (isset($request['search']) && $request['search'] != null) {
+
+                $query->orWhere('name', 'LIKE', '%' . $request['search'] . '%');
+            }
+            if (isset($request['search']) && $request['search'] != null) {
+
+                $query->orWhere('email', 'LIKE', '%' . $request['search'] . '%');
+            }
+
+
+
+            $user = $query->get();
+            if ($user) {
+                return $this->sendResponse($user, 'User List');
+            } else {
+                return $this->sendResponse($user, 'No record found');
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Somthig is wrong.'], 404);
+        }
+    }
     public function index()
     {
 

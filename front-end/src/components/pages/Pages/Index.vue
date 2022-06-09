@@ -14,47 +14,54 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <table class="table" id="datatable">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Page Type</th>
-                 
+            <div class="panel panel-default">
+              <div class="panel-heading mypnl_heading">
+                <span>Pages</span>
+              </div>
+              <table
+                class="table table-bordered table-responsive"
+                id="datatable"
+              >
+                <thead>
+                  <tr>
+                   <th class="text-center">ID</th>
+                   <th class="text-center">Page Type</th>
 
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody v-if="pages">
-                <tr v-for="(state, index) in pages" :key="state.id">
-                  <td>{{ index + 1 }}</td>
-                
-                  <td>{{ state.page_type.name }}</td>
+                   <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody v-if="pages">
+                  <tr v-for="(state, index) in pages" :key="state.id">
+                   <td class="text-center">{{ index + 1 }}</td>
 
-                  <td>
-                    <div class="btn-group" role="group">
-                      <router-link
-                        :to="{
-                          name: 'page-edit',
-                          params: { id: state.id },
-                        }"
-                        >Edit</router-link
-                      >
-                      <a
-                        href="javascript:void(0)"
-                        @click="deleteDevice(state.id)"
-                      >
-                        Delete
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody v-if="!pages.length">
-                <tr>
-                  <td>No record found !</td>
-                </tr>
-              </tbody>
-            </table>
+                   <td class="text-center">{{ state.page_type.name }}</td>
+
+                   <td class="text-center">
+                      <div class="btn-group" role="group">
+                        <router-link
+                          :to="{
+                            name: 'page-edit',
+                            params: { id: state.id },
+                          }"
+                          >Edit</router-link
+                        >
+                        <a
+                          href="javascript:void(0)"
+                          @click="deleteDevice(state.id)"
+                        >
+                          Delete
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-if="!pages.length">
+                  <tr>
+                   <td class="text-center">No record found !</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -79,7 +86,7 @@ export default {
     return {
       pages: [],
       message: "Pages",
-      loading:false
+      loading: false,
     };
   },
   async created() {
@@ -109,7 +116,6 @@ export default {
         }
       });
     },
-   
   },
 };
 </script>

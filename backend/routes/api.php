@@ -28,6 +28,7 @@ Route::post('/reset_password', [ForgotPasswordController::class, 'reset']);
 Route::group(['middleware' => 'auth:api'], function () {
   Route::post('/test', [UsersController::class, 'changePasswordPost']);
   Route::get('/users', [UsersController::class, 'index']);
+  Route::post('/search', [UsersController::class, 'search']);
   Route::get('/get_details', [UsersController::class, 'getDetails']);
   Route::get('/users', [UsersController::class, 'index']);
   Route::post('/add_user', [UsersController::class, 'addUser']);

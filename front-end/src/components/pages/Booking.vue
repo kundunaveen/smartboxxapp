@@ -11,61 +11,79 @@
             <i class="fa fa-ticket fa-fw"></i> Add Booking
           </router-link>
         </div>
-        <table class="table" id="datatable">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>UUID</th>
-              <th>Device Type</th>
-              <th>Booking Date/Time</th>
+        
+        
 
-              <th>Status</th>
-              <th>Address</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody v-if="bookings">
-            <tr v-for="(booking, index) in bookings" :key="booking.id">
-              <td>{{ index + 1 }}</td>
-              <td>{{ booking.uuid }}</td>
-              <td>{{ booking.device.name }}</td>
-              <td>
-                {{ booking.start_date }} / {{ booking.start_time }} to
-                {{ booking.end_time
-                }}<span v-if="booking.end_date">
-                  to {{ booking.end_date }}</span
-                >
-              </td>
-              <td>
-                <button type="button" class="btn btn-success">
-                  {{ booking.status }}
-                </button>
-              </td>
-              <td>{{ booking.address }}</td>
-              <td></td>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel panel-default">
+              <div class="panel-heading mypnl_heading">
+                <span>Booking</span>
+              </div>
+              <table
+                class="table table-bordered table-responsive"
+                id="datatable"
+              >
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>UUID</th>
+                    <th>Device Type</th>
+                    <th>Booking Date/Time</th>
 
-              <td>
-                <div class="btn-group" role="group">
-                  <router-link
-                    :to="{ name: 'bookingedit', params: { id: booking.id } }"
-                    >Edit</router-link
-                  >
-                  <a
-                    href="javascript:void(0)"
-                    @click="deleteBooking(booking.id)"
-                  >
-                    Delete
-                  </a>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-          <tbody v-if="!bookings.length">
-            <tr>
-              <td>No record found !</td>
-            </tr>
-          </tbody>
-        </table>
+                    <th>Status</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody v-if="bookings">
+                  <tr v-for="(booking, index) in bookings" :key="booking.id">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ booking.uuid }}</td>
+                    <td>{{ booking.device.name }}</td>
+                    <td>
+                      {{ booking.start_date }} / {{ booking.start_time }} to
+                      {{ booking.end_time
+                      }}<span v-if="booking.end_date">
+                        to {{ booking.end_date }}</span
+                      >
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-success">
+                        {{ booking.status }}
+                      </button>
+                    </td>
+                    <td>{{ booking.address }}</td>
+                
+
+                    <td>
+                 
+                        <router-link
+                          :to="{
+                            name: 'bookingedit',
+                            params: { id: booking.id },
+                          }"
+                          >Edit</router-link
+                        >
+                        <a
+                          href="javascript:void(0)"
+                          @click="deleteBooking(booking.id)"
+                        >
+                          Delete
+                        </a>
+              
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-if="!bookings.length">
+                  <tr>
+                    <td>No record found !</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
