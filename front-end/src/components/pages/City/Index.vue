@@ -6,9 +6,9 @@
       <div class="container-fluid">
         <Head :msg="message" />
         <div class="pull-right">
-          <router-link to="/add-smartbox" class="active"
+          <router-link to="/add-city" class="active"
             ><i class="fa fa-plus fa-fw"></i>
-            <i class="fa fa-user fa-fw"></i> Add Box
+            <i class="fa fa-flag fa-fw"></i> Add
           </router-link>
         </div>
 
@@ -18,33 +18,32 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Status</th>
+                  <th>Country</th>
+                  <th>State</th>
+                  <th>City</th>
+
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody v-if="devices">
-                <tr v-for="(device, index) in devices" :key="device.id">
+              <tbody v-if="states">
+                <tr v-for="(state, index) in states" :key="state.id">
                   <td>{{ index + 1 }}</td>
-                  <td>{{ device.name }}</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      v-bind:checked="device.status == 'active'"
-                      data-toggle="toggle"
-                      data-size="xs"
-                      @change="check(device.id)"
-                    />
-                  </td>
+                  <td>{{ state.country.name }}</td>
+                  <td>{{ state.state.name }}</td>
+                  <td>{{ state.city }}</td>
+
                   <td>
                     <div class="btn-group" role="group">
                       <router-link
-                        :to="{ name: 'device-edit', params: { id: device.id } }"
+                        :to="{
+                          name: 'city-edit',
+                          params: { id: state.id },
+                        }"
                         >Edit</router-link
                       >
                       <a
                         href="javascript:void(0)"
-                        @click="deleteDevice(device.id)"
+                        @click="deleteDevice(state.id)"
                       >
                         Delete
                       </a>
@@ -52,7 +51,7 @@
                   </td>
                 </tr>
               </tbody>
-              <tbody v-if="!devices.length">
+              <tbody v-if="!states.length">
                 <tr>
                   <td>No record found !</td>
                 </tr>
@@ -68,11 +67,11 @@
 <script>
 import swal from "sweetalert";
 import axios from "axios";
-import Nav from "./../../layout/Nav.vue";
-import Head from "./../../layout/Head.vue";
+import Nav from "../../layout/Nav.vue";
+import Head from "../../layout/Head.vue";
 
 export default {
-  name: "SmartBoxList",
+  name: "stateList",
   components: {
     Nav,
     Head,
@@ -80,16 +79,16 @@ export default {
 
   data() {
     return {
-      devices: [],
-      message: "Smartbox",
+      states: [],
+      message: "City",
       loading: false,
     };
   },
   async created() {
     this.loading = true;
-    const response = await axios.get("/api/device_list");
-    console.log("response.data.data", response.data);
-    this.devices = response.data.data;
+    const response = await axios.get("/api/city");
+
+    this.states = response.data.data;
     this.loading = false;
   },
   methods: {
@@ -102,20 +101,14 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          axios.delete(`/api/device_delete/${id}`).then(() => {
-            let i = this.devices.map((data) => data.id).indexOf(id);
-            this.devices.splice(i, 1);
+          axios.delete(`/api/city/${id}`).then(() => {
+            let i = this.states.map((data) => data.id).indexOf(id);
+            this.states.splice(i, 1);
             this.$toaster.success("Record delete successfully.");
           });
         } else {
           swal("Your Record safe now!");
         }
-      });
-    },
-    check(id) {
-      axios.put(`/api/device_status_change/${id}`).then(() => {
-        swal("Status update!", "Status has been change!", "success");
-        this.$toaster.success("Status has been change! successfully.");
       });
     },
   },

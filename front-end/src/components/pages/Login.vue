@@ -8,7 +8,7 @@
         <section class="login_content">
           <form @submit="handleSubmit">
             <h1>Login</h1>
-            <p v-if="error" class="text-danger"> {{error}}</p>
+            <p v-if="error" class="text-danger">{{ error }}</p>
             <div>
               <input
                 type="text"
@@ -31,7 +31,10 @@
               <button class="btn btn-default submit" type="submit">
                 Log in
               </button>
-              <router-link class="reset_pass" to="/forgot">Lost your password?</router-link>
+              <router-link class="reset_pass" to="/forgot"
+                >Lost your password?</router-link
+              >
+              
             </div>
 
             <div class="clearfix"></div>
@@ -47,7 +50,9 @@
 
               <div>
                 <h1><i class="fa fa-paw"></i> smartboxapp</h1>
-                <p>©2016 All Rights Reserved.smartboxapp.com. Privacy and Terms</p>
+                <p>
+                  ©2016 All Rights Reserved.smartboxapp.com. Privacy and Terms
+                </p>
               </div>
             </div>
           </form>
@@ -65,38 +70,37 @@ export default {
     return {
       email: "",
       password: "",
-      error :null
+      error: null,
     };
   },
   methods: {
-   async handleSubmit(e) {
+    async handleSubmit(e) {
       e.preventDefault();
 
       const input = {
         email: this.email,
-        password: this.password
+        password: this.password,
       };
-
   
-   
-    
-    axios.post('/api/login',input)
-    .then(resp => {
-    localStorage.setItem('token',resp.data.data.token);
-     this.error =null
-      this.$router.push('/dashboard');
-      // location.href = "/dashboard"
-    })
-    .catch(err => {
+ 
+        await axios
+          .post("/api/login", input)
+          .then((resp) => {
+            localStorage.setItem("token", resp.data.data.token);
+            this.error = null;
+            this.$router.push("/dashboard");
+            // location.href = "/dashboard"
+          })
+          .catch((err) => {
             console.log(err);
-          this.error = "Please check the credentials"
-    });
-     
+            // this.errors.push(error.response.data.errors)
+            this.error = "Please check the credentials";
+          });
+  
     },
   },
 };
 </script>
 
 <style>
-
 </style>

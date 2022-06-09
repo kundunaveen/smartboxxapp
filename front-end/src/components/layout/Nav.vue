@@ -86,9 +86,20 @@
             <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
           </li>
           <li>
+            <router-link to="/change_pass" class="active"
+              ><i class="fa fa-key fa-fw"></i> Change Password</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/profile" class="active"
+              ><i class="fa fa-user fa-fw"></i>Edit Profile</router-link
+            >
+          </li>
+          <li>
             <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
           </li>
           <li class="divider"></li>
+
           <li>
             <a href="javascript:void(0)" @click="handleClick"
               ><i class="fa fa-sign-out fa-fw"></i> Logout</a
@@ -128,10 +139,56 @@
               ><i class="fa fa-ticket fa-fw"></i> Booking Mgmt</router-link
             >
           </li>
-            <li>
+          <li>
             <router-link to="/smartbox-list" class="active"
               ><i class="fa fa-ticket fa-fw"></i> Smartbox Mgmt</router-link
             >
+          </li>
+          <li class="sub_menu ">
+            <a href="#"
+              ><i class="fa fa-gear fa-fw"></i> Settings<span
+                class="fa arrow"
+              ></span
+            ></a>
+            <ul class="nav nav-second-level collapse">
+              <li>
+                <router-link to="/country" class="active"
+                  ><i class="fa fa-flag fa-fw"></i> Country</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/state" class="active"
+                  ><i class="fa fa-sitemap fa-fw"></i> State/County</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/city" class="active"
+                  ><i class="fa fa-sitemap fa-fw"></i> City/Region</router-link
+                >
+              </li>
+            </ul>
+            <!-- /.nav-second-level -->
+          </li>
+            <li class="sub_menu ">
+            <a href="#"
+              ><i class="fa fa-book fa-fw"></i>Web Pages<span
+                class="fa arrow"
+              ></span
+            ></a>
+            <ul class="nav nav-second-level collapse">
+              <li>
+                <router-link to="/page-type" class="active"
+                  ><i class="fa fa-file-archive-o fa-fw"></i> Page Type</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/pages" class="active"
+                  ><i class="fa fa-file   fa-fw"></i> Pages</router-link
+                >
+              </li>
+             
+            </ul>
+            <!-- /.nav-second-level -->
           </li>
         </ul>
       </div>

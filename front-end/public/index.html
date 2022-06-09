@@ -1,57 +1,94 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-   
-    <title>smartboxapp</title>
-    <link rel="stylesheet" href="./style.css">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-            <!-- MetisMenu CSS -->
-            <link href="css/metisMenu.min.css" rel="stylesheet">
 
-            <!-- Timeline CSS -->
-            <link href="css/timeline.css" rel="stylesheet">
-    
-            <!-- Custom CSS -->
-            <link href="css/startmin.css" rel="stylesheet">
-    
-            <!-- Morris Charts CSS -->
-            <link href="css/morris.css" rel="stylesheet">
-    
-            <!-- Custom Fonts -->
-            <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-            <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-  </head>
-  <body class="">
- 
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
+  <title>smartboxapp</title>
+  <link rel="stylesheet" href="./style.css">
 
-        <!-- /#wrapper -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- MetisMenu CSS -->
+  <link href="css/metisMenu.min.css" rel="stylesheet">
 
-        <!-- jQuery -->
-        <script src="js/jquery.min.js"></script>
+  <!-- Timeline CSS -->
+  <link href="css/timeline.css" rel="stylesheet">
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
+  <!-- Custom CSS -->
+  <link href="css/startmin.css" rel="stylesheet">
 
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="js/metisMenu.min.js"></script>
+  <!-- Morris Charts CSS -->
+  <link href="css/morris.css" rel="stylesheet">
 
-        <!-- Morris Charts JavaScript -->
-        <script src="js/raphael.min.js"></script>
+  <!-- Custom Fonts -->
+  <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <style>
+    .loader {
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      opacity: 0.6;
+
+      z-index: 9999;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Phi_fenomeni.gif/50px-Phi_fenomeni.gif') 50% 50% no-repeat rgb(249, 249, 249);
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+
+  <!-- /#wrapper -->
+
+  <!-- jQuery -->
+  <script src="js/jquery.min.js"></script>
+
+  <!-- Bootstrap Core JavaScript -->
+  <script src="js/bootstrap.min.js"></script>
+
+  <!-- Metis Menu Plugin JavaScript -->
+  <script src="js/metisMenu.min.js"></script>
+
+  <!-- Morris Charts JavaScript -->
+  <script src="js/raphael.min.js"></script>
+
+
+  <!-- Custom Theme JavaScript -->
+  <script src="js/startmin.js"></script>
+  
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script src="../node_modules/ckeditor4/ckeditor.js"></script>
+<script src="../node_modules/ckeditor4-vue/dist/ckeditor.js"></script>
+
+  <script>
+    $(document).on('click','.sub_menu',function(){
+      $(this).find("ul").toggleClass('collapse');
+      $(this).toggleClass('active');
       
 
-        <!-- Custom Theme JavaScript -->
-        <script src="js/startmin.js"></script>
-        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    })
+  </script>
 
-        
-  </body>
 
-  
+</body>
+
+
 </html>

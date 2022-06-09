@@ -1,18 +1,17 @@
 <template>
   <div id="wrapper">
-      <div v-if="loading" class="loader"></div>
     <Nav />
     <div id="page-wrapper" style="min-height: 606px">
       <div class="container-fluid">
         <div class="col-lg-12">
-          <h1 class="page-header">Edit Users</h1>
+          <h1 class="page-header">Edit Profile</h1>
         </div>
         <div class="row">
           <div class="col-lg-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <router-link type="reset" to="/users"> Back </router-link> Edit
-                User
+                <router-link type="reset" to="/dashboard"> Back </router-link> Edit
+                Profile
               </div>
               <div class="panel-body">
                 <div class="row">
@@ -139,20 +138,6 @@
                           required=""
                         />
                       </div>
-                      <div class="checkbox">
-                        <label>
-                          <input
-                            type="checkbox"
-                            v-bind:checked="user.status == '1'"
-                            data-toggle="toggle"
-                            data-size="xs"
-                          
-                           @change="onChange"
-                          />
-
-                          Enable and disable a user
-                        </label>
-                      </div>
 
                       <button type="submit" class="btn btn-default">
                         Update
@@ -193,9 +178,7 @@ export default {
     };
   },
   async created() {
-        this.loading = true;
     if (`${this.$route.params.id}` !== "undefined") {
-      
       url1 = `/api/get_user/${this.$route.params.id}`;
     } else {
       var url1 = `/api/get_user`;
@@ -203,18 +186,18 @@ export default {
 
     const response = await axios.get(url1);
     this.user = response.data.data;
-       this.loading = false;
   },
   methods: {
     updateUser() {
-      console.log(" this.user", this.user);
       if (`${this.$route.params.id}` !== "undefined") {
+       
         url = `/api/update_user/${this.$route.params.id}`;
         axios.put(url, this.user).then(() => {
           this.$toaster.success("Record update successfully.");
           this.$router.push("/users");
         });
       } else {
+     
         var url = `/api/update_user`;
         axios.post(url, this.user).then(() => {
           this.$toaster.success("Record update successfully.");
@@ -222,11 +205,6 @@ export default {
         });
       }
     },
-     onChange(e) {
- 
-      this.user.status = e.target.checked == true ? 1 : 0;
-   
-    }
   },
   components: {
     Nav,

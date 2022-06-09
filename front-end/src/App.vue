@@ -1,36 +1,46 @@
 <template>
   <div id="app">
-   
-    <Login v-if="!user"/>
-     <router-view v-if="user"></router-view>
+    <Login v-if="!user" />
+    <router-view v-if="user"></router-view>
   </div>
 </template>
 
 <script>
-
-import Login from './components/pages/Login.vue'
+import Login from "./components/pages/Login.vue";
 import axios from "axios";
 
 export default {
-  name: 'App',
-  components:{
-    Login
-    
+  name: "App",
+  components: {
+    Login,
   },
-    data() {
+  data() {
     return {
       user: null,
     };
   },
   async created() {
-    const response = await axios.get("/api/get_details");
-    this.user = response.data.data;
-  },
+    
+if (localStorage.getItem("token") !== null) {
+await axios
+      .get("/api/get_details")
+      .then((response) => {
+        this.user = response.data.data;
+      })
+      .catch((err) => {
+         console.log("err", err);
+      });
 }
+  
+
+ 
+  },
+};
 </script>
 
 <style>
-.mr-md-auto, .mx-md-auto {
-    margin-right: auto!important;
+.mr-md-auto,
+.mx-md-auto {
+  margin-right: auto !important;
 }
 </style>

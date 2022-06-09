@@ -19,7 +19,34 @@
                 required=""
               />
             </div>
+            <div>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                v-model="password"
+                required=""
+              />
+            </div>
 
+            <div>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Confirm new password"
+                v-model="password_confirmation"
+                required=""
+              />
+            </div>
+            <div>
+              <input
+                type="hidden"
+                class="form-control"
+                placeholder="token"
+                v-model="token"
+                required=""
+              />
+            </div>
             <div>
               <button class="btn btn-default submit" type="submit">
                 Submit
@@ -52,24 +79,32 @@ export default {
   data() {
     return {
       email: "",
+      password: "",
+      password_confirmation: "",
+
       error: null,
       success: null,
+      token: `${this.$route.params.token}`,
     };
   },
+
   methods: {
     async handleSubmit(e) {
       e.preventDefault();
 
       const input = {
         email: this.email,
+        password: this.password,
+        token: this.token,
+        password_confirmation: this.password_confirmation,
       };
 
       await axios
-        .post("/api/send_link", input)
+        .post("/api/reset_password", input)
         .then((resp) => {
           console.log("send_link", resp.data.message.email);
           if (resp.data.status == "error") {
-           let current_error = resp.data.message.email;
+            let current_error = resp.data.message;
             this.error = current_error;
             this.success = null;
           } else {
