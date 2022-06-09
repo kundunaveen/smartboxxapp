@@ -210,7 +210,7 @@ export default {
     },
     clear() {
       this.loading = true;
-        $this.search="",
+        this.search="",
       axios
         .get("/api/users")
         .then((res) => {
