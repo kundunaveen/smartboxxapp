@@ -53,12 +53,7 @@
           </div>
         </div>
         <hr />
-        <div class="pull-right">
-          <router-link to="/add-state" class="active"
-            ><i class="fa fa-plus fa-fw"></i>
-            <i class="fa fa-flag fa-fw"></i> Add
-          </router-link>
-        </div>
+       
 
         <div class="row">
           <div class="col-lg-12">
