@@ -25,7 +25,7 @@
                 <thead>
                   <tr>
                    <th class="text-center">ID</th>
-                   <th class="text-center">Page Type</th>
+                   <th class="text-center">Title</th>
 
                    <th class="text-center">Actions</th>
                   </tr>
@@ -34,7 +34,7 @@
                   <tr v-for="(state, index) in pages" :key="state.id">
                    <td class="text-center">{{ index + 1 }}</td>
 
-                   <td class="text-center">{{ state.page_type.name }}</td>
+                   <td class="text-center">{{ state.title}}</td>
 
                    <td class="text-center">
                       <div class="btn-group" role="group">

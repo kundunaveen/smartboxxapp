@@ -51,7 +51,7 @@ class PageController extends Controller
     public function index()
     {
         try {
-            $data = Page::with('page_type')->get();
+            $data = Page::get();
             if ($data) {
                 return $this->sendResponse($data, 'Page List');
             } else {
@@ -74,7 +74,7 @@ class PageController extends Controller
         // try {
         $validator = Validator::make($request->all(), [
             'detail' => 'required',
-            'page_type_id' => 'required|unique:pages'
+            'title' => 'required|unique:pages'
         ]);
 
         if ($validator->fails()) {
@@ -127,7 +127,7 @@ class PageController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'detail' => 'required',
-                'page_type_id' => 'required|unique:pages,page_type_id,' . $id . ',id',
+                'title' => 'required|unique:pages,title,' . $id . ',id',
 
             ]);
 
@@ -140,7 +140,7 @@ class PageController extends Controller
             if ($Page) {
                 $input = $request->all();
                 $Page->update([
-                    'page_type_id' => isset($input['page_type_id']) ? $input['page_type_id'] : $Page->page_type_id,
+                    'title' => isset($input['title']) ? $input['title'] : $Page->title,
                     'detail' => isset($input['detail']) ? $input['detail'] : $Page->name
 
                 ]);

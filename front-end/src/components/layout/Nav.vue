@@ -176,11 +176,11 @@
               ></span
             ></a>
             <ul class="nav nav-second-level collapse">
-              <li>
+              <!-- <li>
                 <router-link to="/page-type" class=""
                   ><i class="fa fa-file-archive-o fa-fw"></i> Page Type</router-link
                 >
-              </li>
+              </li> -->
               <li>
                 <router-link to="/pages" class=""
                   ><i class="fa fa-file   fa-fw"></i> Pages</router-link

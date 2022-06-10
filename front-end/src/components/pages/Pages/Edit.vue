@@ -21,24 +21,14 @@
                     <p v-if="error" class="text-danger">{{ error }}</p>
                     <form role="form" @submit.prevent="updatestate">
                       <div class="form-group">
-                        <label>Page Type</label>
-                        <select
-                          name="page_id"
-                          class="form-select form-control"
-                          v-model="page.page_type_id"
+                       <label>Name</label>
+                        <input
+                          class="form-control"
+                          placeholder="Ex:about-us"
+                          v-model="page.title"
                           required=""
-                        >
-                          <option value="" v-if="pagetype">
-                            -- Select page --
-                          </option>
-                          <option
-                            v-bind:value="page.id"
-                            v-for="page in pagetype"
-                            :key="page.id"
-                          >
-                            {{ page.name }}
-                          </option>
-                        </select>
+                          autocomplete="on|off"
+                        />
                       </div>
                       <div class="form-group">
                         <div class="form-group">

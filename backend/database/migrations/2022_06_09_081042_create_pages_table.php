@@ -15,9 +15,7 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('page_type_id');
-            $table->foreign('page_type_id')
-                ->references('id')->on('page_types')->onDelete('cascade');
+            $table->text('title');
             $table->text('detail');
             $table->timestamps();
         });

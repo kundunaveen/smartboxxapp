@@ -22,24 +22,14 @@
                     <p v-if="error" class="text-danger">{{ error }}</p>
                     <form role="form" @submit="handleSubmit">
                       <div class="form-group">
-                        <label>Page Type</label>
-                        <select
-                          name="page_type_id"
-                          class="form-select form-control"
-                          v-model="page_type_id"
+                         <label>Name</label>
+                        <input
+                          class="form-control"
+                          placeholder="Ex:about-us"
+                          v-model="title"
                           required=""
-                        >
-                          <option value="" v-if="pagetype">
-                            -- Select page type --
-                          </option>
-                          <option
-                            v-bind:value="ptype.id"
-                            v-for="ptype in pagetype"
-                            :key="ptype.id"
-                          >
-                            {{ ptype.name }}
-                          </option>
-                        </select>
+                          autocomplete="on|off"
+                        />
                       </div>
                       <div class="form-group">
                         <label>Details</label>
@@ -83,7 +73,7 @@ export default {
   data() {
     return {
       detail: "",
-      page_type_id: "",
+      title: "",
       loading: false,
       error: "",
       pagetype: "",
@@ -107,7 +97,7 @@ export default {
 
       const input = {
         detail: this.detail,
-        page_type_id: this.page_type_id,
+        title: this.title,
       };
 
       axios
