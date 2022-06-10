@@ -39,13 +39,16 @@ Vue.use(Router)
 
 export default new Router({
     mode:'history',
-    base: '/',
+    base: '/dist',
     routes:[
         {   
-            path:'/',component:Login
+            path:'/',
+            component:Login
         },
         {
-            path:'/dashboard',component:Dashboard
+            name: 'dashboard',
+            path:'/dashboard',
+            component:Dashboard
         },
         {
             name: 'forgot',
@@ -53,7 +56,9 @@ export default new Router({
             component:Forgot
         },
         {
-            name: 'USERS', path:'/users',component:Users
+            name: 'USERS', 
+            path:'/users',
+            component:Users
         },
         {
             path:'/booking',component:Booking

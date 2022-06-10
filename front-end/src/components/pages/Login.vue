@@ -31,9 +31,8 @@
               <button class="btn btn-default submit" type="submit">
                 Log in
               </button>
-              <router-link class="reset_pass" to="/forgot"
-                >Lost your password?</router-link
-              >
+              <router-link class="reset_pass" to="/forgot" 
+                >Lost your password?</router-link>
               
             </div>
 
@@ -88,7 +87,11 @@ export default {
           .then((resp) => {
             localStorage.setItem("token", resp.data.data.token);
             this.error = null;
-            this.$router.push("/dashboard");
+            
+            // this.$router.push("/dashboard");
+            // this.$router.push({ path: '/dashboard' })
+            this.$router.push({ name: 'dashboard' })
+
             // location.href = "/dashboard"
           })
           .catch((err) => {
@@ -97,7 +100,7 @@ export default {
             this.error = "Please check the credentials";
           });
   
-    },
+    }
   },
 };
 </script>

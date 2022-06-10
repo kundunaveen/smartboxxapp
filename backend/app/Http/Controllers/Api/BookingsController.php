@@ -190,10 +190,17 @@ class BookingsController extends Controller
         }
     }
 
-    public function getBooking()
+    public function getBooking(Request $request)
     {
         try {
-            $booking = Booking::with('device')->get();
+            $query = Booking::with('device');
+           
+            if (isset($request['search']) && $request['search'] != null) {
+
+                $query->where('uuid', 'LIKE', '%' . $request['search'] . '%');
+            }
+
+            $booking = $query->get();
             if ($booking) {
                 return $this->sendResponse($booking, 'Booking List');
             } else {
@@ -376,6 +383,13 @@ class BookingsController extends Controller
         }
 
         $input = $request->all();
+
+        if (isset($input['image'])) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('image'), $imageName);
+            $input['image'] =  $imageName;
+        }
+
         $device = Device::create($input);
 
         if ($device) {
@@ -431,15 +445,28 @@ class BookingsController extends Controller
         }
     }
 
-    public function updateDevice(Request $request, $id)
+    public function updateDevice(Request $request, $id = null)
     {
         try {
-            if ($request->isMethod('put')) {
+            $id = $request['id'];
+            if ($request->isMethod('post')) {
                 $device = Device::find($id);
                 $input = $request->all();
+
+                if (isset($input['image'])) {
+                    $imageName = time() . '.' . $request->image->extension();
+                    $request->image->move(public_path('image'), $imageName);
+                    $input['image'] =  $imageName;
+                }
+
                 if ($device) {
                     $device->update([
-                        'name' => $input['name'], 'description' => $input['description'],
+                        'name' => $input['name'],
+                        'description' => isset($input['description']) ? $input['description'] : $device->description,
+                        'lat' => isset($input['lat']) ? $input['lat'] : $device->lat,
+                        'long' => isset($input['long']) ? $input['long'] : $device->long,
+                        'address' => isset($input['address']) ? $input['address'] : $device->address,
+                        'image' => isset($input['image']) ? $input['image'] : $device->image,
 
                     ]);
                     return $this->sendResponse($device, 'Record update successfullly');

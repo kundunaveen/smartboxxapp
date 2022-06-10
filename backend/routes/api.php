@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::post('/add_device', [BookingsController::class, 'addDevice']);
   Route::put('/device_status_change/{id}', [BookingsController::class, 'statusChange']);
   Route::get('/view_device/{id}', [BookingsController::class, 'viewDevice']);
-  Route::put('/update_device/{id}', [BookingsController::class, 'updateDevice']);
+  Route::post('/update_device', [BookingsController::class, 'updateDevice']);
 
   Route::resource('/country', CountryController::class);
   Route::resource('/state', StateController::class);

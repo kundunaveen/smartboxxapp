@@ -69,7 +69,6 @@ export default {
       await axios
         .post("/api/send_link", input)
         .then((resp) => {
-          console.log("send_link", resp.data.message.email);
           if (resp.data.status == "error") {
            let current_error = resp.data.message.email;
             this.error = current_error;
@@ -80,17 +79,12 @@ export default {
           }
 
            this.save_button = 'Submit'
-        })
-        .catch((err) => {
-          console.log("err", err);
-     
-            this.save_button = 'Submit'
+        }).catch((err) => {
+       console.log(err);
+          this.save_button = 'Submit'
           this.error = "Somthing went wrong";
         });
     },
   },
 };
 </script>
-
-<style>
-</style>

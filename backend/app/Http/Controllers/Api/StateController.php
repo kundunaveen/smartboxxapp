@@ -48,10 +48,15 @@ class StateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $data = State::with('country')->get();
+            $query = State::with('country');
+            if (isset($request['search']) && $request['search'] != null) {
+
+                $query->where('country_id', $request['search']);
+            }
+            $data = $query->get();
             if ($data) {
                 return $this->sendResponse($data, 'State List');
             } else {
@@ -147,7 +152,7 @@ class StateController extends Controller
             $State->update([
                 'name' => isset($input['name']) ? $input['name'] : $State->name,
                 'country_id' => isset($input['country_id']) ? $input['country_id'] : $State->country_id,
-              
+
 
             ]);
 

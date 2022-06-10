@@ -1,5 +1,5 @@
 <template>
-      <div id="wrapper">
+  <div id="wrapper">
     <Nav />
     <div id="page-wrapper" style="min-height: 606px">
       <div class="container-fluid">
@@ -11,8 +11,10 @@
           <div class="col-lg-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <router-link type="reset" to="/smartbox-list"> Back </router-link> Add
-                New Smartbox
+                <router-link type="reset" to="/smartbox-list">
+                  Back
+                </router-link>
+                Add New Smartbox
               </div>
               <div class="panel-body">
                 <div class="row">
@@ -29,7 +31,57 @@
                           autocomplete="on|off"
                         />
                       </div>
-                       <div class="form-group">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <label>Latitude</label
+                            ><input
+                              type="text"
+                              placeholder="Example: 40.785091"
+                              required="required"
+                              autocomplete="on|off"
+                              class="form-control"
+                              v-model="lat"
+                            />
+                          </div>
+                          <div class="col-lg-6">
+                            <label>Longitude</label
+                            ><input
+                              type="text"
+                              placeholder="Example: -73.968285"
+                              required="required"
+                              autocomplete="on|off"
+                              class="form-control"
+                              v-model="long"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <label>Image</label>
+                            <input
+                              type="file"
+                              id="file"
+                              ref="file"
+                              v-on:change="handleFileUpload()"
+                            />
+                          
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Address</label>
+                        <textarea
+                          class="form-control"
+                          rows="3"
+                          v-model="address"
+                          required=""
+                        ></textarea>
+                      </div>
+
+                      <div class="form-group">
                         <label>Description</label>
                         <textarea
                           class="form-control"
@@ -38,7 +90,6 @@
                           required=""
                         ></textarea>
                       </div>
-
 
                       <button type="submit" class="btn btn-default">Add</button>
                     </form>
@@ -60,7 +111,6 @@
   </div>
 </template>
 <script>
-
 import Nav from "./../../layout/Nav.vue";
 
 import axios from "axios";
@@ -71,28 +121,48 @@ Vue.use(Toaster, { timeout: 5000 });
 
 export default {
   name: "AddDevice",
-    data() {
+  data() {
     return {
       name: "",
       description: "",
-      error:""
+      error: "",
+      address: "",
+      lat: "",
+      long: "",
+      image: {},
+      imageUrl: "",
+      file: "",
     };
   },
- 
+
   components: {
-    Nav
+    Nav,
   },
   methods: {
     async handleSubmit(e) {
       e.preventDefault();
+      let input = new FormData();
+      input.append("image", this.file);
+      input.append("name", this.name);
+      input.append("description", this.description);
+      input.append("lat", this.lat);
+      input.append("long", this.long);
+      input.append("address", this.address);
 
-      const input = {
-        name: this.name,
-        description: this.description
-      };
+      // const input = {
+      //   name: this.name,
+      //   description: this.description,
+      //   image: this.image,
+      //   lat: this.lat,
+      //   long: this.long,
+      //   address: this.address,
+      // };
 
-      axios
-        .post("/api/add_device", input)
+      axios({
+        method: "post",
+        url: "/api/add_device",
+        data: input,
+      })
         .then((res) => {
           if (res.data.code == "200") {
             this.error = null;
@@ -107,6 +177,10 @@ export default {
           console.log(err.errors);
           this.error = "Record not save please check";
         });
+    },
+    handleFileUpload() {
+      this.file = this.$refs.file.files[0];
+      console.log("      this.file ", this.file);
     },
   },
 };

@@ -15,7 +15,9 @@ class Device extends Model
         "description",
         "lat",
         "long",
-        "status"
+        "status",
+        'image',
+        'address'
     ];
 
 }
