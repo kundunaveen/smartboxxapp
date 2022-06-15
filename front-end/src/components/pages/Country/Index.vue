@@ -5,13 +5,43 @@
     <div id="page-wrapper" style="min-height: 606px">
       <div class="container-fluid">
         <Head :msg="message" />
-        <div class="pull-right">
-          <router-link to="/add-country" class="active"
-            ><i class="fa fa-plus fa-fw"></i>
-            <i class="fa fa-flag fa-fw"></i> Add
-          </router-link>
-        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="pull-left">
+              <form role="form" class="form-inline" @submit="handleSubmit">
+                <div class="form-group mr-4">
+                  <input
+                    type="text"
+                    name="search"
+                    placeholder="search by country"
+                    value=""
+                    v-model="search"
+                    class="form-control"
+                  />
+                </div>
 
+                <div class="form-group" style="margin-left: 5px">
+                  <button type="submit" class="btn btn-info btn-default">
+                    Search</button
+                  ><button
+                    type="reset"
+                    class="btn btn-danger btn-default"
+                    @click="clear()"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="pull-right">
+              <router-link to="/add-country" class="active"
+                ><i class="fa fa-plus fa-fw"></i>
+                <i class="fa fa-flag fa-fw"></i> Add
+              </router-link>
+            </div>
+          </div>
+        </div>
+        <hr />
         <div class="row">
           <div class="col-lg-12">
             <div class="panel panel-default">
@@ -33,11 +63,11 @@
                 </thead>
                 <tbody v-if="countries">
                   <tr v-for="(country, index) in countries" :key="country.id">
-                   <td class="text-center">{{ index + 1 }}</td>
-                   <td class="text-center">{{ country.name }}</td>
-                   <td class="text-center">{{ country.dial_code }}</td>
-                   <td class="text-center">{{ country.code }}</td>
-                   <td class="text-center">
+                    <td class="text-center">{{ index + 1 }}</td>
+                    <td class="text-center">{{ country.name }}</td>
+                    <td class="text-center">{{ country.dial_code }}</td>
+                    <td class="text-center">{{ country.code }}</td>
+                    <td class="text-center">
                       <div class="btn-group" role="group">
                         <router-link
                           :to="{
@@ -58,7 +88,7 @@
                 </tbody>
                 <tbody v-if="!countries.length">
                   <tr>
-                   <td class="text-center">No record found !</td>
+                    <td class="text-center">No record found !</td>
                   </tr>
                 </tbody>
               </table>
@@ -87,6 +117,7 @@ export default {
     return {
       countries: [],
       message: "Country",
+      search: "",
     };
   },
   async created() {
@@ -115,6 +146,56 @@ export default {
           swal("Your Record safe now!");
         }
       });
+    },
+    async handleSubmit(e) {
+      e.preventDefault();
+
+      let input = new FormData();
+      input.append("search", this.search);
+
+      this.loading = true;
+
+      axios
+        .get("/api/country", {
+          params: {
+            search: this.search,
+          },
+        })
+        .then((res) => {
+          if (res.data.success == true) {
+            this.countries = res.data.data;
+          } else {
+            this.error = res.data.message;
+            this.$toaster.error(res.data.message);
+          }
+        })
+        .catch((err) => {
+          // console.log(err.errors);
+          this.$toaster.error(err.errors);
+          this.error = "Record not save please check";
+        });
+      this.loading = false;
+    },
+    clear() {
+      this.loading = true;
+      (this.search = null),
+        axios
+          .get("/api/country")
+          .then((res) => {
+            if (res.data.success == true) {
+              this.countries = res.data.data;
+            } else {
+              this.error = res.data.message;
+              this.$toaster.error(res.data.message);
+            }
+          })
+          .catch((err) => {
+            // console.log(err.errors);
+            this.$toaster.error(err.errors);
+            this.error = "Record not save please check";
+          });
+
+      this.loading = false;
     },
   },
 };

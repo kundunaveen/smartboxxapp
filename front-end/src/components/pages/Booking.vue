@@ -61,7 +61,7 @@
                     <th>Booking Date/Time</th>
 
                     <th>Status</th>
-                    <th>Address</th>
+           
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -77,13 +77,12 @@
                         to {{ booking.end_date }}</span
                       >
                     </td>
-                    <td>
+                    <td >
                       <button type="button" class="btn btn-success">
                         {{ booking.status }}
                       </button>
                     </td>
-                    <td>{{ booking.address }}</td>
-
+              
                     <td>
                       <router-link
                         :to="{

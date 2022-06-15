@@ -20,4 +20,8 @@ class Device extends Model
         'address'
     ];
 
+    public function images()
+    {
+        return $this->hasMany(DeviceImages::class, 'device_id', 'id');
+    }
 }

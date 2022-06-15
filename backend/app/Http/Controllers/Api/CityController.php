@@ -50,10 +50,15 @@ class CityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $data = City::with(['country','state'])->get();
+            $query = City::with(['country', 'state']);
+            if (isset($request['search']) && $request['search'] != null) {
+
+                $query->where('city', $request['search']);
+            }
+            $data = $query->get();
             if ($data) {
                 return $this->sendResponse($data, 'City List');
             } else {
@@ -198,8 +203,8 @@ class CityController extends Controller
     public function getState($id)
     {
         try {
-            
-            $data = State::where('country_id','=',$id)->get();
+
+            $data = State::where('country_id', '=', $id)->get();
 
             if ($data) {
                 return $this->sendResponse($data, 'City List');

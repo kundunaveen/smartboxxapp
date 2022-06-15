@@ -5,12 +5,43 @@
     <div id="page-wrapper" style="min-height: 606px">
       <div class="container-fluid">
         <Head :msg="message" />
-        <div class="pull-right">
-          <router-link to="/add-city" class="active"
-            ><i class="fa fa-plus fa-fw"></i>
-            <i class="fa fa-flag fa-fw"></i> Add
-          </router-link>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="pull-left">
+              <form role="form" class="form-inline" @submit="handleSubmit">
+                <div class="form-group mr-4">
+                  <input
+                    type="text"
+                    name="search"
+                    placeholder="search by city"
+                    value=""
+                    v-model="search"
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="form-group" style="margin-left: 5px">
+                  <button type="submit" class="btn btn-info btn-default">
+                    Search</button
+                  ><button
+                    type="reset"
+                    class="btn btn-danger btn-default"
+                    @click="clear()"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="pull-right">
+              <router-link to="/add-city" class="active"
+                ><i class="fa fa-plus fa-fw"></i>
+                <i class="fa fa-flag fa-fw"></i> Add
+              </router-link>
+            </div>
+          </div>
         </div>
+        <hr />
 
         <div class="row">
           <div class="col-lg-12">
@@ -90,6 +121,7 @@ export default {
       states: [],
       message: "City",
       loading: false,
+      search: "",
     };
   },
   async created() {
@@ -118,6 +150,56 @@ export default {
           swal("Your Record safe now!");
         }
       });
+    },
+    async handleSubmit(e) {
+      e.preventDefault();
+
+      let input = new FormData();
+      input.append("search", this.search);
+
+      this.loading = true;
+
+      axios
+        .get("/api/city", {
+          params: {
+            search: this.search,
+          },
+        })
+        .then((res) => {
+          if (res.data.success == true) {
+            this.states = res.data.data;
+          } else {
+            this.error = res.data.message;
+            this.$toaster.error(res.data.message);
+          }
+        })
+        .catch((err) => {
+          // console.log(err.errors);
+          this.$toaster.error(err.errors);
+          this.error = "Record not save please check";
+        });
+      this.loading = false;
+    },
+    clear() {
+      this.loading = true;
+      (this.search = null),
+        axios
+          .get("/api/city")
+          .then((res) => {
+            if (res.data.success == true) {
+              this.states = res.data.data;
+            } else {
+              this.error = res.data.message;
+              this.$toaster.error(res.data.message);
+            }
+          })
+          .catch((err) => {
+            // console.log(err.errors);
+            this.$toaster.error(err.errors);
+            this.error = "Record not save please check";
+          });
+
+      this.loading = false;
     },
   },
 };

@@ -150,7 +150,7 @@
                            @change="onChange"
                           />
 
-                          Enable and disable a user
+                          Enable
                         </label>
                       </div>
 

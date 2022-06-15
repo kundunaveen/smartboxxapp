@@ -48,10 +48,15 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $data = Country::get();
+            $query = Country::latest();
+            if (isset($request['search']) && $request['search'] != null) {
+
+                $query->where('name', $request['search']);
+            }
+            $data = $query->get();
             if ($data) {
                 return $this->sendResponse($data, 'Country List');
             } else {

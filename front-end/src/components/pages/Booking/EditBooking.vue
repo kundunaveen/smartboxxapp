@@ -1,5 +1,6 @@
 <template>
   <div id="wrapper">
+            <div v-if="loading" class="loader"></div>
     <Nav />
     <div id="page-wrapper" style="min-height: 606px">
       <div class="container-fluid">
@@ -10,14 +11,13 @@
           <div class="col-lg-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <router-link type="reset" to="/booking">
-                  Back
-                </router-link>Edit Booking
+                <router-link type="reset" to="/booking"> Back </router-link>Edit
+                Booking
               </div>
               <div class="panel-body">
                 <div class="row">
                   <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                        <p v-if="error" class="text-danger "> {{error}}</p>
+                    <p v-if="error" class="text-danger">{{ error }}</p>
                     <form role="form" @submit.prevent="updateBooking">
                       <div class="form-group">
                         <label>Select smartbox</label>
@@ -34,6 +34,23 @@
                             :key="device.id"
                           >
                             {{ device.name }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Select Users</label>
+
+                        <select
+                          class="form-select form-control"
+                          v-model="booking.user_id"
+                          required=""
+                        >
+                          <option
+                            v-bind:value="user.id"
+                            v-for="user in users"
+                            :key="user.id"
+                          >
+                            {{ user.name }}
                           </option>
                         </select>
                       </div>
@@ -74,10 +91,11 @@
                               v-model="booking.start_date"
                               valueType="format"
                             ></date-picker>
-
-                            
                           </div>
-                             <div class="col-lg-6" v-show="booking.slot_type === '0'">
+                          <div
+                            class="col-lg-6"
+                            v-show="booking.slot_type === '0'"
+                          >
                             <label>Select Time</label>
                             <div class="row">
                               <div class="col-lg-6">
@@ -87,16 +105,16 @@
                                   v-model="editstart"
                                   required=""
                                 >
-                                  <option value="" >
-                                    -- Start  Time--
-                                  </option>
+                                  <option value="">-- Start Time--</option>
 
                                   <option
-                                    v-bind:value="slot.time +''+ slot.standard "
+                                    v-bind:value="
+                                      slot.time + '' + slot.standard
+                                    "
                                     v-for="slot in startslots"
-                                    :key="slot.time+''+ slot.standard"
+                                    :key="slot.time + '' + slot.standard"
                                   >
-                                    {{ slot.time }}  {{ slot.standard }}
+                                    {{ slot.time }} {{ slot.standard }}
                                   </option>
                                 </select>
                               </div>
@@ -107,35 +125,29 @@
                                   v-model="editend"
                                   required=""
                                 >
-                                  <option value="" >
-                                    -- End TIme--
-                                  </option>
-                                    <option
-                                    v-bind:value="slot.time+''+ slot.standard"
+                                  <option value="">-- End TIme--</option>
+                                  <option
+                                    v-bind:value="
+                                      slot.time + '' + slot.standard
+                                    "
                                     v-for="slot in endslots"
-                                    :key="slot.time+''+ slot.standard"
+                                    :key="slot.time + '' + slot.standard"
                                   >
-                                    {{ slot.time }}  {{ slot.standard }}
+                                    {{ slot.time }} {{ slot.standard }}
                                   </option>
                                 </select>
                               </div>
                             </div>
                           </div>
 
-
                           <div
                             class="col-lg-6"
                             v-show="booking.slot_type === '1'"
                           >
                             <label>Multiple Day</label>
-                           
-                            <date-picker
-                            range
-                            v-model="endDate" >
-                              range
-                              style="width: 100%"
-                            >
-                           
+
+                            <date-picker range v-model="endDate">
+                              range style="width: 100%" >
                             </date-picker>
                           </div>
                         </div>
@@ -150,7 +162,7 @@
                           required=""
                         />
                       </div> -->
-                        <div class="form-group">
+                      <!-- <div class="form-group">
                         <label>Mobile</label>
 
                         <div class="row">
@@ -236,7 +248,7 @@
                           v-model="booking.zip"
                           required=""
                         />
-                      </div>
+                      </div> -->
 
                       <button type="submit" class="btn btn-default">
                         Update
@@ -264,12 +276,12 @@ import Nav from "./../../layout/Nav.vue";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import axios from "axios";
-import Vue from 'vue' 
-import Toaster from 'v-toaster' 
-import 'v-toaster/dist/v-toaster.css'
-import countries from './../../../assets/countries'
+import Vue from "vue";
+import Toaster from "v-toaster";
+import "v-toaster/dist/v-toaster.css";
+import countries from "./../../../assets/countries";
 import slot from "./../../../assets/slot";
-Vue.use(Toaster, {timeout: 5000})
+Vue.use(Toaster, { timeout: 5000 });
 
 export default {
   name: "EditBooking",
@@ -277,34 +289,29 @@ export default {
     return {
       booking: {},
       devices: "",
-      range_date:this.endDate,
-      endDate:"",
+      range_date: this.endDate,
+      endDate: "",
       error: null,
-      iteams:countries,
-      startslots:slot,
-      endslots:slot,
-      editstart:"",
-      editend:""
-
-     
+      iteams: countries,
+      startslots: slot,
+      endslots: slot,
+      editstart: "",
+      editend: "",
+      users: {},
     };
   },
-   methods: {
+  methods: {
     updateBooking() {
-      this.booking.range_date= this.endDate
+      this.booking.range_date = this.endDate;
       axios
-        .put(
-          `/api/update_booking/${this.$route.params.id}`,
-          this.booking
-        )
+        .put(`/api/update_booking/${this.$route.params.id}`, this.booking)
         .then((res) => {
-
-           if(res.data.success==true){
-               this.error = null;
-                   this.$toaster.success('Record update successfully.')
-          this.$router.push("/booking");
-          }else{
-                  this.$toaster.error(res.data.custom)
+          if (res.data.success == true) {
+            this.error = null;
+            this.$toaster.success("Record update successfully.");
+            this.$router.push("/booking");
+          } else {
+            this.$toaster.error(res.data.custom);
             this.error = res.data.custom;
           }
         });
@@ -313,24 +320,28 @@ export default {
   components: {
     Nav,
     DatePicker,
-    
   },
   async created() {
-    
+        this.loading = true;
     const response = await axios.get(
       `/api/view_booking/${this.$route.params.id}`
     );
     this.booking = response.data.data;
-    this.editstart= response.data.data.start_time
-    this.editend= response.data.data.end_time
-   
-  
-    this.endDate = [new Date(response.data.data.start_date),new Date(response.data.data.end_date)]
+    this.editstart = response.data.data.start_time;
+    this.editend = response.data.data.end_time;
+
+    this.endDate = [
+      new Date(response.data.data.start_date),
+      new Date(response.data.data.end_date),
+    ];
 
     const res = await axios.get("/api/get_device");
     this.devices = res.data.data;
-  
-   
+
+    const result = await axios.get("/api/users");
+    console.log("response.data.data", result.data);
+    this.users = result.data.data;
+    this.loading = false;
   },
 };
 </script>

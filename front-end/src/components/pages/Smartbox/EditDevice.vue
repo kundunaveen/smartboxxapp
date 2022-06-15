@@ -64,9 +64,10 @@
                             <label>Image</label>
                             <input
                               type="file"
-                              id="file"
-                              ref="file"
-                              v-on:change="handleFileUpload()"
+                              class="form-control"
+                              multiple
+                              accept="image/jpeg"
+                              @change="uploadImage"
                             />
                           </div>
                         </div>
@@ -130,13 +131,18 @@ export default {
       file: "",
       error: "",
       loading: "",
+      files: [],
     };
   },
   methods: {
     updateDevice() {
       this.loading = true;
       let input = new FormData();
-      input.append("image", this.file);
+
+      for (let i = 0; i < this.files.length; i++) {
+        input.append("image[]", this.files[i]);
+      }
+
       input.append("name", this.device.name);
       input.append("description", this.device.description);
       input.append("lat", this.device.lat);
@@ -161,9 +167,17 @@ export default {
           }
         });
     },
-    handleFileUpload() {
-      this.file = this.$refs.file.files[0];
-      console.log("this.file ", this.file);
+    uploadImage(e) {
+      const selectedFiles = e.target.files;
+
+      for (let i = 0; i < selectedFiles.length; i++) {
+        // let img = {
+        //   src: URL.createObjectURL(selectedFiles[i]),
+        //   file: selectedFiles[i],
+        // };
+        // this.images.push(img);
+        this.files.push(selectedFiles[i]);
+      }
     },
   },
   components: {

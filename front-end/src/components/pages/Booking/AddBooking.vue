@@ -1,5 +1,6 @@
 <template>
   <div id="wrapper">
+        <div v-if="loading" class="loader"></div>
     <Nav />
     <div id="page-wrapper" style="min-height: 606px">
       <div class="container-fluid">
@@ -40,6 +41,27 @@
                         </select>
                       </div>
                       <div class="form-group">
+                        <label>Select Users</label>
+
+                        <select
+                          name="device_id"
+                          class="form-select form-control"
+                          v-model="user_id"
+                          required=""
+                        >
+                          <option value="" v-if="users">
+                            -- Select User --
+                          </option>
+                          <option
+                            v-bind:value="user.id"
+                            v-for="user in users"
+                            :key="user.id"
+                          >
+                            {{ user.name }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-group">
                         <label>Select days</label>
                         <div class="radio">
                           <label>
@@ -68,7 +90,6 @@
                       <div class="form-group">
                         <div class="row">
                           <div class="col-lg-6" v-show="slot_type === '0'">
-                          
                             <label>single Day</label>
                             <date-picker
                               v-model="time1"
@@ -85,16 +106,16 @@
                                   v-model="startSlot"
                                   required=""
                                 >
-                                  <option value="" >
-                                    -- Start  Time--
-                                  </option>
+                                  <option value="">-- Start Time--</option>
 
                                   <option
-                                    v-bind:value="slot.time +''+ slot.standard "
+                                    v-bind:value="
+                                      slot.time + '' + slot.standard
+                                    "
                                     v-for="slot in startslots"
                                     :key="slot.time"
                                   >
-                                    {{ slot.time }}  {{ slot.standard }}
+                                    {{ slot.time }} {{ slot.standard }}
                                   </option>
                                 </select>
                               </div>
@@ -105,15 +126,15 @@
                                   v-model="endSlot"
                                   required=""
                                 >
-                                  <option value="" >
-                                    -- End TIme--
-                                  </option>
-                                    <option
-                                    v-bind:value="slot.time +''+ slot.standard"
+                                  <option value="">-- End TIme--</option>
+                                  <option
+                                    v-bind:value="
+                                      slot.time + '' + slot.standard
+                                    "
                                     v-for="slot in endslots"
                                     :key="slot.time"
                                   >
-                                    {{ slot.time }}  {{ slot.standard }}
+                                    {{ slot.time }} {{ slot.standard }}
                                   </option>
                                 </select>
                               </div>
@@ -132,7 +153,7 @@
                         </div>
                       </div>
 
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label>Mobile</label>
                         <div class="row">
                           <div class="col-lg-6">
@@ -225,7 +246,7 @@
                           v-model="zip"
                           required=""
                         />
-                      </div>
+                      </div> -->
 
                       <button type="submit" class="btn btn-default">Add</button>
                     </form>
@@ -265,21 +286,23 @@ export default {
       slot_type: "0",
       devices: "",
       device_id: "",
-      mobile: "",
-      address: "",
+      users: {},
+      // mobile: "",
+      // address: "",
       time1: "",
       time3: "",
       error: null,
       iteams: countries,
-      startslots:slot,
-      endslots:slot,
+      startslots: slot,
+      endslots: slot,
       code: "",
-      city: "",
-      state: "",
-      country: "",
-      zip: "",
-      startSlot:"",
-      endSlot:""
+      user_id: "",
+      // city: "",
+      // state: "",
+      // country: "",
+      // zip: "",
+      startSlot: "",
+      endSlot: "",
     };
   },
   components: {
@@ -287,9 +310,15 @@ export default {
     DatePicker,
   },
   async created() {
+        this.loading = true;
     const response = await axios.get("/api/get_device");
     console.log("response.data.data", response.data);
     this.devices = response.data.data;
+
+    const result = await axios.get("/api/users");
+    console.log("response.data.data", result.data);
+    this.users = result.data.data;
+        this.loading = false;
   },
   methods: {
     async handleSubmit(e) {
@@ -300,13 +329,14 @@ export default {
         slot_type: this.slot_type,
         start_date: this.time1,
         range_date: this.time3,
-        address: this.address,
-        mobile: this.mobile,
-        code: this.code,
-        city: this.city,
-        state: this.state,
-        country: this.country,
-        zip: this.zip,
+        user_id: this.user_id,
+        // address: this.address,
+        // mobile: this.mobile,
+        // code: this.code,
+        // city: this.city,
+        // state: this.state,
+        // country: this.country,
+        // zip: this.zip,
         start_time: this.startSlot,
         end_time: this.endSlot,
       };

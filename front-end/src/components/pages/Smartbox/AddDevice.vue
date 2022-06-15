@@ -63,11 +63,19 @@
                             <label>Image</label>
                             <input
                               type="file"
-                              id="file"
-                              ref="file"
-                              v-on:change="handleFileUpload()"
+                              class="form-control"
+                              multiple
+                              accept="image/jpeg"
+                              @change="uploadImage"
                             />
-                          
+                            <!-- <div v-for="(image, key) in images" :key="key">
+                              <img
+                                :src="image.src"
+                                class="preview"
+                                style="width: 200px"
+                              />
+                              {{ image.file.name }}
+                            </div> -->
                           </div>
                         </div>
                       </div>
@@ -131,7 +139,9 @@ export default {
       long: "",
       image: {},
       imageUrl: "",
-      file: "",
+      files: [],
+      rawData: [],
+      // images: [],
     };
   },
 
@@ -141,28 +151,29 @@ export default {
   methods: {
     async handleSubmit(e) {
       e.preventDefault();
+
       let input = new FormData();
-      input.append("image", this.file);
+
+      for (let i = 0; i < this.files.length; i++) {
+        input.append("image[]", this.files[i]);
+      }
+
       input.append("name", this.name);
       input.append("description", this.description);
       input.append("lat", this.lat);
       input.append("long", this.long);
       input.append("address", this.address);
 
-      // const input = {
-      //   name: this.name,
-      //   description: this.description,
-      //   image: this.image,
-      //   lat: this.lat,
-      //   long: this.long,
-      //   address: this.address,
-      // };
-
       axios({
         method: "post",
         url: "/api/add_device",
         data: input,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
+        // axios
+        // .post("/api/add_deviced", {files:this.files})
         .then((res) => {
           if (res.data.code == "200") {
             this.error = null;
@@ -178,9 +189,17 @@ export default {
           this.error = "Record not save please check";
         });
     },
-    handleFileUpload() {
-      this.file = this.$refs.file.files[0];
-      console.log("      this.file ", this.file);
+    uploadImage(e) {
+      const selectedFiles = e.target.files;
+
+      for (let i = 0; i < selectedFiles.length; i++) {
+        // let img = {
+        //   src: URL.createObjectURL(selectedFiles[i]),
+        //   file: selectedFiles[i],
+        // };
+        // this.images.push(img);
+        this.files.push(selectedFiles[i]);
+      }
     },
   },
 };

@@ -17,14 +17,18 @@ class CreateBookingTable extends Migration
             $table->id();
             $table->string('uuid');
             $table->integer('device_id');
-            $table->enum('slot_type',array('0','1'));
+            $table->enum('slot_type', array('0', '1'));
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->string('start_time')->nullable();
             $table->string('end_time')->nullable();
             $table->string('standard')->nullable();
-            $table->string('mobile');
-            $table->string('address');
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->string('mobile');
+            // $table->string('address');
+            $table->enum('status', ['active', 'inprogress', 'complete'])->default('active'); 
+
             $table->timestamps();
         });
     }

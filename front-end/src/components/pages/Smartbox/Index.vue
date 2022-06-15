@@ -5,13 +5,43 @@
     <div id="page-wrapper" style="min-height: 606px">
       <div class="container-fluid">
         <Head :msg="message" />
-        <div class="pull-right">
-          <router-link to="/add-smartbox" class="active"
-            ><i class="fa fa-plus fa-fw"></i>
-            <i class="fa fa-user fa-fw"></i> Add Box
-          </router-link>
-        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="pull-left">
+              <form role="form" class="form-inline" @submit="handleSubmit">
+                <div class="form-group mr-4">
+                  <input
+                    type="text"
+                    name="search"
+                    placeholder="search by name"
+                    value=""
+                    v-model="search"
+                    class="form-control"
+                  />
+                </div>
 
+                <div class="form-group" style="margin-left: 5px">
+                  <button type="submit" class="btn btn-info btn-default">
+                    Search</button
+                  ><button
+                    type="reset"
+                    class="btn btn-danger btn-default"
+                    @click="clear()"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="pull-right">
+              <router-link to="/add-smartbox" class="active"
+                ><i class="fa fa-plus fa-fw"></i>
+                <i class="fa fa-user fa-fw"></i> Add Box
+              </router-link>
+            </div>
+          </div>
+        </div>
+        <hr />
         <div class="row">
           <div class="col-lg-12">
             <div class="panel panel-default">
@@ -24,7 +54,7 @@
               >
                 <thead>
                   <tr>
-                    <th class="text-center"> ID</th>
+                    <th class="text-center">ID</th>
                     <th class="text-center">Name</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Actions</th>
@@ -128,6 +158,56 @@ export default {
         swal("Status update!", "Status has been change!", "success");
         this.$toaster.success("Status has been change! successfully.");
       });
+    },
+    async handleSubmit(e) {
+      e.preventDefault();
+
+      let input = new FormData();
+      input.append("search", this.search);
+
+      this.loading = true;
+
+      axios
+        .get("/api/device_list", {
+          params: {
+            search: this.search,
+          },
+        })
+        .then((res) => {
+          if (res.data.success == true) {
+            this.devices = res.data.data;
+          } else {
+            this.error = res.data.message;
+            this.$toaster.error(res.data.message);
+          }
+        })
+        .catch((err) => {
+          // console.log(err.errors);
+          this.$toaster.error(err.errors);
+          this.error = "Record not save please check";
+        });
+      this.loading = false;
+    },
+    clear() {
+      this.loading = true;
+      (this.search = null),
+        axios
+          .get("/api/device_list")
+          .then((res) => {
+            if (res.data.success == true) {
+              this.devices = res.data.data;
+            } else {
+              this.error = res.data.message;
+              this.$toaster.error(res.data.message);
+            }
+          })
+          .catch((err) => {
+            // console.log(err.errors);
+            this.$toaster.error(err.errors);
+            this.error = "Record not save please check";
+          });
+
+      this.loading = false;
     },
   },
 };
