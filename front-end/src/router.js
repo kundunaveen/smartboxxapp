@@ -95,7 +95,7 @@ export default new Router({
         },
         {
             name: 'pass',
-            path: '/change_pass/:id',
+            path: '/change-pass/:id',
             component: ChangePass
         },
         {
@@ -194,5 +194,9 @@ export default new Router({
         
         
     ]
+
+    
 })
+
+
 

@@ -1,16 +1,23 @@
 <template>
-  <div>
-    <a class="hiddenanchor" id="signup"></a>
-    <a class="hiddenanchor" id="signin"></a>
-
-    <div class="login_wrapper">
-      <div class="animate form login_form">
-        <section class="login_content">
-          <form @submit="handleSubmit">
-            <h1>Forgot Password</h1>
-            <p v-if="error" class="text-danger">{{ error }}</p>
-            <p v-if="success" class="text-success">{{ success }}</p>
-            <div>
+  <section id="wrapper" class="login-register">
+    <div class="preloader" v-if="loading">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
+    <div class="login-box">
+      <div class="white-box">
+        <form class="form-horizontal" id="" @submit="handleSubmit">
+          <div class="form-group">
+            <div class="col-xs-12">
+              <h3>Recover Password</h3>
+              <p v-if="error" class="text-danger">{{ error }}</p>
+              <p v-if="success" class="text-success">{{ success }}</p>
+              <p class="text-muted">
+                Enter your Email and instructions will be sent to you!
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
               <input
                 type="email"
                 class="form-control"
@@ -19,30 +26,25 @@
                 required=""
               />
             </div>
-
-            <div>
-              <button class="btn btn-default submit" type="submit">
-                {{save_button}}
+          </div>
+          <div class="form-group text-center m-t-20">
+            <div class="col-xs-12">
+              <button
+                class="
+                  btn btn-primary btn-lg btn-block
+                  text-uppercase
+                  waves-effect waves-light
+                "
+                type="submit"
+              >
+                Reset
               </button>
-              <router-link class="reset_pass" to="/">Login</router-link>
             </div>
-
-            <div class="clearfix"></div>
-
-            <div class="separator">
-              <div class="clearfix"></div>
-              <br />
-
-              <div>
-                <h1><i class="fa fa-paw"></i> Booking</h1>
-                <p>©2016 All Rights Reserved.Booking.com. Privacy and Terms</p>
-              </div>
-            </div>
-          </form>
-        </section>
+          </div>
+        </form>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 <script>
 import axios from "axios";
@@ -54,23 +56,24 @@ export default {
       email: "",
       error: null,
       success: null,
-      save_button : 'Submit'
+      save_button: "Submit",
+      loading: false,
     };
   },
   methods: {
     async handleSubmit(e) {
       e.preventDefault();
-
+      this.loading = true;
       const input = {
         email: this.email,
       };
-      this.save_button = 'Wait..'
+      this.save_button = "Wait..";
 
       await axios
         .post("/api/send_link", input)
         .then((resp) => {
           if (resp.data.status == "error") {
-           let current_error = resp.data.message.email;
+            let current_error = resp.data.message.email;
             this.error = current_error;
             this.success = null;
           } else {
@@ -78,12 +81,14 @@ export default {
             this.error = null;
           }
 
-           this.save_button = 'Submit'
-        }).catch((err) => {
-       console.log(err);
-          this.save_button = 'Submit'
+          this.save_button = "Submit";
+        })
+        .catch((err) => {
+          console.log(err);
+          this.save_button = "Submit";
           this.error = "Somthing went wrong";
         });
+      this.loading = false;
     },
   },
 };

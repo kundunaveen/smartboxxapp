@@ -1,60 +1,83 @@
 <template>
-  <div id="wrapper">
-    <div v-if="loading" class="loader"></div>
+ <div id="wrapper">
+    <div class="preloader" v-if="loading">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
     <Nav />
-    <div id="page-wrapper" style="min-height: 606px">
+    <div class="page-wrapper">
       <div class="container-fluid">
-        <div class="col-lg-12">
-          <h1 class="page-header">Edit Page</h1>
-        </div>
-
+        <!-- /.row -->
         <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <router-link type="reset" to="/pages"> Back </router-link>
-                Edit Page
-              </div>
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                    <p v-if="error" class="text-danger">{{ error }}</p>
-                    <form role="form" @submit.prevent="updatestate">
-                      <div class="form-group">
-                       <label>Name</label>
-                        <input
+          <div class="col-md-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">Edit Page</div>
+              <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+                  <form action="#" @submit.prevent="updatestate">
+                    <div class="form-body">
+                      <h3 class="box-title">Edit Page</h3>
+                      <p v-if="error" class="text-danger">{{ error }}</p>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Name</label>
+                            <input
                           class="form-control"
                           placeholder="Ex:about-us"
                           v-model="page.title"
                           required=""
                           autocomplete="on|off"
                         />
-                      </div>
-                      <div class="form-group">
-                        <div class="form-group">
-                          <label>Details</label>
-                          <ckeditor v-model="page.detail"></ckeditor>
+                          </div>
                         </div>
                       </div>
+                      <div class="row">
+                        <!--/span-->
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label>Details</label>
+                          <ckeditor v-model="page.detail"></ckeditor>
+                          </div>
+                        </div>
+                        <!--/span-->
+                      </div>
+                      <!--/row-->
+                      <!--/row-->
 
-                      <button type="submit" class="btn btn-default">
-                        Update
+                      <hr />
+                    </div>
+                    <div class="form-actions">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        style="margin-right: 8px"
+                      >
+                        <i class="fa fa-check"></i> Update
                       </button>
-                    </form>
-                  </div>
-                  <!-- /.col-lg-6 (nested) -->
-
-                  <!-- /.col-lg-6 (nested) -->
+                      <router-link
+                        type="reset"
+                        to="/pages"
+                        class="btn btn-default"
+                      >
+                        Cancel
+                      </router-link>
+                    </div>
+                  </form>
                 </div>
-                <!-- /.row (nested) -->
               </div>
-              <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
           </div>
-          <!-- /.col-lg-12 -->
         </div>
+        <!--row -->
+        <!-- ===== Right-Sidebar ===== -->
+
+        <!-- ===== Right-Sidebar-End ===== -->
       </div>
+      <!-- /.container-fluid -->
+      <!-- ===== footer ===== -->
+
+      <!-- ===== footer-End ===== -->
     </div>
   </div>
 </template>

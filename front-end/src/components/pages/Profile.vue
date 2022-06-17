@@ -1,77 +1,92 @@
 <template>
   <div id="wrapper">
+    <div class="preloader" v-if="loading">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
     <Nav />
-    <div id="page-wrapper" style="min-height: 606px">
+    <div class="page-wrapper">
       <div class="container-fluid">
-        <div class="col-lg-12">
-          <h1 class="page-header">Edit Profile</h1>
-        </div>
+        <!-- /.row -->
         <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <router-link type="reset" to="/dashboard"> Back </router-link> Edit
-                Profile
-              </div>
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                    <form role="form" @submit.prevent="updateUser">
-                      <div class="form-group">
-                        <label>Name</label>
-                        <input
-                          class="form-control"
-                          placeholder="Enter Name"
-                          v-model="user.name"
-                          required=""
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label>Email</label>
-                        <input
-                          class="form-control"
-                          placeholder="Enter Email"
-                          v-model="user.email"
-                          required=""
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label>Mobile</label>
-
-                        <div class="row">
-                          <div class="col-lg-6">
-                            <select
-                              name="code"
-                              class="form-select form-control"
-                              v-model="user.code"
-                              required=""
-                            >
-                              <option value="" v-if="iteams">Country</option>
-                              <option
-                                v-bind:value="iteam.dial_code"
-                                v-for="iteam in iteams"
-                                :key="iteam.code"
-                              >
-                                {{ iteam.name }} {{ iteam.dial_code }}
-                              </option>
-                            </select>
-                          </div>
-                          <div class="col-lg-6">
+          <div class="col-md-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">Edit User</div>
+              <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+                  <form action="#" @submit.prevent="updateUser">
+                    <div class="form-body">
+                      <h3 class="box-title">Edit User</h3>
+                      <p v-if="error" class="text-danger">{{ error }}</p>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Name</label>
                             <input
-                              type="number"
                               class="form-control"
-                              placeholder="EX: 7737719645"
-                              v-model="user.phone"
+                              placeholder="Enter Name"
+                              v-model="user.name"
                               required=""
                             />
                           </div>
                         </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Email</label>
+                            <input
+                              class="form-control"
+                              placeholder="Enter Email"
+                              v-model="user.email"
+                              required=""
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
                       </div>
+                      <!--/row-->
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Mobile</label>
 
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-lg-6">
-                            <label>Street</label>
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <select
+                                  name="code"
+                                  class="form-select form-control"
+                                  v-model="user.code"
+                                  required=""
+                                >
+                                  <option value="" v-if="iteams">
+                                    Country
+                                  </option>
+                                  <option
+                                    v-bind:value="iteam.dial_code"
+                                    v-for="iteam in iteams"
+                                    :key="iteam.code"
+                                  >
+                                    {{ iteam.name }} {{ iteam.dial_code }}
+                                  </option>
+                                </select>
+                              </div>
+                              <div class="col-lg-6">
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  placeholder="EX: 7737719645"
+                                  v-model="user.phone"
+                                  required=""
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="control-label">Street</label>
                             <input
                               type="text"
                               class="form-control"
@@ -80,8 +95,15 @@
                               required=""
                             />
                           </div>
-                          <div class="col-lg-6">
+                        </div>
+                        <!--/span-->
+                      </div>
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>City</label>
+
                             <input
                               type="text"
                               class="form-control"
@@ -91,11 +113,9 @@
                             />
                           </div>
                         </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-lg-6">
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>State</label>
                             <input
                               type="text"
@@ -105,7 +125,15 @@
                               required=""
                             />
                           </div>
-                          <div class="col-lg-6">
+                        </div>
+                        <!--/span-->
+                      </div>
+
+                      <!--/row-->
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>Country</label>
                             <select
                               name="code"
@@ -126,37 +154,76 @@
                             </select>
                           </div>
                         </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Zip</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX:India"
+                              v-model="user.zip"
+                              required=""
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
                       </div>
 
-                      <div class="form-group">
-                        <label>Zip</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="EX:India"
-                          v-model="user.zip"
-                          required=""
-                        />
+                      <!--/row-->
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>
+                              <input
+                                type="checkbox"
+                                v-bind:checked="user.status == '1'"
+                                data-toggle="toggle"
+                                data-size="xs"
+                                @change="onChange"
+                              />
+
+                              Enable
+                            </label>
+                          </div>
+                        </div>
                       </div>
 
-                      <button type="submit" class="btn btn-default">
-                        Update
+                      <!--/row-->
+                      <hr />
+                    </div>
+                    <div class="form-actions">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        style="margin-right: 8px"
+                      >
+                        <i class="fa fa-check"></i> Update
                       </button>
-                    </form>
-                  </div>
-                  <!-- /.col-lg-6 (nested) -->
-
-                  <!-- /.col-lg-6 (nested) -->
+                      <router-link
+                        type="reset"
+                        to="/users"
+                        class="btn btn-default"
+                      >
+                        Cancel
+                      </router-link>
+                    </div>
+                  </form>
                 </div>
-                <!-- /.row (nested) -->
               </div>
-              <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
           </div>
-          <!-- /.col-lg-12 -->
         </div>
+        <!--row -->
+        <!-- ===== Right-Sidebar ===== -->
+
+        <!-- ===== Right-Sidebar-End ===== -->
       </div>
+      <!-- /.container-fluid -->
+      <!-- ===== footer ===== -->
+
+      <!-- ===== footer-End ===== -->
     </div>
   </div>
 </template>
@@ -190,18 +257,19 @@ export default {
   methods: {
     updateUser() {
       if (`${this.$route.params.id}` !== "undefined") {
-       
         url = `/api/update_user/${this.$route.params.id}`;
-        axios.put(url, this.user).then(() => {
+         axios.put(url, this.user).then(() => {
           this.$toaster.success("Record update successfully.");
           this.$router.push("/users");
         });
       } else {
-     
         var url = `/api/update_user`;
-        axios.post(url, this.user).then(() => {
+         axios.post(url, this.user).then((res) => {
+          console.log(res);
           this.$toaster.success("Record update successfully.");
-          this.$router.push("/edit");
+          // this.$router.push("/dashboard");.
+          // this.$router.push({ name: "dashboard" });
+          this.$router.push("/").catch(()=>{});
         });
       }
     },

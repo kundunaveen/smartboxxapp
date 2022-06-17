@@ -1,40 +1,39 @@
 <template>
-  <div id="wrapper">
-    <div v-if="loading" class="loader"></div>
+ <div id="wrapper">
+    <div class="preloader" v-if="loading">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
     <Nav />
-    <div id="page-wrapper" style="min-height: 606px">
+    <div class="page-wrapper">
       <div class="container-fluid">
-        <div class="col-lg-12">
-          <h1 class="page-header">Edit Smartbox</h1>
-        </div>
-
+        <!-- /.row -->
         <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <router-link type="reset" to="/smartbox-list">
-                  Back
-                </router-link>
-                Edit Smartbox
-              </div>
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                    <p v-if="error" class="text-danger">{{ error }}</p>
-                    <form role="form" @submit.prevent="updateDevice">
-                      <div class="form-group">
-                        <label>Name</label>
-                        <input
+          <div class="col-md-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">Edit SmartBox</div>
+              <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+                  <form role="form"  @submit.prevent="updateDevice">
+                    <div class="form-body">
+                      <h3 class="box-title">Edit SmartBox</h3>
+                      <p v-if="error" class="text-danger">{{ error }}</p>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="control-label">Name</label>
+                              <input
                           class="form-control"
                           placeholder="Ex:Jackson"
                           v-model="device.name"
                           required=""
                           autocomplete="on|off"
                         />
-                      </div>
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-lg-6">
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>Latitude</label
                             ><input
                               type="text"
@@ -45,7 +44,14 @@
                               v-model="device.lat"
                             />
                           </div>
-                          <div class="col-lg-6">
+                        </div>
+                        <!--/span-->
+                      </div>
+                      <!--/row-->
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>Longitude</label
                             ><input
                               type="text"
@@ -57,12 +63,11 @@
                             />
                           </div>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-lg-6">
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>Image</label>
-                            <input
+                             <input
                               type="file"
                               class="form-control"
                               multiple
@@ -71,44 +76,71 @@
                             />
                           </div>
                         </div>
+                        <!--/span-->
                       </div>
-                      <div class="form-group">
-                        <label>Address</label>
-                        <textarea
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Address</label>
+                            <textarea
                           class="form-control"
                           rows="3"
                           v-model="device.address"
                           required=""
                         ></textarea>
-                      </div>
-                      <div class="form-group">
-                        <label>Description</label>
-                        <textarea
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Description</label>
+                             <textarea
                           class="form-control"
                           rows="3"
                           v-model="device.description"
                           required=""
                         ></textarea>
+                          </div>
+                        </div>
+                        <!--/span-->
                       </div>
 
-                      <button type="submit" class="btn btn-default">
-                        Update
-                      </button>
-                    </form>
-                  </div>
-                  <!-- /.col-lg-6 (nested) -->
+                      <!--/row-->
 
-                  <!-- /.col-lg-6 (nested) -->
+                      <hr />
+                    </div>
+                    <div class="form-actions">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        style="margin-right: 8px"
+                      >
+                        <i class="fa fa-check"></i> Update
+                      </button>
+                      <router-link
+                        type="reset"
+                        to="/smartbox-list"
+                        class="btn btn-default"
+                      >
+                        Cancel
+                      </router-link>
+                    </div>
+                  </form>
                 </div>
-                <!-- /.row (nested) -->
               </div>
-              <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
           </div>
-          <!-- /.col-lg-12 -->
         </div>
+        <!--row -->
+        <!-- ===== Right-Sidebar ===== -->
+
+        <!-- ===== Right-Sidebar-End ===== -->
       </div>
+      <!-- /.container-fluid -->
+      <!-- ===== footer ===== -->
+
+      <!-- ===== footer-End ===== -->
     </div>
   </div>
 </template>

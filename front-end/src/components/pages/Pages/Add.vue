@@ -1,59 +1,84 @@
 <template>
   <div id="wrapper">
-    <div v-if="loading" class="loader"></div>
-
+    <div class="preloader" v-if="loading">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
     <Nav />
-    <div id="page-wrapper" style="min-height: 606px">
+    <div class="page-wrapper">
       <div class="container-fluid">
-        <div class="col-lg-12">
-          <h1 class="page-header">Add Page</h1>
-        </div>
-
+        <!-- /.row -->
         <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <router-link type="reset" to="/page"> Back </router-link>
-                Add New Page
-              </div>
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                    <p v-if="error" class="text-danger">{{ error }}</p>
-                    <form role="form" @submit="handleSubmit">
-                      <div class="form-group">
-                         <label>Name</label>
-                        <input
-                          class="form-control"
-                          placeholder="Ex:about-us"
-                          v-model="title"
-                          required=""
-                          autocomplete="on|off"
-                        />
+          <div class="col-md-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">Add Page</div>
+              <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+                  <form action="#" @submit="handleSubmit">
+                    <div class="form-body">
+                      <h3 class="box-title">Add Page</h3>
+                      <p v-if="error" class="text-danger">{{ error }}</p>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Name</label>
+                            <input
+                              class="form-control"
+                              placeholder="Ex:about-us"
+                              v-model="title"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
                       </div>
-                      <div class="form-group">
-                        <label>Details</label>
-                        
-                                <ckeditor v-model="detail"></ckeditor>
+                      <div class="row">
+                        <!--/span-->
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label>Details</label>
 
+                            <ckeditor v-model="detail"></ckeditor>
+                          </div>
+                        </div>
+                        <!--/span-->
                       </div>
+                      <!--/row-->
+                      <!--/row-->
 
-                      <button type="submit" class="btn btn-default">Add</button>
-                    </form>
-                  </div>
-                  <!-- /.col-lg-6 (nested) -->
-
-                  <!-- /.col-lg-6 (nested) -->
+                      <hr />
+                    </div>
+                    <div class="form-actions">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        style="margin-right: 8px"
+                      >
+                        <i class="fa fa-check"></i> Save
+                      </button>
+                      <router-link
+                        type="reset"
+                        to="/pages"
+                        class="btn btn-default"
+                      >
+                        Cancel
+                      </router-link>
+                    </div>
+                  </form>
                 </div>
-                <!-- /.row (nested) -->
               </div>
-              <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
           </div>
-          <!-- /.col-lg-12 -->
         </div>
+        <!--row -->
+        <!-- ===== Right-Sidebar ===== -->
+
+        <!-- ===== Right-Sidebar-End ===== -->
       </div>
+      <!-- /.container-fluid -->
+      <!-- ===== footer ===== -->
+
+      <!-- ===== footer-End ===== -->
     </div>
   </div>
 </template>
@@ -64,9 +89,9 @@ import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
-import CKEditor from 'ckeditor4-vue';
+import CKEditor from "ckeditor4-vue";
 
-Vue.use(CKEditor,Toaster, { timeout: 5000 });
+Vue.use(CKEditor, Toaster, { timeout: 5000 });
 
 export default {
   name: "AddDevice",
@@ -77,7 +102,7 @@ export default {
       loading: false,
       error: "",
       pagetype: "",
-      editorConfig:""
+      editorConfig: "",
     };
   },
 

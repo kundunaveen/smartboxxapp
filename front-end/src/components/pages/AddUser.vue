@@ -1,85 +1,94 @@
 <template>
   <div id="wrapper">
     <Nav />
-    <div id="page-wrapper" style="min-height: 606px">
+    <div class="page-wrapper">
       <div class="container-fluid">
-        <div class="col-lg-12">
-          <h1 class="page-header">Add Users</h1>
-        </div>
-
+        <!-- /.row -->
         <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <router-link type="reset" to="/users"> Back </router-link> Add
-                New User
-              </div>
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                    <p v-if="error" class="text-danger">{{ error }}</p>
-                    <form role="form" @submit="handleSubmit">
-                      <div class="form-group">
-                        <label>Name</label>
-                        <input
-                          class="form-control"
-                          placeholder="Ex:Jackson"
-                          v-model="name"
-                          required=""
-                          autocomplete="on|off"
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label>Email</label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          placeholder="Ex: Jackson@temporary-mail.net"
-                          v-model="email"
-                          required=""
-                          autocomplete="on|off"
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label>Mobile</label>
-                        <div class="row">
-                          <div class="col-lg-6">
-                            <select
-                              name="code"
-                              class="form-select form-control"
-                              v-model="code"
-                              required=""
-                              autocomplete="on|off"
-                            >
-                              <option value="" v-if="iteams">
-                                --select Country--
-                              </option>
-                              <option
-                                v-bind:value="iteam.dial_code"
-                                v-for="iteam in iteams"
-                                :key="iteam.code"
-                              >
-                                {{ iteam.name }} {{ iteam.dial_code }}
-                              </option>
-                            </select>
-                          </div>
-                          <div class="col-lg-6">
+          <div class="col-md-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">Add User</div>
+              <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+                  <form action="#" @submit="handleSubmit">
+                    <div class="form-body">
+                      <h3 class="box-title">Add User</h3>
+                      <p v-if="error" class="text-danger">{{ error }}</p>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="control-label">Name</label>
                             <input
-                              type="number"
                               class="form-control"
-                              placeholder="EX: 7737719645"
-                              v-model="phone"
+                              placeholder="Ex:Jackson"
+                              v-model="name"
                               required=""
                               autocomplete="on|off"
                             />
                           </div>
                         </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <input
+                              type="email"
+                              class="form-control"
+                              placeholder="Ex: Jackson@temporary-mail.net"
+                              v-model="email"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
                       </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-lg-6">
-                            <label>Street</label>
+                      <!--/row-->
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="control-label">Mobile</label>
+                            
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <select
+                                  name="code"
+                                  class="form-select form-control select2"
+                                  v-model="code"
+                                  required=""
+                                  autocomplete="on|off"
+                                >
+                                  <option value="" v-if="iteams">
+                                    --select Country--
+                                  </option>
+                                  <option
+                                    v-bind:value="iteam.dial_code"
+                                    v-for="iteam in iteams"
+                                    :key="iteam.code"
+                                  >
+                                    {{ iteam.name }} {{ iteam.dial_code }}
+                                  </option>
+                                </select>
+                              </div>
+                              <div class="col-lg-6">
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  placeholder="EX: 7737719645"
+                                  v-model="phone"
+                                  required=""
+                                  autocomplete="on|off"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="control-label">Street</label>
                             <input
                               type="text"
                               class="form-control"
@@ -89,8 +98,15 @@
                               autocomplete="on|off"
                             />
                           </div>
-                          <div class="col-lg-6">
+                        </div>
+                        <!--/span-->
+                      </div>
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>City</label>
+
                             <input
                               type="text"
                               class="form-control"
@@ -101,11 +117,9 @@
                             />
                           </div>
                         </div>
-                      </div>
-
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-lg-6">
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>State</label>
                             <input
                               type="text"
@@ -116,7 +130,15 @@
                               autocomplete="on|off"
                             />
                           </div>
-                          <div class="col-lg-6">
+                        </div>
+                        <!--/span-->
+                      </div>
+
+                      <!--/row-->
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>Country</label>
                             <select
                               name="code"
@@ -138,36 +160,54 @@
                             </select>
                           </div>
                         </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Zip</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX:India"
+                              v-model="zip"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
                       </div>
 
-                      <div class="form-group">
-                        <label>Zip</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="EX:India"
-                          v-model="zip"
-                          required=""
-                          autocomplete="on|off"
-                        />
-                      </div>
+                      <!--/row-->
 
-                      <button type="submit" class="btn btn-default">Add</button>
-                    </form>
-                  </div>
-                  <!-- /.col-lg-6 (nested) -->
-
-                  <!-- /.col-lg-6 (nested) -->
+                      <hr />
+                    </div>
+                    <div class="form-actions">
+                      <button type="submit" class="btn btn-success " style="margin-right:8px">
+                        <i class="fa fa-check"></i> Save
+                      </button>
+                      <router-link
+                        type="reset"
+                        to="/users"
+                        class="btn btn-default "
+                      >
+                        Cancel
+                      </router-link>
+                    </div>
+                  </form>
                 </div>
-                <!-- /.row (nested) -->
               </div>
-              <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
           </div>
-          <!-- /.col-lg-12 -->
         </div>
+        <!--row -->
+        <!-- ===== Right-Sidebar ===== -->
+
+        <!-- ===== Right-Sidebar-End ===== -->
       </div>
+      <!-- /.container-fluid -->
+      <!-- ===== footer ===== -->
+
+      <!-- ===== footer-End ===== -->
     </div>
   </div>
 </template>

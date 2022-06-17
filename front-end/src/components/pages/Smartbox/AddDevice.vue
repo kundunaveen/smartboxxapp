@@ -1,39 +1,39 @@
 <template>
   <div id="wrapper">
+    <div class="preloader" v-if="loading">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
     <Nav />
-    <div id="page-wrapper" style="min-height: 606px">
+    <div class="page-wrapper">
       <div class="container-fluid">
-        <div class="col-lg-12">
-          <h1 class="page-header">Add Smartbox</h1>
-        </div>
-
+        <!-- /.row -->
         <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <router-link type="reset" to="/smartbox-list">
-                  Back
-                </router-link>
-                Add New Smartbox
-              </div>
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                    <p v-if="error" class="text-danger">{{ error }}</p>
-                    <form role="form" @submit="handleSubmit">
-                      <div class="form-group">
-                        <label>Name</label>
-                        <input
-                          class="form-control"
-                          placeholder="Ex:Smartbox"
-                          v-model="name"
-                          required=""
-                          autocomplete="on|off"
-                        />
-                      </div>
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-lg-6">
+          <div class="col-md-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">Add SmartBox</div>
+              <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+                  <form action="#" @submit="handleSubmit">
+                    <div class="form-body">
+                      <h3 class="box-title">Add SmartBox</h3>
+                      <p v-if="error" class="text-danger">{{ error }}</p>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="control-label">Name</label>
+                            <input
+                              class="form-control"
+                              placeholder="Ex:Smartbox"
+                              v-model="name"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>Latitude</label
                             ><input
                               type="text"
@@ -44,7 +44,14 @@
                               v-model="lat"
                             />
                           </div>
-                          <div class="col-lg-6">
+                        </div>
+                        <!--/span-->
+                      </div>
+                      <!--/row-->
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>Longitude</label
                             ><input
                               type="text"
@@ -56,10 +63,9 @@
                             />
                           </div>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-lg-6">
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
                             <label>Image</label>
                             <input
                               type="file"
@@ -68,53 +74,73 @@
                               accept="image/jpeg"
                               @change="uploadImage"
                             />
-                            <!-- <div v-for="(image, key) in images" :key="key">
-                              <img
-                                :src="image.src"
-                                class="preview"
-                                style="width: 200px"
-                              />
-                              {{ image.file.name }}
-                            </div> -->
                           </div>
                         </div>
+                        <!--/span-->
                       </div>
-                      <div class="form-group">
-                        <label>Address</label>
-                        <textarea
-                          class="form-control"
-                          rows="3"
-                          v-model="address"
-                          required=""
-                        ></textarea>
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Address</label>
+                            <textarea
+                              class="form-control"
+                              rows="3"
+                              v-model="address"
+                              required=""
+                            ></textarea>
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Description</label>
+                            <textarea
+                              class="form-control"
+                              rows="3"
+                              v-model="description"
+                              required=""
+                            ></textarea>
+                          </div>
+                        </div>
+                        <!--/span-->
                       </div>
 
-                      <div class="form-group">
-                        <label>Description</label>
-                        <textarea
-                          class="form-control"
-                          rows="3"
-                          v-model="description"
-                          required=""
-                        ></textarea>
-                      </div>
+                      <!--/row-->
 
-                      <button type="submit" class="btn btn-default">Add</button>
-                    </form>
-                  </div>
-                  <!-- /.col-lg-6 (nested) -->
-
-                  <!-- /.col-lg-6 (nested) -->
+                      <hr />
+                    </div>
+                    <div class="form-actions">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        style="margin-right: 8px"
+                      >
+                        <i class="fa fa-check"></i> Save
+                      </button>
+                      <router-link
+                        type="reset"
+                        to="/smartbox-list"
+                        class="btn btn-default"
+                      >
+                        Cancel
+                      </router-link>
+                    </div>
+                  </form>
                 </div>
-                <!-- /.row (nested) -->
               </div>
-              <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
           </div>
-          <!-- /.col-lg-12 -->
         </div>
+        <!--row -->
+        <!-- ===== Right-Sidebar ===== -->
+
+        <!-- ===== Right-Sidebar-End ===== -->
       </div>
+      <!-- /.container-fluid -->
+      <!-- ===== footer ===== -->
+
+      <!-- ===== footer-End ===== -->
     </div>
   </div>
 </template>

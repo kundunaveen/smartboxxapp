@@ -1,75 +1,97 @@
 <template>
   <div id="wrapper">
-    <div v-if="loading" class="loader"></div>
+    <div class="preloader" v-if="loading">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
     <Nav />
-    <div id="page-wrapper" style="min-height: 606px">
+    <div class="page-wrapper">
       <div class="container-fluid">
-        <div class="col-lg-12">
-          <h1 class="page-header">Edit State</h1>
-        </div>
-
+        <!-- /.row -->
         <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <router-link type="reset" to="/state"> Back </router-link>
-                Edit State
-              </div>
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                    <p v-if="error" class="text-danger">{{ error }}</p>
-                    <form role="form" @submit.prevent="updatestate">
-                      <div class="form-group">
-                        <label>Country</label>
-                        <select
-                          name="country_id"
-                          class="form-select form-control"
-                          v-model="country.country_id"
-                          required=""
-                        >
-                          <option value="" v-if="countries">
-                            -- Select country --
-                          </option>
-                          <option
-                            v-bind:value="country.id"
-                            v-for="country in countries"
-                            :key="country.id"
-                          >
-                            {{ country.name }}
-                          </option>
-                        </select>
-                      </div>
-
-                        <div class="form-group">
-                          <label>Name</label>
-                          <input
-                            class="form-control"
-                            placeholder="Ex:California"
-                            v-model="country.name"
-                            required=""
-                            autocomplete="on|off"
-                          />
+          <div class="col-md-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">Edit State</div>
+              <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+                  <form action="#" @submit.prevent="updatestate">
+                    <div class="form-body">
+                      <h3 class="box-title">Edit State</h3>
+                      <p v-if="error" class="text-danger">{{ error }}</p>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Country</label>
+                            <select
+                              name="country_id"
+                              class="form-select form-control"
+                              v-model="country.country_id"
+                              required=""
+                            >
+                              <option value="" v-if="countries">
+                                -- Select country --
+                              </option>
+                              <option
+                                v-bind:value="country.id"
+                                v-for="country in countries"
+                                :key="country.id"
+                              >
+                                {{ country.name }}
+                              </option>
+                            </select>
+                          </div>
                         </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Name</label>
+                            <input
+                              class="form-control"
+                              placeholder="Ex:California"
+                              v-model="country.name"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
+                      </div>
+                      <!--/row-->
+                      <!--/row-->
 
-                      <button type="submit" class="btn btn-default">
-                        Update
+                      <hr />
+                    </div>
+                    <div class="form-actions">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        style="margin-right: 8px"
+                      >
+                        <i class="fa fa-check"></i> Update
                       </button>
-                    </form>
-                  </div>
-                  <!-- /.col-lg-6 (nested) -->
-
-                  <!-- /.col-lg-6 (nested) -->
+                      <router-link
+                        type="reset"
+                        to="/state"
+                        class="btn btn-default"
+                      >
+                        Cancel
+                      </router-link>
+                    </div>
+                  </form>
                 </div>
-                <!-- /.row (nested) -->
               </div>
-              <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
           </div>
-          <!-- /.col-lg-12 -->
         </div>
+        <!--row -->
+        <!-- ===== Right-Sidebar ===== -->
+
+        <!-- ===== Right-Sidebar-End ===== -->
       </div>
+      <!-- /.container-fluid -->
+      <!-- ===== footer ===== -->
+
+      <!-- ===== footer-End ===== -->
     </div>
   </div>
 </template>
@@ -115,7 +137,7 @@ export default {
     this.loading = true;
     const response = await axios.get(`/api/state/${this.$route.params.id}`);
     this.country = response.data.data;
-    
+
     const response1 = await axios.get("/api/country");
     this.countries = response1.data.data;
     this.loading = false;

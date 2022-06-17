@@ -1,63 +1,79 @@
 <template>
   <div id="wrapper">
+    <div class="preloader" v-if="loading">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
     <Nav />
-    <div id="page-wrapper" style="min-height: 606px">
+    <div class="page-wrapper">
       <div class="container-fluid">
-        <div class="col-lg-12">
-          <h1 class="page-header">Change Password</h1>
-        </div>
+        <!-- /.row -->
         <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                Change Password<router-link type="reset" to="/users">
-                  Back
-                </router-link>
-              </div>
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-6 col-lg-offset-3 col-lg-6">
-                    <p v-if="error" class="text-danger">{{ error }}</p>
-                    <form role="form" @submit.prevent="updatePassword">
-                      <div class="form-group">
-                        <label>Password</label>
-                        <input
-                          type="password"
-                          class="form-control"
-                          placeholder="Enter Password"
-                          v-model="password"
-                          required=""
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label>Confirm Password</label>
-                        <input
-                          type="password"
-                          class="form-control"
-                          placeholder="Confirm Password"
-                          v-model="password_confirmation"
-                          required=""
-                        />
+          <div class="col-md-12">
+            <div class="panel panel-info">
+              <div class="panel-heading">Change Password</div>
+              <div class="panel-wrapper collapse in" aria-expanded="true">
+                <div class="panel-body">
+                  <form action="#" @submit.prevent="updatePassword">
+                    <div class="form-body">
+                      <h3 class="box-title">Change Password</h3>
+                      <p v-if="error" class="text-danger">{{ error }}</p>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Password</label>
+                            <input
+                              type="password"
+                              class="form-control"
+                              placeholder="Enter Password"
+                              v-model="password"
+                              required=""
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input
+                              type="password"
+                              class="form-control"
+                              placeholder="Confirm Password"
+                              v-model="password_confirmation"
+                              required=""
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
                       </div>
 
-                      <button type="submit" class="btn btn-default">
-                        Save
+                      <hr />
+                    </div>
+                    <div class="form-actions">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        style="margin-right: 8px"
+                      >
+                        <i class="fa fa-check"></i> Update
                       </button>
-                    </form>
-                  </div>
-                  <!-- /.col-lg-6 (nested) -->
-
-                  <!-- /.col-lg-6 (nested) -->
+                      <router-link
+                        type="reset"
+                        to="/users"
+                        class="btn btn-default"
+                      >
+                        Cancel
+                      </router-link>
+                    </div>
+                  </form>
                 </div>
-                <!-- /.row (nested) -->
               </div>
-              <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
           </div>
-          <!-- /.col-lg-12 -->
         </div>
+        
       </div>
+    
     </div>
   </div>
 </template>
@@ -87,12 +103,13 @@ export default {
         password_confirmation: this.password_confirmation,
       };
 
-  console.log('typeof `${this.$route.params.id}`',typeof `${this.$route.params.id}`);
+      console.log(
+        "typeof `${this.$route.params.id}`",
+        typeof `${this.$route.params.id}`
+      );
       if (`${this.$route.params.id}` !== "undefined") {
-        
         urll = `/api/change_pass/${this.$route.params.id}`;
         axios.put(urll, input).then((res) => {
-
           if (res.data.status == "error" || res.data.Status == false) {
             this.$toaster.error(res.data.message);
             this.error = res.data.message;
@@ -103,10 +120,8 @@ export default {
           }
         });
       } else {
-      
         var urll = `/api/change_pass`;
         axios.post(urll, input).then((res) => {
-        
           if (res.data.status == "error" || res.data.Status == false) {
             this.$toaster.error(res.data.message);
             this.error = res.data.message;

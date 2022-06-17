@@ -1,129 +1,147 @@
 <template>
   <div id="wrapper">
-    <div v-if="loading" class="loader"></div>
+    <div class="preloader" v-if="loading">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
     <Nav />
-    <div id="page-wrapper" style="min-height: 606px">
+    <div class="page-wrapper">
       <div class="container-fluid">
-        <Head :msg="message" />
+        <!-- /.row -->
         <div class="row">
-          <div class="col-lg-12">
-            <div class="pull-left">
-              <form role="form" class="form-inline" @submit="handleSubmit">
-                <div class="form-group mr-4">
-                   <select-2 :options="options" name="test" v-model="search"></select-2>
-                  <select 
-                  id="select2"
-                    name="search"
-                    class="form-select form-control "
-                    v-model="search"
-                    required=""
-                  >
-                    <option value="" v-if="countries" selected>
-                      -- Select country --
-                    </option>
-                    <option
-                      v-bind:value="country.id"
-                      v-for="country in countries"
-                      :key="country.id"
-                    >
-                      {{ country.name }}
-                    </option>
-                  </select>
-                </div>
+          <div class="col-md-12">
+            <div class="white-box p-0">
+              <!-- .left-right-aside-column-->
+              <div class="page-aside">
+                <div class="right-aside">
+                  <div class="right-page-header">
+                    <div class="pull-right">
+                      <form
+                        role="form"
+                        class="form-inline"
+                        @submit="handleSubmit"
+                      >
+                        <div class="form-group mr-4">
+                          <select-2
+                            :options="options"
+                            name="test"
+                            v-model="search"
+                          ></select-2>
+                          <select
+                            id="select2"
+                            name="search"
+                            class="form-select form-control"
+                            v-model="search"
+                            required=""
+                          >
+                            <option value="" v-if="countries" selected>
+                              -- Select country --
+                            </option>
+                            <option
+                              v-bind:value="country.id"
+                              v-for="country in countries"
+                              :key="country.id"
+                            >
+                              {{ country.name }}
+                            </option>
+                          </select>
+                        </div>
 
-                <div class="form-group" style="margin-left: 5px">
-                  <button type="submit" class="btn btn-info btn-default">
-                    Search</button
-                  ><button
-                    type="reset"
-                    class="btn btn-danger btn-default"
-                    @click="clear()"
-                  >
-                    Clear
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div class="pull-right">
-              <router-link to="/add-state" class="active"
-                ><i class="fa fa-plus fa-fw"></i>
-                <i class="fa fa-ticket fa-fw"></i> Add State
-              </router-link>
-            </div>
-          </div>
-        </div>
-        <hr />
-       
+                        <div class="form-group" style="margin-left: 5px">
+                          <button
+                            type="submit"
+                            class="btn btn-info btn-rounded"
+                          >
+                            Search
+                          </button>
+                          <button
+                            type="reset"
+                            class="btn btn-danger btn-rounded"
+                            @click="clear()"
+                          >
+                            Clear
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <h3 class="box-title">
+                      State List
+                      <br />
+                      <router-link to="/add-state" class="active"
+                        ><i class="fa fa-plus fa-fw"></i>
+                        Add State
+                      </router-link>
+                    </h3>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="scrollable">
+                    <div class="table-responsive">
+                      <table class="table product-overview" id="myTable">
+                        <thead>
+                          <tr>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Country</th>
+                            <th class="text-center">State Name</th>
+                            <th class="text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody v-if="states">
+                          <tr v-for="(state, index) in states" :key="state.id">
+                            <td class="text-center">{{ index + 1 }}</td>
+                            <td class="text-center">
+                              {{ state.country.name }}
+                            </td>
+                            <td class="text-center">{{ state.name }}</td>
 
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading mypnl_heading">
-                <span>States</span>
+                            <td class="text-center">
+                              <div class="btn-group" role="group">
+                                <router-link
+                                  :to="{
+                                    name: 'state-edit',
+                                    params: { id: state.id },
+                                  }"
+                                  class="text-inverse p-r-10"
+                                  ><i class="ti-marker-alt"></i
+                                ></router-link>
+                                <a
+                                  href="javascript:void(0)"
+                                  @click="deleteDevice(state.id)"
+                                  class="text-inverse p-r-10"
+                                >
+                                  <i class="ti-trash"></i>
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tbody v-if="!states.length">
+                          <tr>
+                            <td class="text-center">No record found !</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <table
-                class="table table-bordered table-responsive"
-                id="datatable"
-              >
-                <thead>
-                  <tr>
-                    <th class="text-center">ID</th>
-                    <th class="text-center">Country</th>
-                    <th class="text-center">Name</th>
-
-                    <th class="text-center">Actions</th>
-                  </tr>
-                </thead>
-                <tbody v-if="states">
-                  <tr v-for="(state, index) in states" :key="state.id">
-                    <td class="text-center">{{ index + 1 }}</td>
-                    <td class="text-center">{{ state.country.name }}</td>
-                    <td class="text-center">{{ state.name }}</td>
-
-                    <td class="text-center">
-                      <div class="btn-group" role="group">
-                        <router-link
-                          :to="{
-                            name: 'state-edit',
-                            params: { id: state.id },
-                          }"
-                          >Edit</router-link
-                        >
-                        <a
-                          href="javascript:void(0)"
-                          @click="deleteDevice(state.id)"
-                        >
-                          Delete
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-                <tbody v-if="!states.length">
-                  <tr>
-                    <td class="text-center">No record found !</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
+        <!--row -->
       </div>
+      <!-- /.container-fluid -->
     </div>
   </div>
 </template>
 <script>
-  
-
-  </script>
+</script>
 <script>
 import swal from "sweetalert";
 import axios from "axios";
 import Vue from "vue";
 import Nav from "../../layout/Nav.vue";
 import Head from "../../layout/Head.vue";
-import Select2 from 'v-select2-component';
-Vue.use('Select2', Select2);
+import Select2 from "v-select2-component";
+Vue.use("Select2", Select2);
 export default {
   name: "stateList",
   components: {
@@ -137,7 +155,7 @@ export default {
       message: "States",
       loading: false,
       countries: [],
-      search:""
+      search: "",
     };
   },
   async created() {
@@ -146,7 +164,7 @@ export default {
     this.states = response.data.data;
     const response1 = await axios.get("/api/country");
     this.countries = response1.data.data;
- 
+
     this.loading = false;
   },
   methods: {
