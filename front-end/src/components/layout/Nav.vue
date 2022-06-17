@@ -77,6 +77,7 @@
                         alt="user"
                         class="img-circle"
                       />
+                      
                       <span class="profile-status busy pull-right"></span>
                     </div>
                     <div class="mail-contnet">
