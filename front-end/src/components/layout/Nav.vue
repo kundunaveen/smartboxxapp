@@ -438,8 +438,8 @@ export default {
   beforeMount() {
     let recaptchaScript = document.createElement("script");
     recaptchaScript.setAttribute("src", "/js/custom.js");
-      // recaptchaScript.setAttribute("src", "js/custom.js");
     document.head.appendChild(recaptchaScript);
+     
   },
   methods: {
     handleClick() {
