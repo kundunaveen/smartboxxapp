@@ -443,7 +443,7 @@ export default {
     document.head.appendChild(recaptchaScript);
 
       let recaptchaScript1 = document.createElement("script");
-    recaptchaScript1.setAttribute("src", "/js/custom.js");
+    recaptchaScript1.setAttribute("src", "js/custom.js");
 
     document.head.appendChild(recaptchaScript1);
   },
