@@ -13,11 +13,11 @@
         <div class="top-left-part">
           <a class="logo" href="#">
             <b>
-              <img v-bind:src="'public/plugins/images/logo.png'" alt="home" />
+              <img v-bind:src="'/plugins/images/logo.png'" alt="home" />
             </b>
             <span>
               <img
-                v-bind:src="'public/plugins/images/logo-text.png'"
+                v-bind:src="'/plugins/images/logo-text.png'"
                 alt="homepage"
                 class="dark-logo"
               />
@@ -58,7 +58,7 @@
                   <a href="javascript:void(0);">
                     <div class="user-img">
                       <img
-                        v-bind:src="'public/plugins/images/users/1.jpg'"
+                        v-bind:src="'/plugins/images/users/1.jpg'"
                         alt="user"
                         class="img-circle"
                       />
@@ -73,7 +73,7 @@
                   <a href="javascript:void(0);">
                     <div class="user-img">
                       <img
-                        v-bind:src="'public/plugins/images/users/2.jpg'"
+                        v-bind:src="'/plugins/images/users/2.jpg'"
                         alt="user"
                         class="img-circle"
                       />
@@ -90,7 +90,7 @@
                   <a href="javascript:void(0);">
                     <div class="user-img">
                       <img
-                        v-bind:src="'public/plugins/images/users/3.jpg'"
+                        v-bind:src="'/plugins/images/users/3.jpg'"
                         alt="user"
                         class="img-circle"
                       />
@@ -105,7 +105,7 @@
                   <a href="javascript:void(0);">
                     <div class="user-img">
                       <img
-                        v-bind:src="'public/plugins/images/users/4.jpg'"
+                        v-bind:src="'/plugins/images/users/4.jpg'"
                         alt="user"
                         class="img-circle"
                       />
@@ -254,7 +254,7 @@
           <div class="dropdown user-pro-body">
             <div class="profile-image">
               <img
-                v-bind:src="'public/plugins/images/users/hanna.jpg'"
+                v-bind:src="'/plugins/images/users/hanna.jpg'"
                 alt="user-img"
                 class="img-circle"
               />
