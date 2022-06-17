@@ -13,11 +13,11 @@
         <div class="top-left-part">
           <a class="logo" href="#">
             <b>
-              <img v-bind:src="'plugins/images/logo.png'" alt="home" />
+              <img v-bind:src="'../plugins/images/logo.png'" alt="home" />
             </b>
             <span>
               <img
-                v-bind:src="'plugins/images/logo-text.png'"
+                v-bind:src="'../plugins/images/logo-text.png'"
                 alt="homepage"
                 class="dark-logo"
               />
@@ -58,7 +58,7 @@
                   <a href="javascript:void(0);">
                     <div class="user-img">
                       <img
-                        v-bind:src="'plugins/images/users/1.jpg'"
+                        v-bind:src="'../plugins/images/users/1.jpg'"
                         alt="user"
                         class="img-circle"
                       />
@@ -73,7 +73,7 @@
                   <a href="javascript:void(0);">
                     <div class="user-img">
                       <img
-                        v-bind:src="'plugins/images/users/2.jpg'"
+                        v-bind:src="'../plugins/images/users/2.jpg'"
                         alt="user"
                         class="img-circle"
                       />
@@ -90,7 +90,7 @@
                   <a href="javascript:void(0);">
                     <div class="user-img">
                       <img
-                        v-bind:src="'plugins/images/users/3.jpg'"
+                        v-bind:src="'../plugins/images/users/3.jpg'"
                         alt="user"
                         class="img-circle"
                       />
@@ -105,7 +105,7 @@
                   <a href="javascript:void(0);">
                     <div class="user-img">
                       <img
-                        v-bind:src="'plugins/images/users/4.jpg'"
+                        v-bind:src="'../plugins/images/users/4.jpg'"
                         alt="user"
                         class="img-circle"
                       />
@@ -254,7 +254,7 @@
           <div class="dropdown user-pro-body">
             <div class="profile-image">
               <img
-                v-bind:src="'plugins/images/users/hanna.jpg'"
+                v-bind:src="'../plugins/images/users/hanna.jpg'"
                 alt="user-img"
                 class="img-circle"
               />
@@ -368,18 +368,18 @@
               >
               <ul aria-expanded="false" class="collapse">
                 <li>
-                  <router-link to="/country" class="active"
+                  <router-link to="/country" class=""
                     ><i class="fa fa-flag fa-fw"></i> Country</router-link
                   >
                 </li>
                 <li>
-                  <router-link to="/state" class="active"
+                  <router-link to="/state" class=""
                     ><i class="fa fa-sitemap fa-fw"></i>
                     State/County</router-link
                   >
                 </li>
                 <li>
-                  <router-link to="/city" class="active"
+                  <router-link to="/city" class=""
                     ><i class="fa fa-sitemap fa-fw"></i>
                     City/Region</router-link
                   >
@@ -435,9 +435,9 @@ Vue.use(Plugin);
 export default {
   name: "Nav",
   components: {},
-  mounted() {
+  beforeMount() {
     let recaptchaScript = document.createElement("script");
-    recaptchaScript.setAttribute("src", "js/custom.js");
+    recaptchaScript.setAttribute("src", "/js/custom.js");
     document.head.appendChild(recaptchaScript);
   },
   methods: {
@@ -455,6 +455,18 @@ export default {
     const response = await axios.get("/api/get_details");
     this.user = response.data.data;
   },
+
+  //   async created() {
+  //   await axios
+  //     .get("/api/get_details")
+  //     .then((resp) => {
+  //       this.user = resp.data.data;
+  //     })
+  //     .catch((err) => {
+  //       console.log('err',err);
+  //       this.$router.push("/");
+  //     });
+  // },
 };
 </script>
 

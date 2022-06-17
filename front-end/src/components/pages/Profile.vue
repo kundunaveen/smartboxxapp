@@ -172,23 +172,7 @@
 
                       <!--/row-->
                       <!--/row-->
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>
-                              <input
-                                type="checkbox"
-                                v-bind:checked="user.status == '1'"
-                                data-toggle="toggle"
-                                data-size="xs"
-                                @change="onChange"
-                              />
-
-                              Enable
-                            </label>
-                          </div>
-                        </div>
-                      </div>
+                      
 
                       <!--/row-->
                       <hr />
@@ -203,7 +187,7 @@
                       </button>
                       <router-link
                         type="reset"
-                        to="/users"
+                        to="/dashboard"
                         class="btn btn-default"
                       >
                         Cancel
