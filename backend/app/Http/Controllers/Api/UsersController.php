@@ -218,13 +218,15 @@ class UsersController extends Controller
             if ($request->isMethod('get')) {
                 $user = User::find($id);
                 if ($user) {
-                    if ($user->move_to_trash == '1') {
-                        $user->update(['move_to_trash' => '0']);
-                        return $this->sendResponse($user, 'Move to trash successfully');
-                    } else {
-                        $user->update(['move_to_trash' => '1']);
-                        return $this->sendResponse($user, 'Move to trash successfully');
-                    }
+                    $user->delete();
+                    // if ($user->move_to_trash == '1') {
+                    
+                    //     $user->update(['move_to_trash' => '0']);
+                    //     return $this->sendResponse($user, 'Move to trash successfully');
+                    // } else {
+                    //     $user->update(['move_to_trash' => '1']);
+                    //     return $this->sendResponse($user, 'Move to trash successfully');
+                    // }
                 } else {
                     return $this->sendError('Not Found.', ['error' => 'User not found']);
                 }
