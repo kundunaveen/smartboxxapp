@@ -59,7 +59,7 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="myTable">
+                      <table class="table product-overview" id="datatable">
                         <thead>
                           <tr>
                             <th>ID</th>
@@ -113,9 +113,7 @@
                           </tr>
                         </tbody>
                         <tbody v-if="!bookings.length">
-                          <tr>
-                            <td>No record found !</td>
-                          </tr>
+                        
                         </tbody>
                       </table>
                     </div>
@@ -132,13 +130,17 @@
   </div>
 </template>
 <script>
+import "jquery/dist/jquery.min.js";
 import swal from "sweetalert";
-import "datatables.net-dt/js/dataTables.dataTables";
-import "datatables.net-dt/css/jquery.dataTables.min.css";
+
 import Nav from "./../layout/Nav.vue";
 // import Head from "./../layout/Head.vue";
 import axios from "axios";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from 'jquery';
 import Vue from "vue";
+
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
 Vue.use(Toaster, { timeout: 5000 });
@@ -232,6 +234,15 @@ export default {
     const response = await axios.get("/api/get_booking");
     console.log("response.data.data", response.data);
     this.bookings = response.data.data;
+     setTimeout(() => {
+      $("#datatable").DataTable({
+        pageLength: 15,
+        bLengthChange: false,
+        filter:false,
+        bInfo:false,
+        sort:false
+      });
+    })
     this.loading = false;
   },
 };

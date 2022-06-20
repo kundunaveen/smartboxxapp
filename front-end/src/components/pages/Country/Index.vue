@@ -75,11 +75,11 @@
                             v-for="(country, index) in countries"
                             :key="country.id"
                           >
-                            <td class="text-center">{{ index + 1 }}</td>
-                            <td class="text-center">{{ country.name }}</td>
-                            <td class="text-center">{{ country.dial_code }}</td>
-                            <td class="text-center">{{ country.code }}</td>
-                            <td class="text-center">
+                            <td >{{ index + 1 }}</td>
+                            <td >{{ country.name }}</td>
+                            <td >{{ country.dial_code }}</td>
+                            <td>{{ country.code }}</td>
+                            <td >
                               <div class="btn-group" role="group">
                                 <router-link
                                   :to="{
@@ -101,9 +101,7 @@
                           </tr>
                         </tbody>
                         <tbody v-if="!countries.length">
-                          <tr>
-                            <td class="text-center">No record found !</td>
-                          </tr>
+                     
                         </tbody>
                       </table>
                     </div>
@@ -121,10 +119,14 @@
 </template>
 
 <script>
+import "jquery/dist/jquery.min.js";
 import swal from "sweetalert";
 import axios from "axios";
 import Nav from "../../layout/Nav.vue";
 // import Head from "../../layout/Head.vue";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from "jquery";
 
 export default {
   name: "CountryList",
@@ -143,7 +145,19 @@ export default {
   async created() {
     this.loading = true;
     const response = await axios.get("/api/country");
-
+    setTimeout(() => {
+      $("#myTable").DataTable({
+        // lengthMenu: [
+        //   [5, 10, 25, 50, -1],
+        //   [5, 10, 25, 50, "All"],
+        // ],
+        pageLength: 15,
+        bLengthChange: false,
+        filter: false,
+        bInfo: false,
+        sort: false,
+      });
+    });
     this.countries = response.data.data;
     this.loading = false;
   },

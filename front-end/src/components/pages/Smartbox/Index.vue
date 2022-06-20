@@ -60,12 +60,12 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="myTable">
+                      <table class="table product-overview" id="datatable">
                         <thead>
                           <tr>
                             <th class="text-center">ID</th>
                             <th class="text-center">Name</th>
-                            <th class="text-center">Status</th>
+                            <th>Status</th>
                             <th class="text-center">Actions</th>
                           </tr>
                         </thead>
@@ -74,9 +74,9 @@
                             v-for="(device, index) in devices"
                             :key="device.id"
                           >
-                            <td class="text-center">{{ index + 1 }}</td>
-                            <td class="text-center">{{ device.name }}</td>
-                            <td class="text-center">
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ device.name }}</td>
+                            <td>
                               <input
                                 type="checkbox"
                                 v-bind:checked="device.status == 'active'"
@@ -85,7 +85,7 @@
                                 @change="check(device.id)"
                               />
                             </td>
-                            <td class="text-center">
+                            <td>
                               <div class="btn-group" role="group">
                                 <router-link
                                   :to="{
@@ -93,23 +93,21 @@
                                     params: { id: device.id },
                                   }"
                                   class="text-inverse p-r-10"
-                                  ><i class="ti-marker-alt"></i></router-link
-                                >
+                                  ><i class="ti-marker-alt"></i
+                                ></router-link>
                                 <a
                                   href="javascript:void(0)"
                                   class="text-inverse p-r-10"
                                   @click="deleteDevice(device.id)"
                                 >
-                                      <i class="ti-trash"></i>
+                                  <i class="ti-trash"></i>
                                 </a>
                               </div>
                             </td>
                           </tr>
                         </tbody>
                         <tbody v-if="!devices.length">
-                          <tr>
-                            <td>No record found !</td>
-                          </tr>
+                      
                         </tbody>
                       </table>
                     </div>
@@ -127,9 +125,15 @@
 </template>
 
 <script>
+import "jquery/dist/jquery.min.js";
 import swal from "sweetalert";
+
 import axios from "axios";
 import Nav from "./../../layout/Nav.vue";
+
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from "jquery";
 // import Head from "./../../layout/Head.vue";
 
 export default {
@@ -152,6 +156,16 @@ export default {
     const response = await axios.get("/api/device_list");
     console.log("response.data.data", response.data);
     this.devices = response.data.data;
+
+    setTimeout(() => {
+      $("#datatable").DataTable({
+        pageLength: 15,
+        bLengthChange: false,
+        filter: false,
+        bInfo: false,
+        sort: false,
+      });
+    });
     this.loading = false;
   },
   methods: {

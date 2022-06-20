@@ -407,18 +407,18 @@
         </nav>
         <div class="p-30">
           <span class="hide-menu">
-            <a
+            <!-- <a
               href="javascript:void(0);"
               target="_blank"
               class="btn btn-success"
               >Buy Cubic Admin</a
-            >
-            <a
+            > -->
+            <!-- <a
               href="javascript:void(0);"
               target="_blank"
               class="btn btn-default m-t-15"
               >Check Documentation</a
-            >
+            > -->
           </span>
         </div>
       </div>

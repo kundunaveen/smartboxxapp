@@ -60,7 +60,7 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="myTable">
+                      <table class="table product-overview" id="datatable">
                         <thead>
                           <tr>
                             <th class="text-center">ID</th>
@@ -122,10 +122,15 @@
 </template>
 
 <script>
+import "jquery/dist/jquery.min.js";
+
 import swal from "sweetalert";
 import axios from "axios";
 import Nav from "../../layout/Nav.vue";
 // import Head from "../../layout/Head.vue";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from "jquery";
 
 export default {
   name: "stateList",
@@ -146,6 +151,19 @@ export default {
     this.loading = true;
     const response = await axios.get("/api/city");
 
+    setTimeout(() => {
+      $("#datatable").DataTable({
+        // lengthMenu: [
+        //   [5, 10, 25, 50, -1],
+        //   [5, 10, 25, 50, "All"],
+        // ],
+        pageLength: 15,
+        bLengthChange: false,
+        filter: false,
+        bInfo: false,
+        sort: false,
+      });
+    });
     this.states = response.data.data;
     this.loading = false;
   },

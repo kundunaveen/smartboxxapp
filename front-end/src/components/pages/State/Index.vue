@@ -75,7 +75,7 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="myTable">
+                      <table class="table product-overview" id="datatable">
                         <thead>
                           <tr>
                             <th class="text-center">ID</th>
@@ -86,13 +86,13 @@
                         </thead>
                         <tbody v-if="states">
                           <tr v-for="(state, index) in states" :key="state.id">
-                            <td class="text-center">{{ index + 1 }}</td>
-                            <td class="text-center">
+                            <td >{{ index + 1 }}</td>
+                            <td >
                               {{ state.country.name }}
                             </td>
-                            <td class="text-center">{{ state.name }}</td>
+                            <td >{{ state.name }}</td>
 
-                            <td class="text-center">
+                            <td >
                               <div class="btn-group" role="group">
                                 <router-link
                                   :to="{
@@ -114,9 +114,7 @@
                           </tr>
                         </tbody>
                         <tbody v-if="!states.length">
-                          <tr>
-                            <td class="text-center">No record found !</td>
-                          </tr>
+                          
                         </tbody>
                       </table>
                     </div>
@@ -136,11 +134,16 @@
 </script>
 <script>
 import swal from "sweetalert";
+import "jquery/dist/jquery.min.js";
+
 import axios from "axios";
 import Vue from "vue";
 import Nav from "../../layout/Nav.vue";
 import Head from "../../layout/Head.vue";
 import Select2 from "v-select2-component";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from "jquery";
 Vue.use("Select2", Select2);
 export default {
   name: "stateList",
@@ -162,6 +165,19 @@ export default {
     this.loading = true;
     const response = await axios.get("/api/state");
     this.states = response.data.data;
+    setTimeout(() => {
+      $("#datatable").DataTable({
+        // lengthMenu: [
+        //   [5, 10, 25, 50, -1],
+        //   [5, 10, 25, 50, "All"],
+        // ],
+        pageLength: 15,
+        bLengthChange: false,
+        filter: false,
+        bInfo: false,
+        sort: false,
+      });
+    });
     const response1 = await axios.get("/api/country");
     this.countries = response1.data.data;
 

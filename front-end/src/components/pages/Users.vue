@@ -71,14 +71,14 @@
                       <br />
                       <router-link to="/add-user" class="active"
                         ><i class="fa fa-plus fa-fw"></i>
-                   Add User
+                        Add User
                       </router-link>
                     </h3>
                   </div>
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="myTable">
+                      <table class="table product-overview" id="datatable">
                         <thead>
                           <tr>
                             <th>ID</th>
@@ -112,15 +112,13 @@
                                   }"
                                   class="text-inverse p-r-10"
                                   ><i class="ti-marker-alt"></i
-                              ></router-link
-                                >
+                                ></router-link>
                                 <a
                                   href="javascript:void(0)"
                                   @click="deleteUser(user.id)"
                                   class="text-inverse p-r-10"
                                 >
-                                  <i class="ti-trash"></i
-                              >
+                                  <i class="ti-trash"></i>
                                 </a>
                                 <router-link
                                   :to="{
@@ -128,8 +126,7 @@
                                     params: { id: user.id },
                                   }"
                                   ><i class="ti-lock"></i
-                              ></router-link
-                                >
+                                ></router-link>
                               </div>
                             </td>
                           </tr>
@@ -152,6 +149,7 @@
 
 <script>
 import swal from "sweetalert";
+import "jquery/dist/jquery.min.js";
 
 import Nav from "./../layout/Nav.vue";
 // import Head from "./../layout/Head.vue";
@@ -159,6 +157,9 @@ import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
 import axios from "axios";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from "jquery";
 
 Vue.use(Toaster, { timeout: 5000 });
 
@@ -254,7 +255,15 @@ export default {
   async created() {
     this.loading = true;
     const response = await axios.get("/api/users");
-
+    setTimeout(() => {
+      $("#datatable").DataTable({
+        pageLength: 15,
+        bLengthChange: false,
+        filter: false,
+        bInfo: false,
+        sort: false,
+      });
+    });
     this.users = response.data.data;
     this.loading = false;
   },
