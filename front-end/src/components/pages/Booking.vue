@@ -20,7 +20,7 @@
                         class="form-inline"
                         @submit="handleSubmit"
                       >
-                        <div class="form-group mr-4">
+                        <div class="form-group mr-4 m-r-5">
                           <input
                             type="text"
                             name="search"
@@ -31,10 +31,10 @@
                           />
                         </div>
 
-                        <div class="form-group" style="margin-left: 5px">
+                        <div class="form-group m-r-5">
                           <button
                             type="submit"
-                            class="btn btn-info btn-rounded"
+                            class="btn btn-info btn-rounded m-r-5 "
                           >
                             Search
                           </button>
@@ -99,22 +99,20 @@
                                   name: 'bookingedit',
                                   params: { id: booking.id },
                                 }"
-                                class="text-inverse p-r-10"
-                                ><i class="ti-marker-alt"></i></router-link
-                              >
+                                class="text-inverse m-r-5 btn btn-info"
+                                ><i class="ti-marker-alt"></i
+                              ></router-link>
                               <a
                                 href="javascript:void(0)"
                                 @click="deleteBooking(booking.id)"
-                                class="text-inverse p-r-10"
+                                class="text-inverse m-r-5 btn btn-danger"
                               >
-                               <i class="ti-trash"></i>
+                                <i class="ti-trash"></i>
                               </a>
                             </td>
                           </tr>
                         </tbody>
-                        <tbody v-if="!bookings.length">
-                        
-                        </tbody>
+                        <tbody v-if="!bookings.length"></tbody>
                       </table>
                     </div>
                   </div>
@@ -138,7 +136,7 @@ import Nav from "./../layout/Nav.vue";
 import axios from "axios";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
-import $ from 'jquery';
+import $ from "jquery";
 import Vue from "vue";
 
 import Toaster from "v-toaster";
@@ -234,15 +232,15 @@ export default {
     const response = await axios.get("/api/get_booking");
     console.log("response.data.data", response.data);
     this.bookings = response.data.data;
-     setTimeout(() => {
+    setTimeout(() => {
       $("#datatable").DataTable({
         pageLength: 15,
         bLengthChange: false,
-        filter:false,
-        bInfo:false,
-        sort:false
+        filter: false,
+        bInfo: false,
+        sort: false,
       });
-    })
+    });
     this.loading = false;
   },
 };

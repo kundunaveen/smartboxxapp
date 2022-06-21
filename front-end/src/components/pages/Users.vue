@@ -20,7 +20,7 @@
                         @submit="handleSubmit"
                         class="form-inline"
                       >
-                        <div class="form-group mr-4">
+                        <div class="form-group mr-4 m-r-5">
                           <input
                             type="text"
                             class="form-control"
@@ -31,7 +31,7 @@
                           />
                         </div>
 
-                        <div class="form-group" style="margin-left: 5px">
+                        <div class="form-group m-r-5" >
                           <select
                             class="form-control"
                             name="type"
@@ -43,10 +43,11 @@
                           </select>
                         </div>
 
-                        <div class="form-group" style="margin-left: 5px">
+                        <div class="form-group " >
                           <button
                             type="submit"
-                            class="btn btn-info btn-rounded"
+                            class="btn btn-info btn-rounded m-r-5"
+                            
                           >
                             Search
                           </button>
@@ -110,13 +111,14 @@
                                     name: 'edit',
                                     params: { id: user.id },
                                   }"
-                                  class="text-inverse p-r-10"
+                                  class="text-inverse m-r-5 btn btn-info"
                                   ><i class="ti-marker-alt"></i
                                 ></router-link>
+                                
                                 <a
                                   href="javascript:void(0)"
                                   @click="deleteUser(user.id)"
-                                  class="text-inverse p-r-10"
+                                  class="text-inverse m-r-5 btn btn-danger"
                                 >
                                   <i class="ti-trash"></i>
                                 </a>
@@ -125,6 +127,7 @@
                                     name: 'pass',
                                     params: { id: user.id },
                                   }"
+                                  class="text-inverse m-r-5 btn btn-primary"
                                   ><i class="ti-lock"></i
                                 ></router-link>
                               </div>

@@ -20,7 +20,7 @@
                         class="form-inline"
                         @submit="handleSubmit"
                       >
-                        <div class="form-group mr-4">
+                        <div class="form-group  m-r-5 ">
                           <select-2
                             :options="options"
                             name="test"
@@ -46,16 +46,16 @@
                           </select>
                         </div>
 
-                        <div class="form-group" style="margin-left: 5px">
+                        <div class="form-group">
                           <button
                             type="submit"
-                            class="btn btn-info btn-rounded"
+                            class="btn btn-info btn-rounded  m-r-5 "
                           >
                             Search
                           </button>
                           <button
                             type="reset"
-                            class="btn btn-danger btn-rounded"
+                            class="btn btn-danger btn-rounded  m-r-5 "
                             @click="clear()"
                           >
                             Clear
@@ -86,26 +86,26 @@
                         </thead>
                         <tbody v-if="states">
                           <tr v-for="(state, index) in states" :key="state.id">
-                            <td >{{ index + 1 }}</td>
-                            <td >
+                            <td>{{ index + 1 }}</td>
+                            <td>
                               {{ state.country.name }}
                             </td>
-                            <td >{{ state.name }}</td>
+                            <td>{{ state.name }}</td>
 
-                            <td >
+                            <td>
                               <div class="btn-group" role="group">
                                 <router-link
                                   :to="{
                                     name: 'state-edit',
                                     params: { id: state.id },
                                   }"
-                                  class="text-inverse p-r-10"
+                                  class="text-inverse m-r-5 btn btn-info "
                                   ><i class="ti-marker-alt"></i
                                 ></router-link>
                                 <a
                                   href="javascript:void(0)"
                                   @click="deleteDevice(state.id)"
-                                  class="text-inverse p-r-10"
+                                  class="text-inverse m-r-5 btn btn-danger"
                                 >
                                   <i class="ti-trash"></i>
                                 </a>
@@ -113,9 +113,7 @@
                             </td>
                           </tr>
                         </tbody>
-                        <tbody v-if="!states.length">
-                          
-                        </tbody>
+                        <tbody v-if="!states.length"></tbody>
                       </table>
                     </div>
                   </div>

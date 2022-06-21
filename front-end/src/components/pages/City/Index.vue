@@ -20,7 +20,7 @@
                         class="form-inline"
                         @submit="handleSubmit"
                       >
-                        <div class="form-group mr-4">
+                        <div class="form-group mr-4  m-r-5 ">
                           <input
                             type="text"
                             name="search"
@@ -31,16 +31,16 @@
                           />
                         </div>
 
-                        <div class="form-group" style="margin-left: 5px">
+                        <div class="form-group  ">
                           <button
                             type="submit"
-                            class="btn btn-info btn-rounded"
+                            class="btn btn-info btn-rounded  m-r-5"
                           >
                             Search
                           </button>
                           <button
                             type="reset"
-                            class="btn btn-danger btn-rounded"
+                            class="btn btn-danger btn-rounded  m-r-5 "
                             @click="clear()"
                           >
                             Clear
@@ -87,13 +87,13 @@
                                     name: 'city-edit',
                                     params: { id: state.id },
                                   }"
-                                  class="text-inverse p-r-10"
+                                  class="text-inverse m-r-5 btn btn-info"
                                   ><i class="ti-marker-alt"></i
                                 ></router-link>
                                 <a
                                   href="javascript:void(0)"
                                   @click="deleteDevice(state.id)"
-                                  class="text-inverse p-r-10"
+                                  class="text-inverse m-r-5 btn btn-danger"
                                 >
                                   <i class="ti-trash"></i>
                                 </a>

@@ -13,7 +13,10 @@
         <div class="top-left-part">
           <a class="logo" href="#">
             <b>
-              <img v-bind:src="'http://65.2.143.196/anadev/smartboxxapp/front-end/dist/plugins/images/logo.png'" alt="home" />
+              <img
+                v-bind:src="'http://65.2.143.196/anadev/smartboxxapp/front-end/dist/plugins/images/logo.png'"
+                alt="home"
+              />
             </b>
             <span>
               <img
@@ -77,7 +80,7 @@
                         alt="user"
                         class="img-circle"
                       />
-                      
+
                       <span class="profile-status busy pull-right"></span>
                     </div>
                     <div class="mail-contnet">
@@ -438,11 +441,12 @@ export default {
   components: {},
   beforeMount() {
     let recaptchaScript = document.createElement("script");
-    recaptchaScript.setAttribute("src", "http://65.2.143.196/anadev/smartboxxapp/front-end/dist/js/custom.js");
+    recaptchaScript.setAttribute(
+      "src",
+      "http://65.2.143.196/anadev/smartboxxapp/front-end/dist/js/custom.js"
+    );
 
     document.head.appendChild(recaptchaScript);
-
-    
   },
   methods: {
     handleClick() {
@@ -453,11 +457,14 @@ export default {
   data() {
     return {
       user: null,
+      loading: false,
     };
   },
   async created() {
+    this.loading = true;
     const response = await axios.get("/api/get_details");
     this.user = response.data.data;
+    this.loading = false;
   },
 
   //   async created() {

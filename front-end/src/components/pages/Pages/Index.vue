@@ -82,13 +82,13 @@
                                     name: 'page-edit',
                                     params: { id: state.id },
                                   }"
-                                  class="text-inverse p-r-10"
+                                  class="text-inverse m-r-5 btn btn-info"
                                   ><i class="ti-marker-alt"></i
                                 ></router-link>
                                 <a
                                   href="javascript:void(0)"
                                   @click="deletePage(state.id)"
-                                  class="text-inverse p-r-10"
+                                  class="text-inverse m-r-5 btn btn-danger"
                                 >
                                   <i class="ti-trash"></i>
                                 </a>

@@ -20,7 +20,7 @@
                         class="form-inline"
                         @submit="handleSubmit"
                       >
-                        <div class="form-group mr-4">
+                        <div class="form-group m-r-5">
                           <input
                             type="text"
                             name="search"
@@ -31,16 +31,16 @@
                           />
                         </div>
 
-                        <div class="form-group" style="margin-left: 5px">
+                        <div class="form-group m-r-5" >
                           <button
                             type="submit"
-                            class="btn btn-info btn-rounded"
+                            class="btn btn-info btn-rounded m-r-5"
                           >
                             Search
                           </button>
                           <button
                             type="reset"
-                            class="btn btn-danger btn-rounded"
+                            class="btn btn-danger btn-rounded m-r-5"
                             @click="clear()"
                           >
                             Clear
@@ -75,24 +75,24 @@
                             v-for="(country, index) in countries"
                             :key="country.id"
                           >
-                            <td >{{ index + 1 }}</td>
-                            <td >{{ country.name }}</td>
-                            <td >{{ country.dial_code }}</td>
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ country.name }}</td>
+                            <td>{{ country.dial_code }}</td>
                             <td>{{ country.code }}</td>
-                            <td >
+                            <td>
                               <div class="btn-group" role="group">
                                 <router-link
                                   :to="{
                                     name: 'country-edit',
                                     params: { id: country.id },
                                   }"
-                                  class="text-inverse p-r-10"
+                                  class="text-inverse m-r-5 btn btn-info"
                                   ><i class="ti-marker-alt"></i
                                 ></router-link>
                                 <a
                                   href="javascript:void(0)"
                                   @click="deleteDevice(country.id)"
-                                  class="text-inverse p-r-10"
+                                  class="text-inverse m-r-5 btn btn-danger"
                                 >
                                   <i class="ti-trash"></i>
                                 </a>
@@ -100,9 +100,7 @@
                             </td>
                           </tr>
                         </tbody>
-                        <tbody v-if="!countries.length">
-                     
-                        </tbody>
+                        <tbody v-if="!countries.length"></tbody>
                       </table>
                     </div>
                   </div>

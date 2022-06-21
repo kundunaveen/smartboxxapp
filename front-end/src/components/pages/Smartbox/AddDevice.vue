@@ -79,10 +79,37 @@
                         <!--/span-->
                       </div>
                       <!--/row-->
+                      <!--/row-->
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label>Address</label>
+                            <label class="m-r-5">Booking Cost</label
+                            ><span class="tooltips">
+                              <i
+                                class="fa fa-info-circle"
+                                aria-hidden="true"
+                              ></i>
+                              <span class="tooltiptext"> Per Hour </span> </span
+                            ><input
+                              type="number"
+                              min="1"
+                              placeholder="Example: 5"
+                              required="required"
+                              autocomplete="on|off"
+                              class="form-control"
+                              v-model="booking_cost"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group"></div>
+                        </div>
+                      </div>
+                      <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Address </label>
                             <textarea
                               class="form-control"
                               rows="3"
@@ -95,6 +122,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Description</label>
+
                             <textarea
                               class="form-control"
                               rows="3"
@@ -161,6 +189,7 @@ export default {
       description: "",
       error: "",
       address: "",
+      booking_cost: "",
       lat: "",
       long: "",
       image: {},
@@ -183,7 +212,7 @@ export default {
       for (let i = 0; i < this.files.length; i++) {
         input.append("image[]", this.files[i]);
       }
-
+      input.append("booking_cost", this.booking_cost);
       input.append("name", this.name);
       input.append("description", this.description);
       input.append("lat", this.lat);

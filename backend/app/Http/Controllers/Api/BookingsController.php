@@ -384,6 +384,8 @@ class BookingsController extends Controller
 
                 'name' => 'required|unique:device',
                 'description' => 'required',
+                'booking_cost' => 'required',
+
 
 
             ]);
@@ -400,6 +402,7 @@ class BookingsController extends Controller
             $insert['lat'] =  $input['lat'];
             $insert['long'] =  $input['long'];
             $insert['address'] =  $input['address'];
+            $insert['booking_cost'] =  $input['booking_cost'];
 
             $device = Device::create($insert);
 
@@ -508,6 +511,7 @@ class BookingsController extends Controller
                     'lat' => isset($input['lat']) ? $input['lat'] : $device->lat,
                     'long' => isset($input['long']) ? $input['long'] : $device->long,
                     'address' => isset($input['address']) ? $input['address'] : $device->address,
+                    'booking_cost' => isset($input['booking_cost']) ? $input['booking_cost'] : $device->booking_cost,
                     // 'image' => isset($input['image']) ? $input['image'] : $device->image,
 
                 ]);
