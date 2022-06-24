@@ -13,7 +13,14 @@
               <!-- .left-right-aside-column-->
               <div class="page-aside">
                 <div class="right-aside">
-                  <div class="right-page-header">
+                  <div class="right-page-header top-heading-management">
+                  <h3 class="box-title">
+                      State List
+                      <router-link to="/add-state" class="active"
+                        ><i class="fa fa-plus fa-fw"></i>
+                        Add State
+                      </router-link>
+                    </h3>
                     <div class="pull-right">
                       <form
                         role="form"
@@ -51,26 +58,19 @@
                             type="submit"
                             class="btn btn-info btn-rounded  m-r-5 "
                           >
-                            Search
+                            <i class="fa fa-search" aria-hidden="true"></i> Search
                           </button>
                           <button
                             type="reset"
                             class="btn btn-danger btn-rounded  m-r-5 "
                             @click="clear()"
                           >
-                            Clear
+                            <i class="fa fa-times" aria-hidden="true"></i> Clear
                           </button>
                         </div>
                       </form>
                     </div>
-                    <h3 class="box-title">
-                      State List
-                      <br />
-                      <router-link to="/add-state" class="active"
-                        ><i class="fa fa-plus fa-fw"></i>
-                        Add State
-                      </router-link>
-                    </h3>
+                    
                   </div>
                   <div class="clearfix"></div>
                   <div class="scrollable">

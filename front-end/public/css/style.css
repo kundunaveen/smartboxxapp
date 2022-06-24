@@ -59,7 +59,7 @@ Version:    1.0
 # common:               #e5ebec; 
 
 ============================================================ */
-
+@import url(https://fonts.googleapis.com/css2?family=Lato:wght@100;300;700;900&display=swap)
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i);
 @import "../less/icons/material-design-iconic-font/css/materialdesignicons.min.css";
 @import "spinners.css";
@@ -90,7 +90,8 @@ html {
 
 body {
     background: #fff;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-family: 'Lato', sans-serif;
     margin: 0;
     overflow-x: hidden;
     color: #8d9498;
@@ -104,7 +105,8 @@ h4,
 h5,
 h6 {
     color: #333b3f;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-family: 'Lato', sans-serif;
     margin: 10px 0;
     font-weight: 400
 }
@@ -881,8 +883,11 @@ hr {
 
 .btn-success,
 .btn-success.disabled {
-    background: #2ecc71;
-    border: 2px solid #2ecc71
+    background: #eac48f;
+    border: 2px solid #eac48f;
+    color: #000;
+    border-radius: 0!important;
+    transition: all .3s ease;
 }
 
 .btn-success.disabled.focus,
@@ -891,9 +896,11 @@ hr {
 .btn-success.focus,
 .btn-success:focus,
 .btn-success:hover {
-    background: #2ecc71;
-    opacity: .8;
-    border: 2px solid #2ecc71
+    background: #cfae7e;
+    opacity: 1;
+    border: 2px solid #cfae7e;
+    color: #fff;
+    transition: all .3s ease;
 }
 
 .btn-info,
@@ -1144,8 +1151,8 @@ hr {
 .open>.dropdown-toggle.btn-success.focus,
 .open>.dropdown-toggle.btn-success:focus,
 .open>.dropdown-toggle.btn-success:hover {
-    background-color: #2ecc71;
-    border: 2px solid #2ecc71
+    background-color: #cfae7e;
+    border: 2px solid #cfae7e
 }
 
 .btn-info.active.focus,
@@ -1303,8 +1310,8 @@ hr {
 }
 
 .checkbox-info input[type=checkbox]:checked+label::before {
-    background-color: #00bbd9;
-    border-color: #00bbd9
+    background-color: #000;
+    border-color: #000
 }
 
 .checkbox-info input[type=checkbox]:checked+label::after {
@@ -1469,11 +1476,11 @@ hr {
 }
 
 .radio-info input[type=radio]:checked+label::before {
-    border-color: #00bbd9
+    border-color: #000
 }
 
 .radio-info input[type=radio]:checked+label::after {
-    background-color: #00bbd9
+    background-color: #000
 }
 
 .radio-warning input[type=radio]+label::after {
@@ -1570,8 +1577,8 @@ hr {
 .pagination>.active>span,
 .pagination>.active>span:focus,
 .pagination>.active>span:hover {
-    background-color: #0283cc;
-    border-color: #0283cc
+    background-color: #000000;
+    border-color: #000000
 }
 
 .pager li>a,
@@ -2174,9 +2181,9 @@ table.dataTable thead .sorting:after {
 
 .panel-blue .panel-heading,
 .panel-info .panel-heading {
-    border-color: #00bbd9;
+    border-color: #000000;
     color: #fff;
-    background-color: #00bbd9
+    background-color: #000000
 }
 
 .panel-blue .panel-heading a,
@@ -5664,7 +5671,7 @@ ul.list-icons li i {
 
 .navbar-header {
     width: 100%;
-    background: #0078bc;
+    background: #000!important;
     background: -moz-linear-gradient(left, #0078bc 1%, #00beda 100%);
     background: -webkit-linear-gradient(left, #0078bc 1%, #00beda 100%);
     background: linear-gradient(to right, #0078bc 1%, #00beda 100%);
@@ -5979,7 +5986,7 @@ ul.list-icons li i {
     border: none;
     margin: 0 10px;
     padding: 4px 6px;
-    border-radius: 4px
+    border-radius: 0px
 }
 
 .task-widget .task-chart {
@@ -6460,7 +6467,7 @@ ul.list-icons li i {
     top: 13px;
     left: 30px;
     font-size: 20px;
-    color: #0283cc
+    color: #000000
 }
 
 .sc-widget .custom-select {
@@ -6557,8 +6564,8 @@ ul.list-icons li i {
 }
 
 .calendar-widget .fc th.fc-widget-header {
-    background: #e9f2f5;
-    color: #0283cc;
+    background: #dadada;
+    color: #000;
     font-size: 14px;
     line-height: 20px;
     padding: 7px 0;
@@ -6574,7 +6581,7 @@ ul.list-icons li i {
 .calendar-widget .fc-toolbar.fc-header-toolbar {
     padding: 15px 200px 10px;
     margin: 0;
-    background: -moz-linear-gradient(left, #0284ce 0, #00bdda 100%);
+    background: #000!important;
     background: -webkit-linear-gradient(left, #0284ce 0, #00bdda 100%);
     background: linear-gradient(to right, #0284ce 0, #00bdda 100%)
 }
@@ -7242,8 +7249,10 @@ ul.list-icons li i {
     width: 26px;
     border-radius: 50%;
     text-align: center;
-    line-height: 19px;
-    font-size: 14px
+    line-height: 22px;
+    font-size: 14px;
+    background-color: #000;
+    color: #eac48f;
 }
 
 .user-profile .user-pro-body div {
@@ -7265,7 +7274,17 @@ ul.list-icons li i {
 
 .user-profile .profile-text a {
     font-weight: 600;
-    color: #0078bc
+    color: #000
+}
+
+.right-sidebar .rpanel-title {
+    background: #000!important;
+}
+h3.box-title a {
+    color: #000;
+}
+#side-menu ul>li>a:hover, .mini-sidebar .sidebar-nav #side-menu>li:hover>a i, .sidebar-nav ul#side-menu li a.active i {
+    color: #000!important;
 }
 
 @media (min-width:768px) {
@@ -16128,3 +16147,344 @@ ul.pro-amenities li span i {
 }
 
 
+img.dark-logo {
+    width: 240px;
+}
+
+button.btn.btn-info.btn-lg.btn-block.text-uppercase.waves-effect.waves-light {
+    font-size: 22px;
+    text-transform: uppercase;
+    background-color: #EAC48F;
+    color: #000;
+    border-radius: 0 0 0 0;
+    display: inline-block;
+    padding: 12px 24px;
+    line-height: 1;
+    text-align: center;
+    border: none;
+    transition: all .3s ease;
+}
+button.btn.btn-info.btn-lg.btn-block.text-uppercase.waves-effect.waves-light:hover {
+    background-color: #CFAE7E;
+    color: #ffffff;
+    transition: all .3s ease;
+}
+.reset-password-bttn{
+    font-size: 22px;
+    text-transform: uppercase;
+    background-color: #EAC48F;
+    color: #000;
+    border-radius: 0 0 0 0;
+    display: inline-block;
+    padding: 12px 24px;
+    line-height: 1;
+    text-align: center;
+    border: none;
+    transition: all .3s ease;
+}
+
+.reset-password-bttn:hover {
+    background-color: #CFAE7E;
+    color: #ffffff;
+    border: none;
+    transition: all .3s ease;
+}
+
+
+a.logo b {
+    display: none;
+}
+.mini-sidebar a.logo b{
+    display: inline-block;
+}
+a.logo b img {
+    width: 43px;
+}
+a.logo span {
+    text-align: center;
+    padding-left: 15px;
+    position: relative;
+    top: 2px;
+}
+ul.nav.navbar-top-links.navbar-left.hidden-xs form.app-search.hidden-xs {
+    display: none;
+}
+
+.profile-btn a {
+    border-radius: 0!important;
+}
+
+.profile-btn a.btn.btn-default.btn-outline.m-r-0 {
+    background-color: #c5c5c5;
+    color: #000;
+    border-color: #c5c5c5;
+}
+
+.profile-btn a.btn.btn-default.btn-outline.m-r-0:hover {
+    background-color: #555555;
+    color: #fff;
+    border-color: #555555;
+    opacity: 1;
+}
+
+.right-page-header .form-group button.btn.btn-info.btn-rounded.m-r-5{
+    background-color: #eac48f;
+    border-color: #eac48f;
+    color: #000;
+    border-radius: 0px;
+    min-width: 100px;
+}
+
+.right-page-header .form-group button.btn.btn-info.btn-rounded.m-r-5:hover{
+    background-color: #cfae7e;
+    border-color: #cfae7e;
+    color: #fff;
+}
+h3.box-title a{
+    background-color: #eac48f;
+    border-color: #eac48f;
+    color: #000;
+    border-radius: 0px;
+    min-width: 100px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 2px solid #eac48f;
+}
+
+h3.box-title a:hover{
+    background-color: #cfae7e;
+    border-color: #cfae7e;
+    color: #fff;
+}
+
+
+.cancel-bttnn, button.btn.btn-danger.btn-rounded, .form-actions a.btn.btn-default {
+    background-color: #c5c5c5;
+    color: #000!important;
+    border-color: #c5c5c5;
+    border-radius: 0!important;
+    min-width: 100px;
+    transition: all .3s ease;
+}
+
+.cancel-bttnn:hover, button.btn.btn-danger.btn-rounded:hover, .form-actions a.btn.btn-default:hover {
+    background-color: #555555;
+    color: #fff!important;
+    border-color: #555555;
+    opacity: 1;
+    transition: all .3s ease;
+}
+
+h3.box-title a {
+    margin-left: 16px;
+}
+
+a.btn.btn-default.cancel-bttnn.back-new-bttn i {
+    padding: 0;
+    margin: 0;
+}
+a.btn.btn-default.cancel-bttnn.back-new-bttn {
+    margin-right: 0;
+    float: right;
+    position: relative;
+    top: -8px;
+        text-transform: capitalize;
+}
+
+.navbar-header {
+    height: 65px;
+}
+.navbar {
+    min-height: 65px;
+    height: 65px;
+}
+
+.navbar-top-links>li>a {
+    line-height: 65px;
+    min-height: 65px;
+}
+
+.profile-widget a.profile-text.font-22.font-semibold {
+    color: #000;
+}
+.profile-widget .text-primary {
+    color: #000000!important;
+}
+
+
+.white-box.user-table a.btn.btn-success.pull-right.m-t-10.font-20 {
+    border-radius: 100%!important;
+    border-color: #eac48f;
+}
+.table-responsive {
+    margin-top: 20px;
+}
+.btn-group a.text-inverse, .table-responsive a.text-inverse {
+    margin-right: 10px!important;
+    border-radius: 0!important;
+}
+.white-box.user-table .table-responsive td span.label {
+    min-width: 85px;
+    display: inline-block;
+    border-radius: 0!important;
+    padding: 6px 0;
+}
+
+/*.sales-box-size {
+    min-height: 150px;
+    background-color: #fff;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}*/
+.form-actions button.btn.btn-success {
+    min-width: 100px;
+}
+.profile-btn a {
+    min-width: 100px;
+}
+
+
+.input-new-style{
+    width: 20px;
+    width: 20px;
+  position: relative;
+}
+
+.input-new-style:after{
+  content: '\f00c';
+  display: block;
+  background: white;
+  /*background-image: url('https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-21-32.png');*/
+  pointer-events: none;
+  font-size: 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  color: transparent;
+  transition: .25s all ease-in-out;
+  border-radius: 0px;
+  line-height: 17px!important;
+  background-position: 0 15px;
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #eac48f;
+  font: normal normal normal 15px/1 FontAwesome;
+}
+.input-new-style:checked:after{
+  background-color: #eac48f;
+  background-position: 0 0;
+  color: #000;
+}
+.input-new-style:hover:after{
+  border-color: #eac48f;
+}
+
+.top-heading-management h3.box-title i.fa.fa-plus.fa-fw {
+    width: fit-content!important;
+}
+.top-heading-management h3.box-title {
+    width: fit-content;
+}
+.top-heading-management.right-page-header .pull-right {
+    width: fit-content;
+    display: initial;
+}
+.right-page-header.top-heading-management .box-title {
+    margin: 10px 0 12px;
+    font-weight: 600;
+    font-size: 18px;
+    display: initial;
+}
+
+.table.product-overview.dataTable.no-footer button.btn.btn-success {
+    background-color: #4cae4c;
+    border-color: #4cae4c;
+    color: #fff;
+    transition: all .3s ease;
+}
+.table.product-overview.dataTable.no-footer button.btn.btn-success:hover {
+    background-color: #3b923b!important;
+    border-color: #3b923b!important;
+    color: #fff;
+    transition: all .3s ease;
+}
+div#datatable_paginate {
+    margin-top: 10px;
+}
+div#datatable_paginate a.paginate_button.current {
+    background-color: #000!important;
+    color: #fff!important;
+    opacity: 1;
+    border: none!important;
+    margin: 0 10px;
+    padding: 4px 6px;
+    border-radius: 0px
+}
+.sidebar ul.dropdown-menu.animated.flipInY li a i {
+    width: 20px;
+}
+
+@media screen and (max-width:767px) {
+.white-box.user-table ul.list-inline li {
+    margin-right: 6px;
+}
+.fc-scroller.fc-day-grid-container {
+    height: 100%!important;
+}
+.btn-group a.text-inverse, .table-responsive a.text-inverse {
+    margin-right: 10px!important;
+    margin-bottom: 10px;
+}
+div#datatable_paginate {
+    padding-bottom: 15px;
+}
+.form-body .row .col-md-6 .form-group .col-lg-6 .row {
+    padding: 15px;
+}
+
+.form-body .row .col-md-6 .form-group .col-lg-6 {
+    padding: 0;
+}
+.form-body .row .col-md-6 .form-group .col-lg-6 select select:last-child {
+    margin-bottom: 0!important;
+}
+.form-body .row .col-md-6 .form-group .col-lg-6 select {
+    margin-bottom: 10px;
+}
+.top-heading-management.right-page-header .pull-right {
+    width: 100%!important;
+    display: initial;
+    margin-top: 20px;
+}
+h3.box-title a {
+    margin-left: 0;
+    margin-top: 10px;
+    display: block;
+    width: fit-content;
+}
+.profile-btn a {
+    margin: 0 10px;
+}
+}
+
+
+@media screen and (min-width:768px) and (max-width:991px) {
+    
+}
+
+
+@media screen and (min-width:992px) and (max-width:1025px) {
+    
+}

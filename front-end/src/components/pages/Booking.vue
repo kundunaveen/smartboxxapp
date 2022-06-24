@@ -13,7 +13,14 @@
               <!-- .left-right-aside-column-->
               <div class="page-aside">
                 <div class="right-aside">
-                  <div class="right-page-header">
+                  <div class="right-page-header top-heading-management">
+                  <h3 class="box-title">
+                      Booking Managment
+                      
+                      <router-link to="/add-booking" class="active"
+                        ><i class="fa fa-plus fa-fw"></i> Add Booking
+                      </router-link>
+                    </h3>
                     <div class="pull-right">
                       <form
                         role="form"
@@ -36,25 +43,19 @@
                             type="submit"
                             class="btn btn-info btn-rounded m-r-5 "
                           >
-                            Search
+                            <i class="fa fa-search" aria-hidden="true"></i> Search
                           </button>
                           <button
                             type="reset"
-                            class="btn btn-danger btn-rounded"
+                            class="btn btn-danger btn-rounded cancel-bttnn"
                             @click="clear()"
                           >
-                            Clear
+                            <i class="fa fa-times" aria-hidden="true"></i> Clear
                           </button>
                         </div>
                       </form>
                     </div>
-                    <h3 class="box-title">
-                      Booking Managment
-                      <br />
-                      <router-link to="/add-booking" class="active"
-                        ><i class="fa fa-plus fa-fw"></i> Add Booking
-                      </router-link>
-                    </h3>
+                    
                   </div>
                   <div class="clearfix"></div>
                   <div class="scrollable">

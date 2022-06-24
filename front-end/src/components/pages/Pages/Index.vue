@@ -13,7 +13,14 @@
               <!-- .left-right-aside-column-->
               <div class="page-aside">
                 <div class="right-aside">
-                  <div class="right-page-header">
+                  <div class="right-page-header top-heading-management">
+                  <h3 class="box-title">
+                      Page List
+                      <router-link to="/add-page" class="active"
+                        ><i class="fa fa-plus fa-fw"></i>
+                        Add Page
+                      </router-link>
+                    </h3>
                     <div class="pull-right">
                       <!-- <form
                         role="form"
@@ -48,14 +55,7 @@
                         </div>
                       </form> -->
                     </div>
-                    <h3 class="box-title">
-                      Page List
-                      <br />
-                      <router-link to="/add-page" class="active"
-                        ><i class="fa fa-plus fa-fw"></i>
-                        Add Page
-                      </router-link>
-                    </h3>
+                    
                   </div>
                   <div class="clearfix"></div>
                   <div class="scrollable">

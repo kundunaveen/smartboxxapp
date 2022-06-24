@@ -33,7 +33,7 @@
                 class="
                   btn btn-primary btn-lg btn-block
                   text-uppercase
-                  waves-effect waves-light
+                  waves-effect waves-light reset-password-bttn
                 "
                 type="submit"
               >

@@ -14,13 +14,13 @@
           <a class="logo" href="#">
             <b>
               <img
-                v-bind:src="'http://65.2.143.196/anadev/smartboxxapp/front-end/dist/plugins/images/logo.png'"
+                v-bind:src="'../plugins/images/logo.png'"
                 alt="home"
               />
             </b>
             <span>
               <img
-                v-bind:src="'http://65.2.143.196/anadev/smartboxxapp/front-end/dist/plugins/images/logo-text.png'"
+                v-bind:src="'../plugins/images/logo-text.png'"
                 alt="homepage"
                 class="dark-logo"
               />
@@ -280,6 +280,8 @@
                     ><i class="fa fa-user"></i>Edit Profile</router-link
                   >
                 </li>
+                <li role="separator" class="divider"></li>
+                <li>
                 <li>
                   <router-link to="/change_pass" class="active"
                     ><i class="fa fa-key fa-fw"></i> Change

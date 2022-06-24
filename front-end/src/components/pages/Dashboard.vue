@@ -59,6 +59,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-sm-12">
+                    <div class="sales-box-size">
                         <div class="white-box sd-widget m-b-0 b-b-0">
                             <a href="javascript:void(0);" class="pull-right"><i class="icon-settings"></i></a>
                             <h4 class="box-title">Sales Difference</h4>
@@ -74,8 +75,10 @@
                                 </li>
                             </ul>
                         </div>
+                        </div>
                     </div>
                     <div class="col-md-4 col-sm-6">
+                    <div class="sales-box-size">
                         <div class="white-box sc-widget">
                             <div class="row">
                                 <div class="col-sm-6">
@@ -92,14 +95,17 @@
                             </div>
                             <div class="chartist-sales-chart chart-pos m-t-40"></div>
                         </div>
+                        </div>
                     </div>
                     <div class="col-md-4 col-sm-6">
+                    <div class="sales-box-size">
                         <div class="white-box ie-widget m-b-0 b-b-0">
                             <h4 class="box-title">Item Earnings</h4>
                         </div>
                         <div class="white-box p-0 b-t-0">
                             <div class="ct-ie-chart chart-pos"></div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 <div class="row">
@@ -378,8 +384,10 @@
                                     </p>
                                 </div>
                                 <div class="profile-btn">
-                                    <a href="javascript:void(0);" class="btn btn-success">Follow Me</a>
-                                    <a href="javascript:void(0);" class="btn btn-default btn-outline m-r-0">Detail
+                                    <a href="javascript:void(0);" class="btn btn-success"><i class="fa fa-users" aria-hidden="true"></i>
+ Follow Me</a>
+                                    <a href="javascript:void(0);" class="btn btn-default btn-outline m-r-0"><i class="fa fa-info" aria-hidden="true"></i>
+ Detail
                                         View</a>
                                 </div>
                             </div>

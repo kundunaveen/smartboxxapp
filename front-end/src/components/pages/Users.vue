@@ -13,7 +13,15 @@
               <!-- .left-right-aside-column-->
               <div class="page-aside">
                 <div class="right-aside">
-                  <div class="right-page-header">
+                  <div class="right-page-header top-heading-management">
+                  <h3 class="box-title">
+                      Users Managment
+                     
+                      <router-link to="/add-user" class="active"
+                        ><i class="fa fa-plus fa-fw"></i>
+                        Add User
+                      </router-link>
+                    </h3>
                     <div class="pull-right">
                       <form
                         role="form"
@@ -49,14 +57,14 @@
                             class="btn btn-info btn-rounded m-r-5"
                             
                           >
-                            Search
+                            <i class="fa fa-search" aria-hidden="true"></i> Search
                           </button>
                           <button
                             type="reset"
-                            class="btn btn-danger btn-rounded"
+                            class="btn btn-danger btn-rounded cancel-bttnn"
                             @click="clear()"
                           >
-                            Clear
+                            <i class="fa fa-times" aria-hidden="true"></i> Clear
                           </button>
                           <!-- <router-link
                     :to="{ name: 'USERS', force: true }"
@@ -67,14 +75,7 @@
                         </div>
                       </form>
                     </div>
-                    <h3 class="box-title">
-                      Users Managment
-                      <br />
-                      <router-link to="/add-user" class="active"
-                        ><i class="fa fa-plus fa-fw"></i>
-                        Add User
-                      </router-link>
-                    </h3>
+                    
                   </div>
                   <div class="clearfix"></div>
                   <div class="scrollable">
@@ -96,7 +97,7 @@
                             <td>{{ user.email }}</td>
                             <td>
                               <input
-                                type="checkbox"
+                                type="checkbox" class="input-new-style"
                                 v-bind:checked="user.status == '1'"
                                 data-toggle="toggle"
                                 data-size="xs"

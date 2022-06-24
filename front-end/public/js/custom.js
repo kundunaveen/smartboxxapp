@@ -62,6 +62,9 @@ $(function() {
         $(".sidebartoggler i").toggleClass("fa fa-bars");
     });
 
+    // $(".sidebartoggler").on('click', function(){
+    //     $("a.logo b").toggleClass('short-log');
+    //   });
     /* ========== Auto Select Left Navbar ========== */
 
     $(function() {

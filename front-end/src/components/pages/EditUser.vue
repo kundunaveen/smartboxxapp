@@ -10,14 +10,20 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Edit User</div>
+              <div class="panel-heading">Edit User <router-link
+                        type="reset"
+                        to=""
+                        class="btn btn-default cancel-bttnn back-new-bttn"
+                      >
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                      </router-link></div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit.prevent="updateUser">
                     <div class="form-body">
-                      <h3 class="box-title">Edit User</h3>
+                      <!-- h3 class="box-title">Edit User</h3-->
                       <p v-if="error" class="text-danger">{{ error }}</p>
-                      <hr />
+                      <!-- hr /-->
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -177,7 +183,7 @@
                           <div class="form-group">
                             <label>
                               <input
-                                type="checkbox"
+                                type="checkbox" class="input-new-style"
                                 v-bind:checked="user.status == '1'"
                                 data-toggle="toggle"
                                 data-size="xs"
@@ -206,7 +212,7 @@
                         to="/users"
                         class="btn btn-default"
                       >
-                        Cancel
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
                       </router-link>
                     </div>
                   </form>
