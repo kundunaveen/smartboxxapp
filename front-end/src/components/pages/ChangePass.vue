@@ -10,20 +10,23 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Change Password  <router-link
-                        type="reset"
-                        to="/dashboard"
-                        class="btn btn-default cancel-bttnn back-new-bttn"
-                      >
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                      </router-link></div>
+              <div class="panel-heading">
+                Change Password
+                <router-link
+                  type="reset"
+                  to="/dashboard"
+                  class="btn btn-default cancel-bttnn back-new-bttn"
+                >
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit.prevent="updatePassword">
                     <div class="form-body">
                       <!-- <h3 class="box-title">Change Password</h3> -->
                       <p v-if="error" class="text-danger">{{ error }}</p>
-                 
+
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -68,6 +71,7 @@
                         to="/users"
                         class="btn btn-default"
                       >
+                        <i class="fa fa-times" aria-hidden="true"></i>
                         Cancel
                       </router-link>
                     </div>
@@ -77,9 +81,7 @@
             </div>
           </div>
         </div>
-        
       </div>
-    
     </div>
   </div>
 </template>

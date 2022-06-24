@@ -196,7 +196,8 @@
                         to="/dashboard"
                         class="btn btn-default"
                       >
-                        Cancel
+                        <i class="fa fa-times" aria-hidden="true"></i>
+ Cancel
                       </router-link>
                     </div>
                   </form>

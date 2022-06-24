@@ -360,7 +360,7 @@
                 aria-expanded="false"
               >
                 <i class="icon-drawar fa-fw"></i>
-                <span class="hide-menu"> SmartBox Mgmt </span>
+                <span class="hide-menu"> SmartBoxx Mgmt </span>
               </router-link>
             </li>
 

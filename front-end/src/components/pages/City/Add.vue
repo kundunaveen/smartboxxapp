@@ -12,7 +12,7 @@
             <div class="panel panel-info">
               <div class="panel-heading">Add City <router-link
                         type="reset"
-                        to=""
+                      to="/city"
                         class="btn btn-default cancel-bttnn back-new-bttn"
                       >
                         <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
