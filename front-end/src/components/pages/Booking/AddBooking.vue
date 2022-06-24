@@ -12,7 +12,7 @@
             <div class="panel panel-info">
               <div class="panel-heading">Add Booking <router-link
                         type="reset"
-                        to=""
+                               to="/booking"
                         class="btn btn-default cancel-bttnn back-new-bttn"
                       >
                         <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
@@ -186,7 +186,7 @@
                       </button>
                       <router-link
                         type="reset"
-                        to="/users"
+                        to="/booking"
                         class="btn btn-default cancel-bttnn"
                       >
                         <i aria-hidden="true" class="fa fa-times"></i> Cancel

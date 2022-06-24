@@ -12,7 +12,7 @@
             <div class="panel panel-info">
               <div class="panel-heading">Edit Page  <router-link
                         type="reset"
-                        to="/users"
+                        to="/pages"
                         class="btn btn-default cancel-bttnn back-new-bttn"
                       >
                         <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
