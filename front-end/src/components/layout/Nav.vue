@@ -42,7 +42,7 @@
             </form>
           </li>
         </ul>
-        <ul class="nav navbar-top-links navbar-right pull-right">
+        <!-- <ul class="nav navbar-top-links navbar-right pull-right">
           <li class="dropdown">
             <a
               class="dropdown-toggle waves-effect waves-light font-20"
@@ -249,7 +249,7 @@
               <i class="icon-settings"></i>
             </a>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </nav>
     <aside class="sidebar">
