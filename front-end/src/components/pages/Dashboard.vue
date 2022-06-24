@@ -281,7 +281,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-8 col-sm-12">
                         <div class="white-box comment-widget">
                             <h4 class="box-title">Recent Comments</h4>
@@ -393,7 +393,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- ===== Right-Sidebar ===== -->
                 <div class="right-sidebar">
                     <div class="slimscrollright">
@@ -478,7 +478,7 @@
             </div>
             <!-- ===== Page-Container-End ===== -->
             <footer class="footer t-a-c">
-                © 2017 Cubic Admin
+                © 2022 smartboxx
             </footer>
         </div>
   </div>

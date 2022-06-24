@@ -42,6 +42,13 @@
             </form>
           </li>
         </ul>
+        <ul class="nav navbar-top-links navbar-right pull-right">
+          <li>
+            <a href="javascript:void(0)" @click="handleClick"
+              ><i class="fa fa-power-off"></i> Logout</a
+            >
+          </li>
+        </ul>
         <!-- <ul class="nav navbar-top-links navbar-right pull-right">
           <li class="dropdown">
             <a
@@ -281,7 +288,7 @@
                   >
                 </li>
                 <li role="separator" class="divider"></li>
-                <li>
+                <li></li>
                 <li>
                   <router-link to="/change_pass" class="active"
                     ><i class="fa fa-key fa-fw"></i> Change
