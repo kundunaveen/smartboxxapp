@@ -60,21 +60,21 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="datatable">
-                        <thead>
+                      <table class="table" id="datatable">
+                         <thead>
                           <tr>
                             <th class="text-center">ID</th>
                             <th class="text-center">Name</th>
-                            <th>Status</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Actions</th>
                           </tr>
-                        </thead>
+                      </thead>
                         <tbody v-if="devices">
                           <tr
                             v-for="(device, index) in devices"
                             :key="device.id"
                           >
-                            <td>{{ index + 1 }}</td>
+                            <td >{{ index + 1 }}</td>
                             <td>{{ device.name }}</td>
                             <td>
                               <input

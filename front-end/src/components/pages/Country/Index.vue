@@ -60,7 +60,7 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="myTable">
+                      <table class="table" id="myTable">
                         <thead>
                           <tr>
                             <th class="text-center">ID</th>
@@ -69,7 +69,7 @@
                             <th class="text-center">Code</th>
                             <th class="text-center">Actions</th>
                           </tr>
-                        </thead>
+                      </thead>
                         <tbody v-if="countries">
                           <tr
                             v-for="(country, index) in countries"

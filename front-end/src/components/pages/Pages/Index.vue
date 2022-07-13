@@ -14,7 +14,7 @@
               <div class="page-aside">
                 <div class="right-aside">
                   <div class="right-page-header top-heading-management">
-                    <h3 class="box-title">
+                  <h3 class="box-title">
                       Page List
                       <router-link to="/add-page" class="active"
                         ><i class="fa fa-plus fa-fw"></i>
@@ -55,13 +55,14 @@
                         </div>
                       </form> -->
                     </div>
+                    
                   </div>
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="datatable">
+                      <table class="table" id="datatable">
                         <thead>
-                          <tr>
+                          <tr class="text-center">
                             <th class="text-center">ID</th>
                             <th class="text-center">Title</th>
 
@@ -70,11 +71,11 @@
                         </thead>
                         <tbody v-if="pages">
                           <tr v-for="(state, index) in pages" :key="state.id">
-                            <td class="text-center">{{ index + 1 }}</td>
+                            <td >{{ index + 1 }}</td>
 
-                            <td class="text-center">{{ state.title }}</td>
+                            <td >{{ state.title }}</td>
 
-                            <td class="text-center">
+                            <td >
                               <div class="btn-group" role="group">
                                 <router-link
                                   :to="{
@@ -144,8 +145,14 @@ export default {
     this.pages = response.data.data;
     this.loading = false;
 
-    setTimeout(() => {
-      $(".select2").select2();
+      setTimeout(() => {
+      $("#datatable").DataTable({
+        pageLength: 15,
+        bLengthChange: false,
+        filter: false,
+        bInfo: false,
+        sort: false,
+      });
     });
   },
   methods: {

@@ -79,23 +79,23 @@
                   </div>
                   <div class="clearfix"></div>
                   <div class="scrollable">
-                    <div class="table-responsive">
+                       <div class="table-responsive">
                       <table class="table product-overview" id="datatable">
-                        <thead>
+                         <thead>
                           <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Email</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Actions</th>
                           </tr>
-                        </thead>
+                         </thead>
                         <tbody v-if="users">
                           <tr v-for="(user, index) in users" :key="user.id">
-                            <td>{{ index + 1 }}</td>
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>
+                            <td >{{ index + 1 }}</td>
+                            <td >{{ user.name }}</td>
+                            <td >{{ user.email }}</td>
+                            <td >
                               <input
                                 type="checkbox" class="input-new-style"
                                 v-bind:checked="user.status == '1'"

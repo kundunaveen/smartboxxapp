@@ -60,17 +60,17 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="datatable">
-                        <thead>
+                      <table class="table " id="datatable">
+                            <thead>
                           <tr>
-                            <th>ID</th>
-                            <th>UUID</th>
-                            <th>Device Type</th>
-                            <th>Booking Date/Time</th>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">UUID</th>
+                            <th class="text-center">Device Type</th>
+                            <th class="text-center">Booking Date/Time</th>
 
-                            <th>Status</th>
+                            <th class="text-center">Status</th>
 
-                            <th>Action</th>
+                            <th class="text-center">Action</th>
                           </tr>
                         </thead>
                         <tbody v-if="bookings">

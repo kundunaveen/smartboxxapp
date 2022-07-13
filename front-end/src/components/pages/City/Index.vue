@@ -60,8 +60,8 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="datatable">
-                        <thead>
+                      <table class="table  product-overview" id="datatable">
+                         <thead>
                           <tr>
                             <th class="text-center">ID</th>
                             <th class="text-center">Country</th>
@@ -70,7 +70,7 @@
 
                             <th class="text-center">Actions</th>
                           </tr>
-                        </thead>
+                           </thead>
                         <tbody v-if="states">
                           <tr v-for="(state, index) in states" :key="state.id">
                             <td >{{ index + 1 }}</td>
@@ -80,7 +80,7 @@
                             <td >{{ state.state.name }}</td>
                             <td >{{ state.city }}</td>
 
-                            <td >
+                            <td>
                               <div class="btn-group" role="group">
                                 <router-link
                                   :to="{
@@ -100,12 +100,13 @@
                               </div>
                             </td>
                           </tr>
+
                         </tbody>
-                        <tbody v-if="!states.length">
+                        <!-- <tbody v-if="!states.length">
                           <tr>
                             <td>No record found !</td>
                           </tr>
-                        </tbody>
+                        </tbody> -->
                       </table>
                     </div>
                   </div>
