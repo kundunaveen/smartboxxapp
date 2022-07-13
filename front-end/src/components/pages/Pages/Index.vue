@@ -14,7 +14,7 @@
               <div class="page-aside">
                 <div class="right-aside">
                   <div class="right-page-header top-heading-management">
-                  <h3 class="box-title">
+                    <h3 class="box-title">
                       Page List
                       <router-link to="/add-page" class="active"
                         ><i class="fa fa-plus fa-fw"></i>
@@ -55,12 +55,11 @@
                         </div>
                       </form> -->
                     </div>
-                    
                   </div>
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="myTable">
+                      <table class="table product-overview" id="datatable">
                         <thead>
                           <tr>
                             <th class="text-center">ID</th>
@@ -121,7 +120,9 @@ import swal from "sweetalert";
 import axios from "axios";
 import Nav from "../../layout/Nav.vue";
 // import Head from "../../layout/Head.vue";
-
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from "jquery";
 export default {
   name: "PageList",
   components: {
@@ -142,6 +143,10 @@ export default {
 
     this.pages = response.data.data;
     this.loading = false;
+
+    setTimeout(() => {
+      $(".select2").select2();
+    });
   },
   methods: {
     deletePage(id) {

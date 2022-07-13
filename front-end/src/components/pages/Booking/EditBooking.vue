@@ -28,12 +28,13 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label>Select Smartbox</label>
+                            <label>Select Smartboxx</label>
                             <select
                               name="device_id"
-                              class="form-select form-control"
+                              class="form-select form-control "
                               v-model="booking.device_id"
                               required=""
+                              id="smart_box"
                             >
                               <option
                                 v-bind:value="device.id"
@@ -53,6 +54,7 @@
                               class="form-select form-control"
                               v-model="booking.user_id"
                               required=""
+                              id="users"
                             >
                               <option
                                 v-bind:value="user.id"
@@ -234,6 +236,7 @@ import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
 import countries from "./../../../assets/countries";
 import slot from "./../../../assets/slot";
+import $ from "jquery";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -295,6 +298,20 @@ export default {
     console.log("response.data.data", result.data);
     this.users = result.data.data;
     this.loading = false;
+
+    setTimeout(() => {
+      var val = $("#smart_box :selected").val();
+      $("#smart_box").val(val);
+      $("#smart_box").select2().trigger("change");
+      // $("#smart_box").addClass("select2-container form-select form-control select2");
+
+         var vall = $("#users :selected").val();
+      $("#users").val(vall);
+      $("#users").select2().trigger("change");
+      // $("#users").addClass("select2-container form-select form-control select2");
+
+      
+    });
   },
 };
 </script>

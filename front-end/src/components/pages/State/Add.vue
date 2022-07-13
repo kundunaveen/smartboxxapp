@@ -10,13 +10,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Add State <router-link
-                        type="reset"
-                        to="/state"
-                        class="btn btn-default cancel-bttnn back-new-bttn"
-                      >
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                      </router-link></div>
+              <div class="panel-heading">
+                Add State
+                <router-link
+                  type="reset"
+                  to="/state"
+                  class="btn btn-default cancel-bttnn back-new-bttn"
+                >
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit="handleSubmit">
@@ -30,20 +33,19 @@
                             <label>Country</label>
                             <select
                               name="country_id"
-                              class="form-select form-control"
+                              id="country"
+                              class="form-select form-control select2"
                               v-model="country_id"
                               required=""
-                            >
-                              <option value="" v-if="countries">
-                                -- Select country --
+                                    autocomplete="on|off"
+                            ><option value="" v-if="countries">
+                                -- select country --
                               </option>
                               <option
                                 v-bind:value="country.id"
                                 v-for="country in countries"
                                 :key="country.id"
-                              >
-                                {{ country.name }}
-                              </option>
+                              >{{ country.name }}</option>
                             </select>
                           </div>
                         </div>
@@ -64,7 +66,6 @@
                       </div>
                       <!--/row-->
                       <!--/row-->
-                    
 
                       <hr />
                     </div>

@@ -27,22 +27,21 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label>Select Smartbox</label>
+                            <label>Select Smartboxx</label>
                             <select
                               name="device_id"
-                              class="form-select form-control"
+                              class="form-select form-control select2"
                               v-model="device_id"
                               required=""
                             >
-                              <option value="" v-if="devices">
-                                -- Select box --
+                            <option value="" v-if="devices">
+                                -- Select device --
                               </option>
                               <option
                                 v-bind:value="device.id"
                                 v-for="device in devices"
                                 :key="device.id"
-                              >
-                                {{ device.name }}
+                              >{{ device.name }}
                               </option>
                             </select>
                           </div>
@@ -52,8 +51,8 @@
                           <div class="form-group">
                             <label>Select Users</label>
                             <select
-                              name="device_id"
-                              class="form-select form-control"
+                              name="user_id"
+                              class="form-select form-control select2"
                               v-model="user_id"
                               required=""
                             >

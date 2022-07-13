@@ -10,7 +10,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Edit SmartBox <router-link
+              <div class="panel-heading">Edit SmartBoxx <router-link
                         type="reset"
                                      to="/smartbox-list"
                         class="btn btn-default cancel-bttnn back-new-bttn"

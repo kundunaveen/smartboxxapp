@@ -73,14 +73,14 @@
                         </thead>
                         <tbody v-if="states">
                           <tr v-for="(state, index) in states" :key="state.id">
-                            <td class="text-center">{{ index + 1 }}</td>
-                            <td class="text-center">
+                            <td >{{ index + 1 }}</td>
+                            <td >
                               {{ state.country.name }}
                             </td>
-                            <td class="text-center">{{ state.state.name }}</td>
-                            <td class="text-center">{{ state.city }}</td>
+                            <td >{{ state.state.name }}</td>
+                            <td >{{ state.city }}</td>
 
-                            <td class="text-center">
+                            <td >
                               <div class="btn-group" role="group">
                                 <router-link
                                   :to="{

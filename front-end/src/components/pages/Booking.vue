@@ -81,12 +81,15 @@
                             <td>{{ index + 1 }}</td>
                             <td>{{ booking.uuid }}</td>
                             <td>{{ booking.device.name }}</td>
-                            <td>
-                              {{ booking.start_date }} /
-                              {{ booking.start_time }} to {{ booking.end_time
-                              }}<span v-if="booking.end_date">
+                            <td v-if="booking.slot_type=='1'">
+                              {{ booking.start_date }}<span v-if="booking.end_date">
                                 to {{ booking.end_date }}</span
                               >
+                            </td>
+                            <td v-if="booking.slot_type=='0'">
+                              {{ booking.start_date }} /
+                              {{ booking.start_time }} to {{ booking.end_time
+                              }}
                             </td>
                             <td>
                               <button type="button" class="btn btn-success">

@@ -39,6 +39,10 @@
               >
                 Reset
               </button>
+              <div class="bottom">
+                  <span class="helper-text">Know your password? <router-link to="/" >Login</router-link
+                  ></span>
+               </div>
             </div>
           </div>
         </form>

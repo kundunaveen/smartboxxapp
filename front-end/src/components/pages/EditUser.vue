@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-      <div class="preloader" v-if="loading">
+    <div class="preloader" v-if="loading">
       <div class="cssload-speeding-wheel"></div>
     </div>
     <Nav />
@@ -10,13 +10,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Edit User <router-link
-                        type="reset"
-                         to="/users"
-                        class="btn btn-default cancel-bttnn back-new-bttn"
-                      >
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                      </router-link></div>
+              <div class="panel-heading">
+                Edit User
+                <router-link
+                  type="reset"
+                  to="/users"
+                  class="btn btn-default cancel-bttnn back-new-bttn"
+                >
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit.prevent="updateUser">
@@ -64,6 +67,7 @@
                                   class="form-select form-control"
                                   v-model="user.code"
                                   required=""
+                                  id="mobile_code"
                                 >
                                   <option value="" v-if="iteams">
                                     Country
@@ -146,6 +150,7 @@
                               class="form-select form-control"
                               v-model="user.country"
                               required=""
+                              id="country"
                             >
                               <option value="" v-if="iteams">
                                 --select Country--
@@ -183,7 +188,8 @@
                           <div class="form-group">
                             <label>
                               <input
-                                type="checkbox" class="input-new-style"
+                                type="checkbox"
+                                class="input-new-style"
                                 v-bind:checked="user.status == '1'"
                                 data-toggle="toggle"
                                 data-size="xs"
@@ -240,6 +246,7 @@ import countries from "./../../assets/countries";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
+import $ from "jquery";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -261,6 +268,20 @@ export default {
     const response = await axios.get(url1);
     this.user = response.data.data;
     this.loading = false;
+
+    setTimeout(() => {
+      var val = $("#country :selected").val();
+      $("#country").val(val);
+      $("#country").select2().trigger("change");
+      $("#country").addClass("form-select form-control");
+
+         var vall = $("#mobile_code :selected").val();
+      $("#mobile_code").val(vall);
+      $("#mobile_code").select2().trigger("change");
+      $("#mobile_code").addClass("form-select form-control");
+
+      
+    });
   },
   methods: {
     updateUser() {

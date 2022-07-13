@@ -15,7 +15,7 @@
                 <div class="right-aside">
                   <div class="right-page-header top-heading-management">
                   <h3 class="box-title">
-                      Smartbox
+                      Smartboxx
                       <router-link to="/add-smartbox" class="active"
                         ><i class="fa fa-plus fa-fw"></i>
                         Add

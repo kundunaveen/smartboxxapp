@@ -230,8 +230,8 @@ export default {
     },
     check(id) {
       axios.put(`/api/status_change/${id}`).then(() => {
-        swal("Status update!", "Status has been change!", "success");
-        this.$toaster.success("Status has been change! successfully.");
+        // swal("Status update!", "Status has been change", "success");
+        this.$toaster.success("Status has been change successfully.");
       });
     },
     clear() {

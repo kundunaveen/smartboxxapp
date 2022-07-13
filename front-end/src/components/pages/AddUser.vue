@@ -148,7 +148,7 @@
                             <label>Country</label>
                             <select
                               name="code"
-                              class="form-select form-control"
+                              class="form-select form-control select2"
                               v-model="country"
                               required=""
                               autocomplete="on|off"

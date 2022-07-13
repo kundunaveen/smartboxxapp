@@ -30,7 +30,7 @@
                             <label>Country</label>
                             <select
                               name="country_id"
-                              class="form-select form-control"
+                              class="form-select form-control "
                               v-model="country_id"
                               required=""
                               @change="onChange($event)"
@@ -55,7 +55,7 @@
                             <label>State</label>
                             <select
                               name="state_id"
-                              class="form-select form-control"
+                              class="form-select form-control select2"
                               v-model="state_id"
                               required=""
                             >
