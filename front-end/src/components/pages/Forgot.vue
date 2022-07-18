@@ -8,10 +8,14 @@
         <form class="form-horizontal" id="" @submit="handleSubmit">
           <div class="form-group">
             <div class="col-xs-12">
-              <h3>Recover Password</h3>
+              <h3 class="text-center box-title mb-0">Recover Password</h3>
+              <div class="seprators"></div>
+              <div class="head reset-pwd">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png" alt="">
+              </div>
               <p v-if="error" class="text-danger">{{ error }}</p>
               <p v-if="success" class="text-success">{{ success }}</p>
-              <p class="text-muted">
+              <p class="text-muted center">
                 Enter your Email and instructions will be sent to you!
               </p>
             </div>
@@ -39,7 +43,7 @@
               >
                 Reset
               </button>
-              <div class="bottom">
+              <div class="bottom pt-3">
                   <span class="helper-text">Know your password? <router-link to="/" >Login</router-link
                   ></span>
                </div>

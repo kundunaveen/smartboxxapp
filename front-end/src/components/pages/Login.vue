@@ -6,7 +6,11 @@
     <div class="login-box">
       <div class="white-box">
         <form @submit="handleSubmit" class="form-horizontal form-material">
-          <h3 class="box-title m-b-20">Sign In</h3>
+          <h3 class="box-title mb-0">Sign In</h3>
+          <div class="seprators"></div>
+          <div class="head">
+						<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png" alt="">
+					</div>
           <p v-if="error" class="text-danger">{{ error }}</p>
           <div
             class="
@@ -46,9 +50,9 @@
             <div class="col-md-12">
               <div class="checkbox checkbox-primary pull-left p-t-0">
                 <input id="checkbox-signup" type="checkbox" />
-                <label for="checkbox-signup"> Remember me </label>
+                <label for="checkbox-signup text-grey">&nbsp; Remember me </label>
               </div>
-              <router-link class="text-dark pull-right" to="/forgot"
+              <router-link class="text-grey pull-right" to="/forgot"
                 >Lost your password?</router-link
               >
             </div>
