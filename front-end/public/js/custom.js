@@ -117,10 +117,6 @@ $(function() {
 // }
 
 (function($, window, document) {
-    $(".select2").select2();
-    // setTimeout(selected(), 9000);
-    
-
     var panelSelector = '[data-perform="panel-collapse"]',
         panelRemover = '[data-perform="panel-dismiss"]';
     $(panelSelector).each(function() {

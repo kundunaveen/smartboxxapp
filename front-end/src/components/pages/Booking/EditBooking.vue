@@ -1,8 +1,7 @@
 <template>
   <div id="wrapper">
-
     <Nav />
-        <div class="preloader" v-if="loading">
+    <div class="preloader" v-if="loading">
       <div class="cssload-speeding-wheel"></div>
     </div>
     <div class="page-wrapper">
@@ -11,13 +10,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Edit Booking <router-link
-                        type="reset"
-                           to="/booking"
-                        class="btn btn-default cancel-bttnn back-new-bttn"
-                      >
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                      </router-link></div>
+              <div class="panel-heading">
+                Edit Booking
+                <router-link
+                  type="reset"
+                  to="/booking"
+                  class="btn btn-default cancel-bttnn back-new-bttn"
+                >
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit.prevent="updateBooking">
@@ -29,21 +31,20 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Select Smartboxx</label>
-                            <select
-                              name="device_id"
-                              class="form-select form-control "
-                              v-model="booking.device_id"
+
+                            <Select2
+                              v-model="selectedValue"
+                              :options="devices"
+                              :settings="{ width: '100%' }"
+                              @select="onChange($event)"
                               required=""
-                              id="smart_box"
+                            
+                              
                             >
-                              <option
-                                v-bind:value="device.id"
-                                v-for="device in devices"
-                                :key="device.id"
-                              >
-                                {{ device.name }}
-                              </option>
-                            </select>
+                              <!-- <option disabled value="0">Select</option> -->
+                            </Select2>
+                            <!-- <h4>arry: {{ devices }}</h4>
+                            <h4>Value: {{ selectedValue }}</h4> -->
                           </div>
                         </div>
                         <!--/span-->
@@ -227,6 +228,8 @@
   </div>
 </template>
 <script>
+// import $ from "jquery";
+
 import Nav from "./../../layout/Nav.vue";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
@@ -236,7 +239,7 @@ import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
 import countries from "./../../../assets/countries";
 import slot from "./../../../assets/slot";
-import $ from "jquery";
+import Select2 from "vue3-select2-component";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -244,7 +247,8 @@ export default {
   data() {
     return {
       booking: {},
-      devices: "",
+      // devices: [],
+      selected: "",
       range_date: this.endDate,
       endDate: "",
       error: null,
@@ -254,8 +258,15 @@ export default {
       editstart: "",
       editend: "",
       users: {},
+      slot_type: "",
+      time1: "",
+      loading: false,
+      device_id: "",
+      selectedValue: "",
+      devices: [],
     };
   },
+
   methods: {
     updateBooking() {
       this.booking.range_date = this.endDate;
@@ -272,26 +283,18 @@ export default {
           }
         });
     },
+    onChange(event) {
+      this.booking.device_id = event.id;
+    },
   },
   components: {
     Nav,
     DatePicker,
+    Select2,
   },
   async created() {
     this.loading = true;
-    const response = await axios.get(
-      `/api/view_booking/${this.$route.params.id}`
-    );
-    this.booking = response.data.data;
-    this.editstart = response.data.data.start_time;
-    this.editend = response.data.data.end_time;
-
-    this.endDate = [
-      new Date(response.data.data.start_date),
-      new Date(response.data.data.end_date),
-    ];
-
-    const res = await axios.get("/api/get_device");
+    const res = await axios.get("/api/device_list_dropdown");
     this.devices = res.data.data;
 
     const result = await axios.get("/api/users");
@@ -299,15 +302,32 @@ export default {
     this.users = result.data.data;
     this.loading = false;
 
-    setTimeout(() => {
-      var val = $("#smart_box :selected").val();
-      $("#smart_box").val(val);
-      $("#smart_box").select2().trigger("change");
+    const response = await axios.get(
+      `/api/view_booking/${this.$route.params.id}`
+    );
+    this.booking = response.data.data;
+
+    this.editstart = response.data.data.start_time;
+    this.editend = response.data.data.end_time;
+    this.selectedValue = response.data.data.device_id;
+    this.selectedValue = [{ "id": 128, "text": "smart one" }]
+    // this.selectedValue = ({id: 'EN', text: 'en', selected: ifSelected})
+
+    this.endDate = [
+      new Date(response.data.data.start_date),
+      new Date(response.data.data.end_date),
+    ];
+
+     setTimeout(() => {
+      // var val = this.booking.device_id;
+      
+      // $("#smart_box").val(val);
+      // $("#smart_box").select2().trigger("change");
       // $("#smart_box").addClass("select2-container form-select form-control select2");
 
-         var vall = $("#users :selected").val();
-      $("#users").val(vall);
-      $("#users").select2().trigger("change");
+      //    var vall = $("#users :selected").val();
+      // $("#users").val(vall);
+      // $("#users").select2().trigger("change");
       // $("#users").addClass("select2-container form-select form-control select2");
 
       

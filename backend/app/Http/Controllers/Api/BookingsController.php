@@ -14,6 +14,8 @@ use Carbon\Carbon;
 use Validator;
 use App\Models\Device;
 use App\Models\DeviceImages;
+use App\Models\User;
+use Mail;
 
 class BookingsController extends Controller
 {
@@ -58,7 +60,7 @@ class BookingsController extends Controller
      */
     public function sendResponseError($result, $message)
     {
-        $response = ['success' => true, 'data' => $result, 'message' => $message, 'code' => '201'];
+        $response = ['error' => true, 'data' => $result, 'message' => $message, 'code' => '201'];
 
         return response()->json($response, 201);
     }
@@ -108,6 +110,8 @@ class BookingsController extends Controller
             $input = $request->all();
 
             if ($input['slot_type'] == '1') {
+
+
                 // $input['start_date'] = strpos($input['range_date'][0], "T") ? substr($input['range_date'][0], 0, strpos($input['range_date'][0], "T")) : $input['range_date'][0];
                 // $input['end_date'] = strpos($input['range_date'][1], "T") ? substr($input['range_date'][1], 0, strpos($input['range_date'][1], "T")) : $input['range_date'][1];
                 $input['start_date'] = Carbon::parse($request['range_date'][0])->setTimezone('Asia/Kolkata')->toDateString();
@@ -122,6 +126,18 @@ class BookingsController extends Controller
                     return $this->sendResponseError($alreadyExist, 'Slot not available Please select another date');
                 }
             } else {
+                $validator = Validator::make($request->all(), [
+
+                    'start_date' => 'required',
+                    'start_time' => 'required',
+                    'end_time' => 'required',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['Status' =>
+                    false, 'message' => $validator->errors()->first(), 'Data' => '', 'Status_code' => "401"]);
+                }
+
+
                 $s = $input['start_time'];
                 $e = $input['end_time'];
                 if ($s == $e) {
@@ -183,6 +199,21 @@ class BookingsController extends Controller
                     $availability['end_time'] = date('H:i:s', strtotime($input['end_time']));
                     availability::create($availability);
                 }
+                $travler = User::find($booking['user_id']);
+                $data = [
+                    'subject' => 'SmartBox:Your Booking Status',
+                    'email' => $travler['email'],
+                    'status' => isset($booking['status']) ? $booking['status'] : 'N/A',
+                    'order_number' => isset($booking['uuid']) ? $booking['uuid'] : 'N/A',
+                    'name' => isset($travler->name) ? $travler->name : 'N/A',
+                ];
+
+
+                $success =  Mail::send('email.booking_status', $data, function ($message) use ($data) {
+                    $message->to($data['email'])
+                        ->subject($data['subject']);
+                });
+
                 return $this->sendResponse($booking, 'Booking add successfully');
             } else {
                 return $this->sendResponseError($booking, 'Booking not add successfully');
@@ -231,7 +262,7 @@ class BookingsController extends Controller
     {
         try {
             if ($request->isMethod('get')) {
-                $user = Booking::find($id);
+                $user = Booking::with('device')->find($id);
                 if ($user) {
                     return $this->sendResponse($user, 'Booking List');
                 } else {
@@ -249,7 +280,10 @@ class BookingsController extends Controller
         if ($request->isMethod('put')) {
             $booking = Booking::find($id);
             $input = $request->all();
+         
             if ($input['slot_type'] == '1') {
+          
+               
                 $input['start_date'] = Carbon::parse($request['range_date'][0])->setTimezone('Asia/Kolkata')->toDateString();
                 $input['end_date'] = Carbon::parse($request['range_date'][1])->setTimezone('Asia/Kolkata')->toDateString();
                 // $input['start_date'] = strpos($input['range_date'][0], "T") ? substr($input['range_date'][0], 0, strpos($input['range_date'][0], "T")) : $input['range_date'][0];
@@ -291,11 +325,13 @@ class BookingsController extends Controller
                     // 'city' => $input['city'],
                     // 'zip' => $input['zip'],
                     // 'mobile' => $input['mobile'],
+                    'status' => $input['status'],
                     'user_id' => $input['user_id'],
                     'start_date' => $input['start_date'],
                     'end_date' => $input['end_date']
                 ]);
             } else {
+             
                 $input['start_date'] = $input['start_date'];
                 $alreadyExist = availability::where('booking_id', '!=', $id)->whereDate('date', '=', $input['start_date'])->get();
                 if (count($alreadyExist) > 0) {
@@ -311,7 +347,7 @@ class BookingsController extends Controller
                     $availability['date'] =  $input['start_date'];
                     availability::create($availability);
                 }
-
+           
                 $booking->update([
                     'slot_type' => $input['slot_type'],
                     'device_id' => isset($input['device_id']) ? $input['device_id'] : $booking['device_id'],
@@ -322,6 +358,7 @@ class BookingsController extends Controller
                     // 'city' => isset($input['city']) ? $input['city'] : $booking['city'],
                     // 'zip' => isset($input['zip']) ? $input['zip'] : $booking['zip'],
                     // 'code' => isset($input['code']) ? $input['code'] : $booking['code'],
+                    'status' => $input['status'],
                     'start_date' => $input['start_date'],
                     'end_date' => NULL,
                     'user_id' => $input['user_id'],
@@ -340,7 +377,32 @@ class BookingsController extends Controller
 
     }
 
+    public function deviceListDropDown()
+    {
 
+        try {
+            // $query = Device::latest();
+            // if (isset($request['search']) && $request['search'] != null) {
+
+            //     $query->where('name', $request['search']);
+            // }
+
+            $device = Device::orderBy('name', 'ASC')->get();
+            if ($device) {
+
+                foreach ($device as $val) {
+                    $temp['id'] = $val->id;
+                    $temp['text'] = $val->name;
+                    $res[] = $temp;
+                }
+                return $this->sendResponse($res, 'device List');
+            } else {
+                return $this->sendResponse($device, 'No record found');
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Somthig is wrong.'], 404);
+        }
+    }
     public function deviceList(Request $request)
     {
         try {

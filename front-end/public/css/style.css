@@ -16512,3 +16512,28 @@ span.select2.select2-container.select2-container--default span.select2-selection
 
     top: 4px !important;
 }
+
+.tooltips {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltips .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+    font-size: 12px;
+}
+
+.tooltips:hover .tooltiptext {
+    visibility: visible;
+}

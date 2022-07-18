@@ -31,22 +31,14 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Country</label>
-                            <select
-                              name="country_id"
-                              id="country"
-                              class="form-select form-control select2"
-                              v-model="country_id"
-                              required=""
-                                    autocomplete="on|off"
-                            ><option value="" v-if="countries">
-                                -- select country --
-                              </option>
-                              <option
-                                v-bind:value="country.id"
-                                v-for="country in countries"
-                                :key="country.id"
-                              >{{ country.name }}</option>
-                            </select>
+                              <Select2
+                                  v-model="country_id"
+                                  :options="countries"
+                                  :settings="{ width: '100%' }"
+                                  @select="onChange($event)"
+                                />
+                               
+                          
                           </div>
                         </div>
                         <!--/span-->
@@ -110,6 +102,9 @@ import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
+import Select2 from "vue3-select2-component";
+
+import $ from "jquery";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -126,15 +121,25 @@ export default {
 
   components: {
     Nav,
+     Select2,
   },
   async created() {
     this.loading = true;
-    const response = await axios.get("/api/country");
+    const response = await axios.get("/api/country_without_code");
     this.loading = false;
 
     this.countries = response.data.data;
+    setTimeout(() => {
+      $("#country").select2();
+     
+    });
   },
   methods: {
+      onChange(val) {
+
+      this.country_id = val.id;
+     
+    },
     async handleSubmit(e) {
       e.preventDefault();
 

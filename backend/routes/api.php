@@ -28,6 +28,8 @@ Route::post('/reset_password', [ForgotPasswordController::class, 'reset']);
 Route::group(['middleware' => 'auth:api'], function () {
   Route::post('/test', [UsersController::class, 'changePasswordPost']);
   Route::get('/users', [UsersController::class, 'index']);
+  Route::get('get-address-from-ip/{ip}', [UsersController::class, 'getLocation']);
+  Route::get('/users_list_dropdown', [UsersController::class, 'usersListDropdown']);
   Route::post('/search', [UsersController::class, 'search']);
   Route::get('/get_details', [UsersController::class, 'getDetails']);
   Route::get('/users', [UsersController::class, 'index']);
@@ -48,14 +50,21 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::get('/view_booking/{id}', [BookingsController::class, 'view']);
   Route::put('/update_booking/{id}', [BookingsController::class, 'update']);
   Route::get('/device_list', [BookingsController::class, 'deviceList']);
+  
   Route::delete('/device_delete/{id}', [BookingsController::class, 'deleteDevice']);
+  Route::any('/device_list_dropdown', [BookingsController::class, 'deviceListDropDown']);
   Route::post('/add_device', [BookingsController::class, 'addDevice']);
   Route::put('/device_status_change/{id}', [BookingsController::class, 'statusChange']);
   Route::get('/view_device/{id}', [BookingsController::class, 'viewDevice']);
   Route::post('/update_device', [BookingsController::class, 'updateDevice']);
 
   Route::resource('/country', CountryController::class);
+  Route::get('/country_with_code', [CountryController::class, 'countWithCode']);
+  Route::get('/country_without_code', [CountryController::class, 'countryWithOutCode']);
+  
+  
   Route::resource('/state', StateController::class);
+  Route::get('/state_drop_down',[StateController::class,'stateDropdown'] );
   Route::resource('/city', CityController::class);
   Route::get('/get_state/{id}', [CityController::class, 'getState']);
   Route::resource('/page-type', PageTypeController::class);
