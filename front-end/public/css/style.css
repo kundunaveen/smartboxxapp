@@ -4340,14 +4340,14 @@ table.focus-on tbody tr.focused th {
 .login-register {
     background: url(../plugins/images/login-register.jpg) center center/cover no-repeat!important;
     height: 100%;
-    position: fixed
+    position: fixed;
+    background-size:cover;
 }
 
 .login-box {
-    background: #fff;
     width: 400px;
-    margin: 10% auto 0
-}
+    margin: 10% 45%;
+} 
 
 .login-box .footer {
     width: 100%;
@@ -4358,6 +4358,11 @@ table.focus-on tbody tr.focused th {
 .login-box .social {
     display: block;
     margin-bottom: 30px
+}
+
+.login-box input {
+    background: #fff !important;
+    padding: 0 12px !important;
 }
 
 #recoverform {
@@ -5857,18 +5862,29 @@ ul.list-icons li i {
 }
 
 .white-box {
-    background: #fff;
+    background: transparent;
     padding: 25px;
     margin-bottom: 30px;
-    border: 1px solid #e5ebec;
-    border-radius: 4px
+    border: 2px solid #e5ebec;
+    border-radius: 20px;
+    position:relative;
 }
 
 .white-box .box-title {
-    margin: 10px 0 12px;
+    margin: 25px 0 12px;
     font-weight: 600;
-    font-size: 18px
+    text-align:center;
+   
 }
+
+
+.head {
+    position: absolute;
+    top: -12%;
+    left: 40%;
+}
+
+.head img { width:80px; height:80px;}
 
 .info-box {
     background: #fff;
@@ -16152,16 +16168,15 @@ img.dark-logo {
 }
 
 button.btn.btn-info.btn-lg.btn-block.text-uppercase.waves-effect.waves-light {
-    font-size: 22px;
-    text-transform: uppercase;
+    font-size: 18px;
+    border-radius: 0px;
+    text-transform: capitalize;
     background-color: #EAC48F;
-    color: #000;
-    border-radius: 0 0 0 0;
     display: inline-block;
     padding: 12px 24px;
-    line-height: 1;
     text-align: center;
     border: none;
+    color:#333;
     transition: all .3s ease;
 }
 button.btn.btn-info.btn-lg.btn-block.text-uppercase.waves-effect.waves-light:hover {
@@ -16170,17 +16185,25 @@ button.btn.btn-info.btn-lg.btn-block.text-uppercase.waves-effect.waves-light:hov
     transition: all .3s ease;
 }
 .reset-password-bttn{
-    font-size: 22px;
-    text-transform: uppercase;
+    font-size:18px;
+    text-transform: capitalize;
     background-color: #EAC48F;
-    color: #000;
     border-radius: 0 0 0 0;
     display: inline-block;
     padding: 12px 24px;
-    line-height: 1;
+   color:#333;
     text-align: center;
     border: none;
     transition: all .3s ease;
+}
+.login-box .checkbox input[type=checkbox]{
+
+width:24px; height:18px;
+
+}
+span.helper-text {
+    margin-top: 15px;
+    display: block;
 }
 
 .reset-password-bttn:hover {
@@ -16337,13 +16360,6 @@ a.btn.btn-default.cancel-bttnn.back-new-bttn {
     padding: 6px 0;
 }
 
-/*.sales-box-size {
-    min-height: 150px;
-    background-color: #fff;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}*/
 .form-actions button.btn.btn-success {
     min-width: 100px;
 }
@@ -16511,4 +16527,60 @@ span.select2.select2-container.select2-container--default span.select2-selection
 .select2-container--default .select2-selection--single .select2-selection__arrow {
 
     top: 4px !important;
+}
+
+.seprators {
+    width: 50px;
+    border: 1px solid #fff;
+    display: block;
+    text-align: center;
+    margin: 0 auto 40px auto;
+}
+
+.login-box h3{ color:#fff}
+.text-grey{ color:#8d9498 !important;}
+
+.head.reset-pwd{ top: -49%; left: 39%; }
+
+@media(min-width:991px){
+#datatable tr th:last-child, table#datatable tr th:last-child, #myTable tr th:last-child, #datatable tr th:last-child {
+    width: 18% !important;
+}
+.white-box.user-table .table tr th:last-child {
+    width: 10%;
+}
+
+}
+
+
+
+@media only screen and (max-width: 767px){
+	.login-register {
+    background: url(../plugins/images/login-register.jpg), rgba(0 0 0) !important;
+    height: 100%;
+    position: fixed!important;
+    background-position: 20px  -59px !important;
+    background-repeat: no-repeat!important;
+    background-size: cover!important;
+}
+.login-box {
+    width: 90%!important;
+	margin: 20% 5%;
+}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px){
+	.login-box {
+   margin:10% 50%;
+    width: 330px;
+    
+}
+.login-register {
+    background: url(../plugins/images/login-register.jpg), rgba(0 0 0)!important;
+    height: 100%;
+        position: fixed!important;
+    background-position: 10px 0px!important;
+    background-repeat: no-repeat!important;
+    background-size: cover!important;
+}
 }
