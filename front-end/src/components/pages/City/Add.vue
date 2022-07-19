@@ -10,13 +10,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Add City <router-link
-                        type="reset"
-                      to="/city"
-                        class="btn btn-default cancel-bttnn back-new-bttn"
-                      >
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                      </router-link></div>
+              <div class="panel-heading">
+                Add City
+                <router-link
+                  type="reset"
+                  to="/city"
+                  class="btn btn-default cancel-bttnn back-new-bttn"
+                >
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit="handleSubmit">
@@ -28,51 +31,27 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Country</label>
-                            <select
-                              name="country_id"
-                              class="form-select form-control"
+                            <Select2
                               v-model="country_id"
+                              :options="countries"
+                              :settings="{ width: '100%' }"
+                              @select="onChange($event)"
                               required=""
-                              @change="onChange($event)"
-                            >
-                              <option value="" v-if="countries">
-                                -- Select country --
-                              </option>
-
-                              <option
-                                v-bind:value="country.id"
-                                v-for="country in countries"
-                                :key="country.id"
-                              >
-                                {{ country.name }}
-                              </option>
-                            </select>
+                            />
                           </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>State</label>
-                            <select
-                              name="state_id"
-                              class="form-select form-control"
+                            <Select2
                               v-model="state_id"
+                              :options="states"
+                              :settings="{ width: '100%' }"
+                              @select="onChangeState($event)"
                               required=""
-                            >
-                              <option value="" v-if="states">
-                                -- Select state --
-                              </option>
-                              <option value="" v-if="!states">
-                                -- Please Select country --
-                              </option>
-                              <option
-                                v-bind:value="state.id"
-                                v-for="state in states"
-                                :key="state.id"
-                              >
-                                {{ state.name }}
-                              </option>
-                            </select>
+                            />
+                          
                           </div>
                         </div>
                         <!--/span-->
@@ -151,6 +130,8 @@ import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
+import $ from "jquery";
+import Select2 from "vue3-select2-component";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -173,15 +154,33 @@ export default {
 
   components: {
     Nav,
+    Select2,
   },
   async created() {
     this.loading = true;
-    const response = await axios.get("/api/country");
+    const response = await axios.get("/api/country_without_code");
     this.loading = false;
 
     this.countries = response.data.data;
+    setTimeout(() => {
+      // $("#country").select2();
+      $("#state").select2();
+    });
   },
   methods: {
+    onChange(event) {
+      this.loading = true;
+      axios.get(`/api/get_state/${event.id}`).then((res) => {
+        this.loading = false;
+        this.states = res.data.data;
+        // this.$toaster.success("Status has been change! successfully.");
+      });
+      this.country_id = event.id;
+    },
+     onChangeState(event) {
+     
+      this.state_id = event.id;
+    },
     async handleSubmit(e) {
       e.preventDefault();
 
@@ -208,14 +207,6 @@ export default {
           console.log(err.errors);
           this.error = "Record not save please check";
         });
-    },
-    onChange(event) {
-      this.loading = true;
-      axios.get(`/api/get_state/${event.target.value}`).then((res) => {
-        this.loading = false;
-        this.states = res.data.data;
-        // this.$toaster.success("Status has been change! successfully.");
-      });
     },
   },
 };

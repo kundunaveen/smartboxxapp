@@ -60,17 +60,17 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="datatable">
-                        <thead>
+                      <table class="table " id="datatable">
+                            <thead>
                           <tr>
-                            <th>ID</th>
-                            <th>UUID</th>
-                            <th>Device Type</th>
-                            <th>Booking Date/Time</th>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">UUID</th>
+                            <th class="text-center">Device Type</th>
+                            <th class="text-center">Booking Date/Time</th>
 
-                            <th>Status</th>
+                            <th class="text-center">Status</th>
 
-                            <th>Action</th>
+                            <th class="text-center">Action</th>
                           </tr>
                         </thead>
                         <tbody v-if="bookings">
@@ -81,12 +81,15 @@
                             <td>{{ index + 1 }}</td>
                             <td>{{ booking.uuid }}</td>
                             <td>{{ booking.device.name }}</td>
-                            <td>
-                              {{ booking.start_date }} /
-                              {{ booking.start_time }} to {{ booking.end_time
-                              }}<span v-if="booking.end_date">
+                            <td v-if="booking.slot_type=='1'">
+                              {{ booking.start_date }}<span v-if="booking.end_date">
                                 to {{ booking.end_date }}</span
                               >
+                            </td>
+                            <td v-if="booking.slot_type=='0'">
+                              {{ booking.start_date }} /
+                              {{ booking.start_time }} to {{ booking.end_time
+                              }}
                             </td>
                             <td>
                               <button type="button" class="btn btn-success">

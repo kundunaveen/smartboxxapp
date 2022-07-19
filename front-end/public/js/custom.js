@@ -105,10 +105,16 @@ $(function() {
     $(function() {
         $('#side-menu').metisMenu();
     });
+    
 
 });
 
 /* ========== Collapsible Panels JS ========== */
+
+// function selected(){
+//    var value= $(".select2").find(':selected').val();
+//     alert('sdf',value);
+// }
 
 (function($, window, document) {
     var panelSelector = '[data-perform="panel-collapse"]',
@@ -220,3 +226,5 @@ $('.visited li a').on('click', function(e) {
     }
     e.preventDefault();
 });
+
+

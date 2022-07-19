@@ -25,7 +25,8 @@ class Booking extends Model
         'state',
         'city',
         'zip',
-        'country'
+        'country',
+        'status'
     ];
 
     public function device(){

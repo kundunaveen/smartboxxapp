@@ -1,5 +1,8 @@
 <template>
   <div id="wrapper">
+    <div class="preloader" v-if="loading">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
     <Nav />
     <div class="page-wrapper">
       <div class="container-fluid">
@@ -7,13 +10,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Add User <router-link
-                        type="reset"
-                        to="/users"
-                        class="btn btn-default cancel-bttnn back-new-bttn"
-                      >
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                      </router-link></div>
+              <div class="panel-heading">
+                Add User
+                <router-link
+                  type="reset"
+                  to="/users"
+                  class="btn btn-default cancel-bttnn back-new-bttn"
+                >
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit="handleSubmit">
@@ -56,27 +62,15 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label class="control-label">Mobile</label>
-                            
+
                             <div class="row">
                               <div class="col-lg-6">
-                                <select
-                                  name="code"
-                                  class="form-select form-control select2"
+                                <Select2
                                   v-model="code"
-                                  required=""
-                                  autocomplete="on|off"
-                                >
-                                  <option value="" v-if="iteams">
-                                    --select Country--
-                                  </option>
-                                  <option
-                                    v-bind:value="iteam.dial_code"
-                                    v-for="iteam in iteams"
-                                    :key="iteam.code"
-                                  >
-                                    {{ iteam.name }} {{ iteam.dial_code }}
-                                  </option>
-                                </select>
+                                  :options="code_with_countries"
+                                  :settings="{ width: '100%' }"
+                                  @select="onChange($event)"
+                                />
                               </div>
                               <div class="col-lg-6">
                                 <input
@@ -146,24 +140,13 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Country</label>
-                            <select
-                              name="code"
-                              class="form-select form-control"
+                            <Select2
                               v-model="country"
-                              required=""
-                              autocomplete="on|off"
-                            >
-                              <option value="" v-if="iteams">
-                                --select Country--
-                              </option>
-                              <option
-                                v-bind:value="iteam.name"
-                                v-for="iteam in iteams"
-                                :key="iteam.code"
-                              >
-                                {{ iteam.name }}
-                              </option>
-                            </select>
+                              :options="iteams"
+                              :settings="{ width: '100%' }"
+                              @select="onChangeCountry($event)"
+                              id="country"
+                            />
                           </div>
                         </div>
                         <!--/span-->
@@ -188,7 +171,11 @@
                       <hr />
                     </div>
                     <div class="form-actions">
-                      <button type="submit" class="btn btn-success " style="margin-right:8px">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        style="margin-right: 8px"
+                      >
                         <i class="fa fa-check"></i> Save
                       </button>
                       <router-link
@@ -220,10 +207,12 @@
 <script>
 import Nav from "./../layout/Nav.vue";
 import axios from "axios";
-import countries from "./../../assets/countries";
+
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
+import Select2 from "vue3-select2-component";
+
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -236,15 +225,59 @@ export default {
       phone: "",
       address: "",
       error: null,
-      iteams: countries,
+      iteams: [],
+      code_with_countries: [],
       code: "",
       city: "",
       state: "",
       country: "",
       zip: "",
+      loading: false,
     };
   },
+
+  async created() {
+    this.loading = true;
+
+    const response = await axios.get("/api/country_with_code");
+    this.code_with_countries = response.data.data;
+    const responses = await axios.get("/api/country_without_code");
+    this.iteams = responses.data.data;
+    // var country = responses.data.data;
+    fetch("https://api.ipify.org?format=json")
+      .then((x) => x.json())
+      .then(({ ip }) => {
+        axios.get(`/api/get-address-from-ip/${ip}`).then((result) => {
+          this.state = result.data.data.regionName;
+          this.city = result.data.data.cityName;
+          this.zip = result.data.data.zipCode;
+          // for (let x in country) {
+          //   if (country[x].text == result.data.data.countryName) {
+          //     var id = responses[x].id;
+              
+          //     var text = responses[x].text;
+          //     this.country = { id, text };
+             
+          //   }
+          // }
+          // this.country = result.data.data.countryName;
+        });
+
+        //  this.state = location.data.regionName
+      });
+
+    this.loading = false;
+  },
   methods: {
+    mySelectEvent({ id, text }) {
+      console.log({ id, text });
+    },
+    onChange(val) {
+      this.code = val.id;
+    },
+    onChangeCountry(val) {
+      this.country = val.id;
+    },
     async handleSubmit(e) {
       e.preventDefault();
 
@@ -273,7 +306,6 @@ export default {
           }
         })
         .catch((err) => {
-          // console.log(err.errors);
           this.$toaster.error(err.errors);
           this.error = "Record not save please check";
         });
@@ -281,6 +313,7 @@ export default {
   },
   components: {
     Nav,
+    Select2,
   },
 };
 </script>

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Hash;
 use Illuminate\Support\Str;
-
+use Location;
 
 
 
@@ -216,7 +216,7 @@ class UsersController extends Controller
     {
         try {
             if ($request->isMethod('get')) {
-                $user = User::find($id);
+                $user = User::with(['code','country'])->find($id);
                 if ($user) {
                     $user->delete();
                     // if ($user->move_to_trash == '1') {
@@ -252,7 +252,7 @@ class UsersController extends Controller
                     $id = auth()->user()->id;
                 }
 
-                $user = User::find($id);
+                $user = User::with(['code','country'])->find($id);
                 if ($user) {
 
                     return $this->sendResponse($user, 'User record is');
@@ -370,6 +370,27 @@ class UsersController extends Controller
         }
     }
 
+    public function usersListDropdown()
+    {
+
+        try {
+            $user = User::where('move_to_trash', '=', '0')->where('id', '!=', 1)->orderBy('id', 'desc')->get();
+            if ($user) {
+
+                foreach ($user as $val) {
+                    $temp['id'] = $val->id;
+                    $temp['text'] = $val->name.' '.$val->last_name;
+                    $res[] = $temp;
+                }
+                return $this->sendResponse($res, 'User List');
+            } else {
+                return $this->sendResponse($user, 'No record found');
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Somthig is wrong.'], 404);
+        }
+    }
+
     public function getDevice()
     {
 
@@ -441,5 +462,14 @@ class UsersController extends Controller
         });
 
         return response()->json(["msg" => 'Reset password link sent on your email id.']);
+    }
+
+
+    public function getLocation($ip)
+    {
+         
+            $data = \Location::get($ip);
+            return $this->sendResponse($data, ' Location is:');
+            // return response()->json(["data" => $data]);
     }
 }

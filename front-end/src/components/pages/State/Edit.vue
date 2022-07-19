@@ -10,13 +10,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Edit State <router-link
-                        type="reset"
-                       to="/state"
-                        class="btn btn-default cancel-bttnn back-new-bttn"
-                      >
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                      </router-link></div>
+              <div class="panel-heading">
+                Edit State
+                <router-link
+                  type="reset"
+                  to="/state"
+                  class="btn btn-default cancel-bttnn back-new-bttn"
+                >
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit.prevent="updatestate">
@@ -30,9 +33,10 @@
                             <label>Country</label>
                             <select
                               name="country_id"
-                              class="form-select form-control"
+                              class="form-select form-control "
                               v-model="country.country_id"
                               required=""
+                              id="country"
                             >
                               <option value="" v-if="countries">
                                 -- Select country --
@@ -109,6 +113,7 @@ import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
+import $ from "jquery";
 
 Vue.use(Toaster, { timeout: 5000 });
 
@@ -147,6 +152,15 @@ export default {
     const response1 = await axios.get("/api/country");
     this.countries = response1.data.data;
     this.loading = false;
+
+    setTimeout(() => {
+     var val = $('#country :selected').val();
+     $('#country').val(val);
+    $('#country').select2().trigger('change');
+    $('#country').addClass('form-select form-control');
+     
+
+    });
   },
 };
 </script>

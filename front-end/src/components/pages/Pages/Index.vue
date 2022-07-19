@@ -60,9 +60,9 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="myTable">
+                      <table class="table" id="datatable">
                         <thead>
-                          <tr>
+                          <tr class="text-center">
                             <th class="text-center">ID</th>
                             <th class="text-center">Title</th>
 
@@ -71,11 +71,11 @@
                         </thead>
                         <tbody v-if="pages">
                           <tr v-for="(state, index) in pages" :key="state.id">
-                            <td class="text-center">{{ index + 1 }}</td>
+                            <td >{{ index + 1 }}</td>
 
-                            <td class="text-center">{{ state.title }}</td>
+                            <td >{{ state.title }}</td>
 
-                            <td class="text-center">
+                            <td >
                               <div class="btn-group" role="group">
                                 <router-link
                                   :to="{
@@ -121,7 +121,9 @@ import swal from "sweetalert";
 import axios from "axios";
 import Nav from "../../layout/Nav.vue";
 // import Head from "../../layout/Head.vue";
-
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from "jquery";
 export default {
   name: "PageList",
   components: {
@@ -142,6 +144,16 @@ export default {
 
     this.pages = response.data.data;
     this.loading = false;
+
+      setTimeout(() => {
+      $("#datatable").DataTable({
+        pageLength: 15,
+        bLengthChange: false,
+        filter: false,
+        bInfo: false,
+        sort: false,
+      });
+    });
   },
   methods: {
     deletePage(id) {

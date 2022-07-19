@@ -10,13 +10,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Add State <router-link
-                        type="reset"
-                        to="/state"
-                        class="btn btn-default cancel-bttnn back-new-bttn"
-                      >
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                      </router-link></div>
+              <div class="panel-heading">
+                Add State
+                <router-link
+                  type="reset"
+                  to="/state"
+                  class="btn btn-default cancel-bttnn back-new-bttn"
+                >
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit="handleSubmit">
@@ -28,23 +31,14 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Country</label>
-                            <select
-                              name="country_id"
-                              class="form-select form-control"
-                              v-model="country_id"
-                              required=""
-                            >
-                              <option value="" v-if="countries">
-                                -- Select country --
-                              </option>
-                              <option
-                                v-bind:value="country.id"
-                                v-for="country in countries"
-                                :key="country.id"
-                              >
-                                {{ country.name }}
-                              </option>
-                            </select>
+                              <Select2
+                                  v-model="country_id"
+                                  :options="countries"
+                                  :settings="{ width: '100%' }"
+                                  @select="onChange($event)"
+                                />
+                               
+                          
                           </div>
                         </div>
                         <!--/span-->
@@ -64,7 +58,6 @@
                       </div>
                       <!--/row-->
                       <!--/row-->
-                    
 
                       <hr />
                     </div>
@@ -109,6 +102,9 @@ import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
+import Select2 from "vue3-select2-component";
+
+import $ from "jquery";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -125,15 +121,25 @@ export default {
 
   components: {
     Nav,
+     Select2,
   },
   async created() {
     this.loading = true;
-    const response = await axios.get("/api/country");
+    const response = await axios.get("/api/country_without_code");
     this.loading = false;
 
     this.countries = response.data.data;
+    setTimeout(() => {
+      $("#country").select2();
+     
+    });
   },
   methods: {
+      onChange(val) {
+
+      this.country_id = val.id;
+     
+    },
     async handleSubmit(e) {
       e.preventDefault();
 

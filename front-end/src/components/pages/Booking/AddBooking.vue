@@ -10,13 +10,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Add Booking <router-link
-                        type="reset"
-                               to="/booking"
-                        class="btn btn-default cancel-bttnn back-new-bttn"
-                      >
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                      </router-link></div>
+              <div class="panel-heading">
+                Add Booking
+                <router-link
+                  type="reset"
+                  to="/booking"
+                  class="btn btn-default cancel-bttnn back-new-bttn"
+                >
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit.prevent="handleSubmit">
@@ -27,47 +30,30 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label>Select Smartbox</label>
-                            <select
-                              name="device_id"
-                              class="form-select form-control"
+                            <label>Select Smartboxx</label>
+                            <Select2
                               v-model="device_id"
-                              required=""
-                            >
-                              <option value="" v-if="devices">
-                                -- Select box --
-                              </option>
-                              <option
-                                v-bind:value="device.id"
-                                v-for="device in devices"
-                                :key="device.id"
-                              >
-                                {{ device.name }}
-                              </option>
-                            </select>
+                              :options="devices"
+                              :settings="{ width: '100%' }"
+                              @select="onChange($event)"
+                               required=""
+                            />
+
+                          
                           </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Select Users</label>
-                            <select
-                              name="device_id"
-                              class="form-select form-control"
+                            <Select2
                               v-model="user_id"
+                              :options="users"
+                              :settings="{ width: '100%' }"
+                              @select="onChangeUser($event)"
                               required=""
-                            >
-                              <option value="" v-if="users">
-                                -- Select User --
-                              </option>
-                              <option
-                                v-bind:value="user.id"
-                                v-for="user in users"
-                                :key="user.id"
-                              >
-                                {{ user.name }}
-                              </option>
-                            </select>
+                            />
+                            
                           </div>
                         </div>
                         <!--/span-->
@@ -123,7 +109,7 @@
                                     name="start_slot"
                                     class="form-select form-control"
                                     v-model="startSlot"
-                                    required=""
+                                   
                                   >
                                     <option value="">-- Start Time--</option>
 
@@ -143,7 +129,7 @@
                                     name="end_slot"
                                     class="form-select form-control"
                                     v-model="endSlot"
-                                    required=""
+                                   
                                   >
                                     <option value="">-- End TIme--</option>
                                     <option
@@ -220,6 +206,8 @@ import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
 import countries from "./../../../assets/countries";
 import slot from "./../../../assets/slot";
+import $ from "jquery";
+import Select2 from "vue3-select2-component";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -227,9 +215,9 @@ export default {
   data() {
     return {
       slot_type: "0",
-      devices: "",
+      devices: [],
       device_id: "",
-      users: {},
+      users: [],
       // mobile: "",
       // address: "",
       time1: "",
@@ -251,19 +239,31 @@ export default {
   components: {
     Nav,
     DatePicker,
+    Select2,
   },
   async created() {
     this.loading = true;
-    const response = await axios.get("/api/get_device");
+    const response = await axios.get("/api/device_list_dropdown");
     console.log("response.data.data", response.data);
     this.devices = response.data.data;
 
-    const result = await axios.get("/api/users");
+    const result = await axios.get("/api/users_list_dropdown");
     console.log("response.data.data", result.data);
     this.users = result.data.data;
+
     this.loading = false;
+    setTimeout(() => {
+      $("#device_id").select2();
+      $("#user_id").select2();
+    });
   },
   methods: {
+    onChange(val) {
+      this.device_id = val.id;
+    },
+    onChangeUser(val) {
+      this.user_id = val.id;
+    },
     async handleSubmit(e) {
       e.preventDefault();
 

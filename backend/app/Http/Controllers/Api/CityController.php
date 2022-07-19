@@ -207,7 +207,13 @@ class CityController extends Controller
             $data = State::where('country_id', '=', $id)->get();
 
             if ($data) {
-                return $this->sendResponse($data, 'City List');
+
+                foreach ($data as $val) {
+                    $temp['id'] = $val->id;
+                    $temp['text'] = $val->name;
+                    $res[] = $temp;
+                }
+                return $this->sendResponse($res, 'City List');
             } else {
                 return $this->sendResponseError($data, 'Record not found');
             }

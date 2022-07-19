@@ -66,7 +66,25 @@ class StateController extends Controller
             return response()->json(['error' => 'Somthig is wrong.'], 404);
         }
     }
-
+    public function stateDropdown(Request $request)
+    {
+        try {
+            $data = State::with('country')->get();
+            if ($data) {
+                
+                foreach ($data as $val) {
+                    $temp['id'] = $val->id;
+                    $temp['text'] = $val->name.' '.$val->last_name;
+                    $res[] = $temp;
+                }
+                return $this->sendResponse($res, 'State List');
+            } else {
+                return $this->sendResponseError($data, 'Record not found');
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Somthig is wrong.'], 404);
+        }
+    }
 
     /**
      * Store a newly created resource in storage.

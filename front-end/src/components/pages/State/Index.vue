@@ -75,22 +75,22 @@
                   <div class="clearfix"></div>
                   <div class="scrollable">
                     <div class="table-responsive">
-                      <table class="table product-overview" id="datatable">
-                        <thead>
+                      <table class="table" id="datatable">
+                           <thead>
                           <tr>
                             <th class="text-center">ID</th>
                             <th class="text-center">Country</th>
                             <th class="text-center">State Name</th>
                             <th class="text-center">Actions</th>
                           </tr>
-                        </thead>
+                      </thead>
                         <tbody v-if="states">
                           <tr v-for="(state, index) in states" :key="state.id">
-                            <td>{{ index + 1 }}</td>
-                            <td>
+                            <td >{{ index + 1 }}</td>
+                            <td >
                               {{ state.country.name }}
                             </td>
-                            <td>{{ state.name }}</td>
+                            <td >{{ state.name }}</td>
 
                             <td>
                               <div class="btn-group" role="group">

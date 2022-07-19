@@ -48,6 +48,30 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function countryWithOutCode(Request $request)
+    {
+        try {
+            $query = Country::latest();
+            if (isset($request['search']) && $request['search'] != null) {
+
+                $query->where('name', $request['search']);
+            }
+            $data = $query->get();
+            if ($data) {
+                foreach ($data as $val) {
+                    $temp['id'] = $val->id;
+                    $temp['text'] = $val->name ;
+                    $res[] = $temp;
+                }
+                return $this->sendResponse($res, 'Country List');
+            } else {
+                return $this->sendResponseError($data, 'Record not found');
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Somthig is wrong.'], 404);
+        }
+    }
+
     public function index(Request $request)
     {
         try {
@@ -58,6 +82,7 @@ class CountryController extends Controller
             }
             $data = $query->get();
             if ($data) {
+               
                 return $this->sendResponse($data, 'Country List');
             } else {
                 return $this->sendResponseError($data, 'Record not found');
@@ -181,6 +206,30 @@ class CountryController extends Controller
                 return $this->sendResponse($success, 'Record delete successfully');
             } else {
                 return $this->sendResponseError($success, 'Record not found');
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Somthig is wrong.'], 404);
+        }
+    }
+
+    public function countWithCode(Request $request)
+    {
+        try {
+            $query = Country::latest();
+            if (isset($request['search']) && $request['search'] != null) {
+
+                $query->where('name', $request['search']);
+            }
+            $data = $query->get();
+            if ($data) {
+                foreach ($data as $val) {
+                    $temp['id'] = $val->id;
+                    $temp['text'] = $val->name . ' ' . $val->dial_code;
+                    $res[] = $temp;
+                }
+                return $this->sendResponse($res, 'Country List');
+            } else {
+                return $this->sendResponseError($data, 'Record not found');
             }
         } catch (\Exception $e) {
             return response()->json(['error' => 'Somthig is wrong.'], 404);
