@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\StateController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\PageTypeController;
 use App\Http\Controllers\Api\PageController;
+use App\Http\Controllers\Api\CompanyController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -73,4 +74,11 @@ Route::group(['middleware' => 'auth:api'], function () {
   // Route::put('/update_booking/{id}', [BookingsController::class, 'update']);
   // Route::get('/device_list', [BookingsController::class, 'deviceList']);
 
+  Route::get('companies',[CompanyController::class,'companyList']);
+  Route::post('add-company',[CompanyController::class,'addCompany']);
+  Route::get('/delete-company/{id}', [CompanyController::class, 'deleteCompany']);
+  Route::put('/company-status-change/{id}', [CompanyController::class, 'statusChange']);
+  Route::post('/search-company', [CompanyController::class, 'search']);
+  Route::get('/get-company/{id}', [CompanyController::class, 'view']);
+  Route::put('/change-password/{id}', [CompanyController::class, 'changePass']);
 });

@@ -108,7 +108,26 @@
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
-                          <div class="form-group"></div>
+                          <div class="form-group">
+                          <label class="m-r-5">Company name</label>
+                          <select
+                                  name="company"
+                                  class="form-select form-control"
+                                  v-model="selectedValue"
+                                  required=""
+                                  id="mobile_code"
+                                >
+                                    <option
+                                    v-bind:value="cmp.id"
+                                    v-for="cmp in companies"
+                                    :key="cmp.id"
+                                    :selected="cmp.id === device.company_id"
+
+                                  >
+                                    {{cmp.name}}
+                                  </option>
+                                </select>
+                          </div>
                         </div>
                         <!--/span-->
                       </div>
@@ -197,6 +216,7 @@ export default {
       error: "",
       loading: "",
       files: [],
+      selectedValue: "",
     };
   },
   methods: {
@@ -254,6 +274,11 @@ export default {
       `/api/view_device/${this.$route.params.id}`
     );
     this.device = response.data.data;
+
+    const responsee = await axios.get("/api/companies");
+    this.companies = responsee.data.data;
+   // console.log(response.data.data.company_id)
+    this.selectedValue = response.data.data.company_id
     this.loading = false;
   },
 };

@@ -447,7 +447,7 @@ class BookingsController extends Controller
                 'name' => 'required|unique:device',
                 'description' => 'required',
                 'booking_cost' => 'required',
-
+                'company' => 'required'
 
 
             ]);
@@ -465,6 +465,7 @@ class BookingsController extends Controller
             $insert['long'] =  $input['long'];
             $insert['address'] =  $input['address'];
             $insert['booking_cost'] =  $input['booking_cost'];
+            $insert['company_id'] = $input['company'];
 
             $device = Device::create($insert);
 

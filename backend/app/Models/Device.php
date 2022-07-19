@@ -18,7 +18,8 @@ class Device extends Model
         "status",
         'image',
         'address',
-        'booking_cost'
+        'booking_cost',
+        'company_id'
     ];
 
     public function images()

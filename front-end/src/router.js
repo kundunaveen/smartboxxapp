@@ -30,6 +30,10 @@ import PagesEdit from './components/pages/Pages/Edit.vue'
 import PageTypeList from './components/pages/PageType/Index.vue'
 import PageTypeAdd from './components/pages/PageType/Add.vue'
 import PageTypeEdit from './components/pages/PageType/Edit.vue'
+import Company from './components/pages/Company/list.vue'
+import AddCompany from './components/pages/Company/add-company.vue'
+import EditCompany from './components/pages/Company/edit-company.vue'
+import ChangeCompanyPass from './components/pages/Company/change-password.vue'
 Smartbox
 
 
@@ -190,7 +194,25 @@ export default new Router({
             component: PagesEdit,
             props: true
         },
-        
+        {
+            name: 'COMPANIES', 
+            path:'/companies',
+            component:Company
+        },
+        {
+            path:'/add-company',component:AddCompany
+        },
+        {
+            name: 'company-edit',
+            path: '/company-edit/:id',
+            component: EditCompany,
+            props: true
+        },
+        {
+            name: 'pass-company',
+            path: '/change-password/:id',
+            component: ChangeCompanyPass
+        },
         
         
     ]

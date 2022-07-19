@@ -106,9 +106,27 @@
                               v-model="booking_cost"
                             />
                           </div>
+                          
                         </div>
                         <div class="col-md-6">
-                          <div class="form-group"></div>
+                          <div class="form-group">
+                          <label class="m-r-5">Company name</label>
+                             <select
+                                  name="company"
+                                  class="form-select form-control"
+                                  v-model="company"
+                                  required=""
+                                  id="mobile_code"
+                                >
+                                    <option
+                                    v-bind:value="cmp.id"
+                                    v-for="cmp in companies"
+                                    :key="cmp.id"
+                                  >
+                                    {{cmp.name}}
+                                  </option>
+                                </select>
+                          </div>
                         </div>
                       </div>
                       <!--/row-->
@@ -203,11 +221,19 @@ export default {
       files: [],
       rawData: [],
       // images: [],
+      companies: [],
     };
   },
 
   components: {
     Nav,
+  }, 
+  async created() {
+    this.loading = true;
+    const responsee = await axios.get("/api/companies");
+    this.companies = responsee.data.data;
+    console.log(this.companies);
+    this.loading = false;
   },
   methods: {
     async handleSubmit(e) {
@@ -224,6 +250,7 @@ export default {
       input.append("lat", this.lat);
       input.append("long", this.long);
       input.append("address", this.address);
+      input.append("company", this.company);
 
       axios({
         method: "post",
