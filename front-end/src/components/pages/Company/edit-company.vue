@@ -92,20 +92,32 @@
                           </div>
                         </div>
                         <!--/span-->
-                        
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="control-label">Street</label>
+                             <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX:877 Mulberry Lane"
+                              v-model="address"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
                         <!--/span-->
                       </div>
                       <!--/row-->
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label>Contact Person 1</label>
+                            <label>Contact Person First Name</label>
 
                             <input
                               type="text"
                               class="form-control"
                               placeholder=""
-                              v-model="user.contact_person1"
+                              v-model="user.contact_firstname"
                               required=""
                             />
                           </div>
@@ -113,12 +125,12 @@
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label>Contact Person 2</label>
+                            <label>Contact Person Last Name</label>
                             <input
                               type="text"
                               class="form-control"
                               placeholder=""
-                              v-model="user.contact_person2"
+                              v-model="user.contact_firstname"
                               required=""
                             />
                           </div>
@@ -128,9 +140,76 @@
 
                       <!--/row-->
                       <!--/row-->
-                     
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>City</label>
+
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX:877 Mulberry Lane"
+                              v-model="user.city"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>State</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX: Dehli"
+                              v-model="user.state"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
+                      </div>
 
                       <!--/row-->
+                       <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Country</label>
+                             <select
+                              name="code"
+                              class="form-select form-control"
+                              v-model="user.country.id"
+                              required=""
+                              id="country"
+                            >
+                              <option
+                                v-bind:value="country.id"
+                                v-for="country in countries"
+                                :key="country.text"
+                              >
+                                {{ country.text }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Zip</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX:India"                            
+                              required=""
+                              v-model="user.zip"
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
+                      </div>
                       <!--/row-->
                       <div class="row">
                         <div class="col-md-6">
@@ -239,13 +318,13 @@ export default {
     updateUser() {
       console.log(" this.user", this.user);
       if (`${this.$route.params.id}` !== "undefined") {
-        url = `/api/update_user/${this.$route.params.id}`;
+        url = `/api/update_company_user/${this.$route.params.id}`;
         axios.put(url, this.user).then(() => {
           this.$toaster.success("Record update successfully.");
           this.$router.push("/users");
         });
       } else {
-        var url = `/api/update_user`;
+        var url = `/api/update_company_user`;
         axios.post(url, this.user).then(() => {
           this.$toaster.success("Record update successfully.");
           this.$router.push("/edit");

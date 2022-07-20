@@ -350,6 +350,16 @@
                 <span class="hide-menu"> Users Mgmt </span>
               </router-link>
             </li>
+             <li>
+              <router-link
+                to="/companies"
+                class="waves-effect"
+                aria-expanded="false"
+              >
+                <i class="icon-user fa-fw"></i>
+                <span class="hide-menu"> Company Mgmt </span>
+              </router-link>
+            </li>
             <li>
               <router-link
                 to="/booking"
@@ -415,16 +425,7 @@
                 </li>
               </ul>
             </li>
-             <li>
-              <router-link
-                to="/companies"
-                class="waves-effect"
-                aria-expanded="false"
-              >
-                <i class="icon-user fa-fw"></i>
-                <span class="hide-menu"> Company Mgmt </span>
-              </router-link>
-            </li>
+            
           </ul>
         </nav>
         <div class="p-30">

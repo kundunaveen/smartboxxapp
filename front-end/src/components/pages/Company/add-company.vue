@@ -88,12 +88,12 @@
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label class="control-label">Password</label>
-                            <input
+                            <label class="control-label">Street</label>
+                             <input
                               type="text"
                               class="form-control"
-                              placeholder=""
-                              v-model="password"
+                              placeholder="EX:877 Mulberry Lane"
+                              v-model="address"
                               required=""
                               autocomplete="on|off"
                             />
@@ -101,16 +101,17 @@
                         </div>
                         <!--/span-->
                       </div>
+
                       <!--/row-->
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label>Contact Person 1</label>
+                            <label>Contact Person First Name</label>
 
                             <input
                               type="text"
                               class="form-control"
-                              v-model="contact_person1"
+                              v-model="contact_firstname"
                               required=""
                               autocomplete="on|off"
                             />
@@ -119,11 +120,11 @@
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label>Contact Person 2</label>
+                            <label>Contact Person Last Name</label>
                             <input
                               type="text"
                               class="form-control"
-                              v-model="contact_person2"
+                              v-model="contact_lastname"
                               required=""
                               autocomplete="on|off"
                             />
@@ -133,8 +134,71 @@
                       </div>
 
                       <!--/row-->
+
                       <!--/row-->
-                     
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>City</label>
+
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX:877 Mulberry Lane"
+                              v-model="city"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>State</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX: Dehli"
+                              v-model="state"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
+                      </div>
+
+                      <!--/row-->
+                       <!--/row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Country</label>
+                            <Select2
+                              v-model="country"
+                              :options="iteams"
+                              :settings="{ width: '100%' }"
+                              @select="onChangeCountry($event)"
+                              id="country"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Zip</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="EX:India"
+                              v-model="zip"
+                              required=""
+                              autocomplete="on|off"
+                            />
+                          </div>
+                        </div>
+                        <!--/span-->
+                      </div>
 
                       <!--/row-->
 
@@ -249,12 +313,15 @@ export default {
       const input = {
         name: this.name,
         email: this.email,
-        password:this.password,
-        address: this.address,
+        street: this.address,
         phone: this.phone,
         code: this.code,
-        contact_person1: this.contact_person1,
-        contact_person2: this.contact_person2,
+        contact_firstname: this.contact_firstname,
+        contact_lastname: this.contact_lastname,
+        city: this.city,
+        state: this.state,
+        country: this.country,
+        zip: this.zip,
       };
       console.log("input", input);
       axios
