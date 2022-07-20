@@ -24,31 +24,22 @@
                 <div class="panel-body">
                   <form action="#" @submit.prevent="updatestate">
                     <div class="form-body">
-                      <!-- h3 class="box-title">Edit State</h3-->
+                    
                       <p v-if="error" class="text-danger">{{ error }}</p>
-                      <!-- hr /-->
+             
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Country</label>
-                            <select
-                              name="country_id"
-                              class="form-select form-control "
+                              <Select2
                               v-model="country.country_id"
+                              :options="countries"
+                              :settings="{ width: '100%' }"
+                            
                               required=""
-                              id="country"
                             >
-                              <option value="" v-if="countries">
-                                -- Select country --
-                              </option>
-                              <option
-                                v-bind:value="country.id"
-                                v-for="country in countries"
-                                :key="country.id"
-                              >
-                                {{ country.name }}
-                              </option>
-                            </select>
+                           </Select2>
+                 
                           </div>
                         </div>
                         <!--/span-->
@@ -107,13 +98,12 @@
 </template>
 <script>
 import Nav from "./../../layout/Nav.vue";
-
-import "vue2-datepicker/index.css";
+import Select2 from 'v-select2-component';
 import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
-import $ from "jquery";
+// import $ from "jquery";
 
 Vue.use(Toaster, { timeout: 5000 });
 
@@ -122,7 +112,9 @@ export default {
   data() {
     return {
       country: {},
+      countries:[],
       loading: false,
+      error:""
     };
   },
   methods: {
@@ -143,24 +135,18 @@ export default {
   },
   components: {
     Nav,
+    Select2,
   },
   async created() {
     this.loading = true;
     const response = await axios.get(`/api/state/${this.$route.params.id}`);
     this.country = response.data.data;
 
-    const response1 = await axios.get("/api/country");
+    const response1 = await axios.get("/api/country_without_code");
+
     this.countries = response1.data.data;
     this.loading = false;
 
-    setTimeout(() => {
-     var val = $('#country :selected').val();
-     $('#country').val(val);
-    $('#country').select2().trigger('change');
-    $('#country').addClass('form-select form-control');
-     
-
-    });
   },
 };
 </script>

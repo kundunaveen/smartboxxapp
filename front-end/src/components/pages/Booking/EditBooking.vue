@@ -33,38 +33,32 @@
                             <label>Select Smartboxx</label>
 
                             <Select2
-                              v-model="selectedValue"
+                              v-model="booking.device_id"
                               :options="devices"
                               :settings="{ width: '100%' }"
                               @select="onChange($event)"
                               required=""
-                            
-                              
                             >
-                              <!-- <option disabled value="0">Select</option> -->
-                            </Select2>
-                            <!-- <h4>arry: {{ devices }}</h4>
-                            <h4>Value: {{ selectedValue }}</h4> -->
+                           </Select2>
+                          
                           </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Select Users</label>
-                            <select
-                              class="form-select form-control"
+
+                            
+                            <Select2
                               v-model="booking.user_id"
+                              :options="users"
+                              :settings="{ width: '100%' }"
+                              @select="onChangeUser($event)"
                               required=""
-                              id="users"
                             >
-                              <option
-                                v-bind:value="user.id"
-                                v-for="user in users"
-                                :key="user.id"
-                              >
-                                {{ user.name }}
-                              </option>
-                            </select>
+                           </Select2>
+
+                          
                           </div>
                         </div>
                         <!--/span-->
@@ -229,7 +223,7 @@
 </template>
 <script>
 // import $ from "jquery";
-
+import Select2 from 'v-select2-component';
 import Nav from "./../../layout/Nav.vue";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
@@ -239,7 +233,7 @@ import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
 import countries from "./../../../assets/countries";
 import slot from "./../../../assets/slot";
-import Select2 from "vue3-select2-component";
+
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -283,8 +277,11 @@ export default {
           }
         });
     },
-    onChange(event) {
-      this.booking.device_id = event.id;
+     onChange(val) {
+      this.device_id = val.id;
+    },
+    onChangeUser(val) {
+      this.user_id = val.id;
     },
   },
   components: {
@@ -297,7 +294,7 @@ export default {
     const res = await axios.get("/api/device_list_dropdown");
     this.devices = res.data.data;
 
-    const result = await axios.get("/api/users");
+    const result = await axios.get("/api/users_list_dropdown");
     console.log("response.data.data", result.data);
     this.users = result.data.data;
     this.loading = false;
@@ -309,8 +306,8 @@ export default {
 
     this.editstart = response.data.data.start_time;
     this.editend = response.data.data.end_time;
-    this.selectedValue = response.data.data.device_id;
-    this.selectedValue = [{ "id": 128, "text": "smart one" }]
+    // this.selectedValue = response.data.data.device_id;
+    // this.selectedValue = [{ "id": 128, "text": "smart one" }]
     // this.selectedValue = ({id: 'EN', text: 'en', selected: ifSelected})
 
     this.endDate = [
@@ -318,20 +315,7 @@ export default {
       new Date(response.data.data.end_date),
     ];
 
-     setTimeout(() => {
-      // var val = this.booking.device_id;
-      
-      // $("#smart_box").val(val);
-      // $("#smart_box").select2().trigger("change");
-      // $("#smart_box").addClass("select2-container form-select form-control select2");
-
-      //    var vall = $("#users :selected").val();
-      // $("#users").val(vall);
-      // $("#users").select2().trigger("change");
-      // $("#users").addClass("select2-container form-select form-control select2");
-
-      
-    });
+ 
   },
 };
 </script>

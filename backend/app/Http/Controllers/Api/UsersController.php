@@ -252,7 +252,7 @@ class UsersController extends Controller
                     $id = auth()->user()->id;
                 }
 
-                $user = User::with(['code','country'])->find($id);
+                $user = User::find($id);
                 if ($user) {
 
                     return $this->sendResponse($user, 'User record is');
