@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\CompanyRequest;
+// use App\Http\Request\CompanyRequest;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use Illuminate\Validation\Rules\Password;
@@ -57,7 +57,7 @@ class CompanyController extends Controller
         }
     }
 
-    public function addCompany(CompanyRequest $request){
+    public function addCompany(Request $request){
         // $var = $request->validated();
         // dd($var);
        try{
