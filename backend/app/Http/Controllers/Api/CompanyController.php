@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Request\CompanyRequest;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use Illuminate\Validation\Rules\Password;
@@ -56,9 +57,11 @@ class CompanyController extends Controller
         }
     }
 
-    public function addCompany(Request $request){
-
+    public function addCompany(CompanyRequest $request){
+        // $var = $request->validated();
+        // dd($var);
        try{
+
             $validator = Validator::make($request->all(), [
                 'name' => 'required|unique:companies',
                 'email' => 'required|email|unique:companies',
@@ -227,7 +230,7 @@ class CompanyController extends Controller
         $input = $request->all();
         
         if($request->notify_email){
-            
+
             $data = [
                 'password'=>$input['password'],
                 'email' => 'preetisingh1@virtualemployee.com',
@@ -245,6 +248,54 @@ class CompanyController extends Controller
             return $this->sendResponse($user, ' Password update successfully');
         } else {
             return $this->sendError($user, 'Password not update successfully');
+        }
+    }
+
+     public function update(Request $request, $id = null)
+    {
+        try {
+
+            if (($request->isMethod('put')) || ($request->isMethod('post'))) {
+
+                if (isset($id)) {
+                    $id = $id;
+                } else {
+                    $id = auth()->user()->id;
+                }
+                $user = Company::find($id);
+
+                $input = $request->all();
+
+                if ($input['status'] == 1) {
+                    $status = '1';
+                } else {
+                    $status = '0';
+                }
+
+                if ($user) {
+
+                    $user->update([
+                        'name' => isset($input['name']) ? $input['name'] : $user->name,
+                        'email' => isset($input['email']) ? $input['email'] : $user->email,
+                        'street' => isset($input['street']) ? $input['street'] : $user->street,
+                        'phone' => isset($input['phone']) ? $input['phone'] : $user->phone,
+                        'code' => isset($input['code']) ? $input['code'] : $user->code,
+                        'state' => isset($input['state']) ? $input['state'] : $user->state,
+                        'city' => isset($input['city']) ? $input['city'] : $user->city,
+                        'zip' => isset($input['zip']) ? $input['zip'] : $user->zip,
+                        'country' => isset($input['country']) ? $input['country'] : $user->country,
+                        'status' =>  $status,
+                        'contact_firstname'=> isset($input['contact_firstname']) ? $input['contact_firstname'] : $user->contact_firstname,
+                        'contact_lastname'=> isset($input['contact_lastname']) ? $input['contact_lastname'] : $user->contact_lastname,
+                    ]);
+
+                    return $this->sendResponse($user, 'Record update successfullly');
+                } else {
+                    return $this->sendError('Not Found.', ['error' => 'Record not found of the given id.']);
+                }
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Page not found'], 404);
         }
     }
 }

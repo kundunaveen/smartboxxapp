@@ -39,6 +39,7 @@
                             />
                           </div>
                         </div>
+                        
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
@@ -99,7 +100,7 @@
                               type="text"
                               class="form-control"
                               placeholder="EX:877 Mulberry Lane"
-                              v-model="address"
+                              v-model="user.street"
                               required=""
                               autocomplete="on|off"
                             />
@@ -116,9 +117,9 @@
                             <input
                               type="text"
                               class="form-control"
-                              placeholder=""
                               v-model="user.contact_firstname"
                               required=""
+                              placeholder="EX:John"
                             />
                           </div>
                         </div>
@@ -129,9 +130,9 @@
                             <input
                               type="text"
                               class="form-control"
-                              placeholder=""
-                              v-model="user.contact_firstname"
+                              v-model="user.contact_lastname"
                               required=""
+                              placeholder="EX:Doe"
                             />
                           </div>
                         </div>
@@ -183,13 +184,15 @@
                               v-model="user.country.id"
                               required=""
                               id="country"
-                            >
+                              @select="onChangeCountry($event)"
+                              placeholder="Select Country"
+                            > 
                               <option
                                 v-bind:value="country.id"
                                 v-for="country in countries"
-                                :key="country.text"
+                                :key="country.name"
                               >
-                                {{ country.text }}
+                                {{ country.name }}
                               </option>
                             </select>
                           </div>
@@ -275,7 +278,7 @@ import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
 // import $ from "jquery";
-// import Select2 from "vue3-select2-component";
+//import Select2 from "vue3-select2-component";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -315,13 +318,16 @@ export default {
     //   this.code.id = val.id;
 
     // },
+     onChangeCountry(val) {
+      this.country = val.id;
+    },
     updateUser() {
       console.log(" this.user", this.user);
       if (`${this.$route.params.id}` !== "undefined") {
         url = `/api/update_company_user/${this.$route.params.id}`;
         axios.put(url, this.user).then(() => {
           this.$toaster.success("Record update successfully.");
-          this.$router.push("/users");
+          this.$router.push("/companies");
         });
       } else {
         var url = `/api/update_company_user`;
@@ -337,7 +343,7 @@ export default {
   },
   components: {
     Nav,
-    // Select2,
+   // Select2,
   },
 };
 </script>

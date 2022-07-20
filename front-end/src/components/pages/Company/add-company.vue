@@ -114,6 +114,7 @@
                               v-model="contact_firstname"
                               required=""
                               autocomplete="on|off"
+                              placeholder="EX:John"
                             />
                           </div>
                         </div>
@@ -127,6 +128,7 @@
                               v-model="contact_lastname"
                               required=""
                               autocomplete="on|off"
+                              placeholder="EX:Doe"
                             />
                           </div>
                         </div>
@@ -180,6 +182,7 @@
                               :settings="{ width: '100%' }"
                               @select="onChangeCountry($event)"
                               id="country"
+                              placeholder="Select Country"
                             />
                           </div>
                         </div>

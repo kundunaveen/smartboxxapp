@@ -81,4 +81,5 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::post('/search-company', [CompanyController::class, 'search']);
   Route::get('/get-company/{id}', [CompanyController::class, 'view']);
   Route::put('/change-password/{id}', [CompanyController::class, 'changePass']);
+  Route::put('/update_company_user/{id}', [CompanyController::class, 'update']);
 });
