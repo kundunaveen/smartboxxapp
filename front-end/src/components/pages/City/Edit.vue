@@ -10,13 +10,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Edit City <router-link
-                        type="reset"
-                         to="/city"
-                        class="btn btn-default cancel-bttnn back-new-bttn"
-                      >
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                      </router-link></div>
+              <div class="panel-heading">
+                Edit City
+                <router-link
+                  type="reset"
+                  to="/city"
+                  class="btn btn-default cancel-bttnn back-new-bttn"
+                >
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
               <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                   <form action="#" @submit.prevent="updatestate">
@@ -28,50 +31,27 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Country</label>
-                            <select
-                              name="country_id"
-                              class="form-select form-control"
+                            <Select2
                               v-model="country.country_id"
-                              required=""
+                              :options="countries"
+                              :settings="{ width: '100%' }"
                               @change="onChange($event)"
+                              required=""
                             >
-                              <option value="" v-if="countries">
-                                -- Select country --
-                              </option>
-                              <option
-                                v-bind:value="country.id"
-                                v-for="country in countries"
-                                :key="country.id"
-                              >
-                                {{ country.name }}
-                              </option>
-                            </select>
+                            </Select2>
                           </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>State</label>
-                            <select
-                              name="state_id"
-                              class="form-select form-control"
+                            <Select2
                               v-model="country.state_id"
+                              :options="states"
+                              :settings="{ width: '100%' }"
                               required=""
                             >
-                              <option value="" v-if="states">
-                                -- Select state --
-                              </option>
-                              <option value="" v-if="!states">
-                                -- Please Select country --
-                              </option>
-                              <option
-                                v-bind:value="state.id"
-                                v-for="state in states"
-                                :key="state.id"
-                              >
-                                {{ state.name }}
-                              </option>
-                            </select>
+                            </Select2>
                           </div>
                         </div>
                         <!--/span-->
@@ -146,7 +126,7 @@
 </template>
 <script>
 import Nav from "./../../layout/Nav.vue";
-
+import Select2 from "v-select2-component";
 import "vue2-datepicker/index.css";
 import axios from "axios";
 import Vue from "vue";
@@ -161,8 +141,8 @@ export default {
     return {
       country: {},
       loading: false,
-      states: "",
-      countries: "",
+      states: [],
+      countries: [],
       error: "",
       state_id: "",
     };
@@ -184,29 +164,27 @@ export default {
     },
     onChange(event) {
       this.loading = true;
-      axios.get(`/api/get_state/${event.target.value}`).then((res) => {
-        this.loading = false;
+
+      axios.get(`/api/get_state/${event}`).then((res) => {
+        console.log("tttttt", res.data.data);
         this.states = res.data.data;
+        this.loading = false;
         // this.$toaster.success("Status has been change! successfully.");
       });
     },
   },
   components: {
     Nav,
+    Select2,
   },
   async created() {
     this.loading = true;
+    const response1 = await axios.get("/api/country_without_code");
+    this.countries = response1.data.data;
+    
     const response = await axios.get(`/api/city/${this.$route.params.id}`);
     this.country = response.data.data;
-
-    const response1 = await axios.get("/api/country");
-    this.countries = response1.data.data;
-
-    const res = await axios.get(
-      `/api/get_state/${response.data.data.country_id}`
-    );
-    this.states = res.data.data;
-    this.state_id = response.data.data.state_id;
+    this.onChange(response.data.data.country_id);
     this.loading = false;
   },
 };

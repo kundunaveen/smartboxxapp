@@ -62,28 +62,11 @@
 
                             <div class="row">
                               <div class="col-lg-6">
-                                <!-- <Select2
-                                  v-model="user.code.id"
+                                <Select2
+                                  v-model="user.code"
                                   :options="code_with_countries"
                                   :settings="{ width: '100%' }"
-                                  @select="onChange($event)"
-                                /> -->
-
-                                <select
-                                  name="code"
-                                  class="form-select form-control"
-                                  v-model="user.code.id"
-                                  required=""
-                                  id="mobile_code"
-                                >
-                                  <option
-                                    v-bind:value="iteam.id"
-                                    v-for="iteam in code_with_countries"
-                                    :key="iteam.id"
-                                  >
-                                    {{ iteam.text }}
-                                  </option>
-                                </select>
+                                />
                               </div>
                               <div class="col-lg-6">
                                 <input
@@ -149,21 +132,11 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Country</label>
-                            <select
-                              name="code"
-                              class="form-select form-control"
-                              v-model="user.country.id"
-                              required=""
-                              id="country"
-                            >
-                              <option
-                                v-bind:value="country.id"
-                                v-for="country in countries"
-                                :key="country.text"
-                              >
-                                {{ country.text }}
-                              </option>
-                            </select>
+                            <Select2
+                              v-model="user.country"
+                              :options="iteams"
+                              :settings="{ width: '100%' }"
+                            />
                           </div>
                         </div>
                         <!--/span-->
@@ -243,12 +216,10 @@
 <script>
 import Nav from "./../layout/Nav.vue";
 import axios from "axios";
-// import countries from "./../../assets/countries";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
-// import $ from "jquery";
-// import Select2 from "vue3-select2-component";
+import Select2 from "v-select2-component";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -264,30 +235,24 @@ export default {
     this.loading = true;
     const responsee = await axios.get("/api/country_with_code");
     this.code_with_countries = responsee.data.data;
-    const responses = await axios.get("/api/country");
-    console.log('country',responses.data.data)
-    this.countries = responses.data.data;
+    const responses = await axios.get("/api/country_without_code");
+    this.iteams = responses.data.data;
 
     if (`${this.$route.params.id}` !== "undefined") {
       url1 = `/api/get_user/${this.$route.params.id}`;
     } else {
       var url1 = `/api/get_user`;
     }
-   console.log('this.user ' );
-    const response = await axios.get(url1);
+ const response = await axios.get(url1);
     this.user = response.data.data;
-    //  this.user =  [...this.user, newNumber];
-    // console.log('this.user ',this.user.code);
+
     this.loading = false;
-
-    
   },
-  methods: {
-    // onChangeCode(val) {
-    //   alert(val);
-    //   this.code.id = val.id;
 
-    // },
+  methods: {
+    onChangeCode(val) {
+      this.code = val.id;
+    },
     updateUser() {
       console.log(" this.user", this.user);
       if (`${this.$route.params.id}` !== "undefined") {
@@ -310,7 +275,7 @@ export default {
   },
   components: {
     Nav,
-    // Select2,
+    Select2,
   },
 };
 </script>

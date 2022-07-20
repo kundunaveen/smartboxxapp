@@ -463,8 +463,8 @@ export default {
     let recaptchaScript = document.createElement("script");
     recaptchaScript.setAttribute(
       "src",
-      "http://65.2.143.196/anadev/smartboxxapp/front-end/dist/js/custom.js"
-        // "../js/custom.js"
+      // "http://65.2.143.196/anadev/smartboxxapp/front-end/dist/js/custom.js"
+        "../js/custom.js"
 
     );
 

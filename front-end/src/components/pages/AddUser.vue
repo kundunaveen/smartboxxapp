@@ -269,9 +269,7 @@ export default {
     this.loading = false;
   },
   methods: {
-    mySelectEvent({ id, text }) {
-      console.log({ id, text });
-    },
+   
     onChange(val) {
       this.code = val.id;
     },
@@ -292,7 +290,7 @@ export default {
         country: this.country,
         zip: this.zip,
       };
-      console.log("input", input);
+  
       axios
         .post("/api/add_user", input)
         .then((res) => {

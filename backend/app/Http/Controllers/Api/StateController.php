@@ -74,7 +74,7 @@ class StateController extends Controller
                 
                 foreach ($data as $val) {
                     $temp['id'] = $val->id;
-                    $temp['text'] = $val->name.' '.$val->last_name;
+                    $temp['text'] = $val->name;
                     $res[] = $temp;
                 }
                 return $this->sendResponse($res, 'State List');
