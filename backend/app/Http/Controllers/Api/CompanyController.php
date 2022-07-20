@@ -203,7 +203,7 @@ class CompanyController extends Controller
 
     public function changePass(Request $request, $id = null)
     {
-
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'required',
@@ -226,16 +226,19 @@ class CompanyController extends Controller
         $user = Company::find($id);
         $input = $request->all();
         
-        $data = [
-            'password'=>$input['password'],
-            'email' => 'preetisingh1@virtualemployee.com',
-            'subject' => 'Password Changed',
-            'password'=>$request->password
-        ];
-        // $success =  Mail::send('email.changepassword', $data, function ($message) use ($data) {
-        //             $message->to($data['email'])
-        //                 ->subject($data['subject']);
-        //         });
+        if($request->notify_email){
+            
+            $data = [
+                'password'=>$input['password'],
+                'email' => 'preetisingh1@virtualemployee.com',
+                'subject' => 'Password Changed',
+                'password'=>$request->password
+            ];
+            $success =  Mail::send('email.changepassword', $data, function ($message) use ($data) {
+                        $message->to($data['email'])
+                            ->subject($data['subject']);
+                    });
+        }
 
         if ($user) {
             $user->update(['password' => bcrypt($input['password'])]);

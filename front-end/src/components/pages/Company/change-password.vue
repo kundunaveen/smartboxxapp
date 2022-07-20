@@ -54,6 +54,11 @@
                           </div>
                         </div>
                         <!--/span-->
+                        <div class="col-md-12">
+                        
+                        <input type="checkbox" v-model="notify_email">
+                        <label>Notify on email</label>
+                        </div>
                       </div>
 
                       <hr />
@@ -109,6 +114,7 @@ export default {
       const input = {
         password: this.password,
         password_confirmation: this.password_confirmation,
+        notify_email:this.notify_email,
       };
 
       console.log(
