@@ -63,22 +63,14 @@
 
                             <div class="row">
                               <div class="col-lg-6">
-
-                                <select
-                                  name="code"
-                                  class="form-select form-control"
-                                  v-model="user.code.id"
-                                  required=""
-                                  id="mobile_code"
-                                >
-                                  <option
-                                    v-bind:value="iteam.id"
-                                    v-for="iteam in code_with_countries"
-                                    :key="iteam.id"
-                                  >
-                                    {{ iteam.text }}
-                                  </option>
-                                </select>
+                              
+                                 <Select2
+                                  v-model="code"
+                                  :options="code_with_countries"
+                                  :settings="{ width: '100%' }"
+                                  @select="onChange($event)"
+                                  id="mobcode"
+                                />
                               </div>
                               <div class="col-lg-6">
                                 <input
@@ -178,23 +170,14 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Country</label>
-                             <select
-                              name="code"
-                              class="form-select form-control"
-                              v-model="user.country.id"
-                              required=""
-                              id="country"
+                             <Select2
+                              v-model="country"
+                              :options="iteams"
+                              :settings="{ width: '100%' }"
                               @select="onChangeCountry($event)"
+                              id="country"
                               placeholder="Select Country"
-                            > 
-                              <option
-                                v-bind:value="country.id"
-                                v-for="country in countries"
-                                :key="country.name"
-                              >
-                                {{ country.name }}
-                              </option>
-                            </select>
+                            />
                           </div>
                         </div>
                         <!--/span-->
@@ -277,8 +260,8 @@ import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
-// import $ from "jquery";
-//import Select2 from "vue3-select2-component";
+import $ from "jquery";
+import Select2 from "vue3-select2-component";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -288,6 +271,7 @@ export default {
       user: {},
       countries: [],
       code_with_countries: [],
+      iteams: [],
     };
   },
   async created() {
@@ -298,16 +282,34 @@ export default {
     console.log('country',responses.data.data)
     this.countries = responses.data.data;
 
+     const country_without_code = await axios.get("/api/country_without_code");
+    this.iteams = country_without_code.data.data;
+
     if (`${this.$route.params.id}` !== "undefined") {
       url1 = `/api/get-company/${this.$route.params.id}`;
     } else {
       var url1 = `/api/get-company`;
     }
-   console.log('this.user ' );
+
     const response = await axios.get(url1);
     this.user = response.data.data;
-    //  this.user =  [...this.user, newNumber];
-    // console.log('this.user ',this.user.code);
+    const selectedCountry =  this.user.country
+    const selectedCode = this.user.code
+
+    setTimeout(function(){  
+      $('#country').val(selectedCountry);    
+      $('#country').select2().trigger('change');
+        $('#country').select2({
+        width: '100%',
+      });
+
+       $('#mobcode').val(selectedCode);    
+      $('#mobcode').select2().trigger('change');
+        $('#mobcode').select2({
+        width: '100%',
+      });
+    },1000)
+ 
     this.loading = false;
 
     
@@ -322,7 +324,6 @@ export default {
       this.country = val.id;
     },
     updateUser() {
-      console.log(" this.user", this.user);
       if (`${this.$route.params.id}` !== "undefined") {
         url = `/api/update_company_user/${this.$route.params.id}`;
         axios.put(url, this.user).then(() => {
@@ -343,7 +344,7 @@ export default {
   },
   components: {
     Nav,
-   // Select2,
+    Select2,
   },
 };
 </script>

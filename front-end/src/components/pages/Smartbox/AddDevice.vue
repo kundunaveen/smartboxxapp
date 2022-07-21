@@ -25,6 +25,18 @@
                       <p v-if="error" class="text-danger">{{ error }}</p>
                       <!-- hr /-->
                       <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                          <label class="m-r-5">Company name</label>
+                             <Select2
+                                  v-model="company"
+                                  :options="companies"
+                                  :settings="{ width: '100%' }"
+                                  @select="onChange($event)"
+                                  placeholder="Select company"
+                                />
+                          </div>
+                        </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label class="control-label">Name</label>
@@ -37,7 +49,12 @@
                             />
                           </div>
                         </div>
-                        <!--/span-->
+                        
+                      </div>
+                      <!--/row-->
+                      <!--/row-->
+                      <div class="row">
+                      <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Latitude</label
@@ -52,10 +69,6 @@
                           </div>
                         </div>
                         <!--/span-->
-                      </div>
-                      <!--/row-->
-                      <!--/row-->
-                      <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Longitude</label
@@ -69,20 +82,7 @@
                             />
                           </div>
                         </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Image</label>
-                            <input
-                              type="file"
-                              class="form-control"
-                              multiple
-                              accept="image/jpeg"
-                              @change="uploadImage"
-                            />
-                          </div>
-                        </div>
-                        <!--/span-->
+                      
                       </div>
                       <!--/row-->
                       <!--/row-->
@@ -108,26 +108,20 @@
                           </div>
                           
                         </div>
+                          <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
-                          <label class="m-r-5">Company name</label>
-                             <select
-                                  name="company"
-                                  class="form-select form-control"
-                                  v-model="company"
-                                  required=""
-                                  id="mobile_code"
-                                >
-                                    <option
-                                    v-bind:value="cmp.id"
-                                    v-for="cmp in companies"
-                                    :key="cmp.id"
-                                  >
-                                    {{cmp.name}}
-                                  </option>
-                                </select>
+                            <label>Image</label>
+                            <input
+                              type="file"
+                              class="form-control"
+                              multiple
+                              accept="image/jpeg"
+                              @change="uploadImage"
+                            />
                           </div>
                         </div>
+                        <!--/span-->
                       </div>
                       <!--/row-->
                       <div class="row">
@@ -203,6 +197,8 @@ import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
+import Select2 from "v-select2-component";
+
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {
@@ -227,10 +223,11 @@ export default {
 
   components: {
     Nav,
+    Select2,
   }, 
   async created() {
     this.loading = true;
-    const responsee = await axios.get("/api/companies");
+    const responsee = await axios.get("/api/companies/sidebar");
     this.companies = responsee.data.data;
     console.log(this.companies);
     this.loading = false;

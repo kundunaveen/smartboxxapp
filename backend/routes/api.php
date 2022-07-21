@@ -74,7 +74,8 @@ Route::group(['middleware' => 'auth:api'], function () {
   // Route::put('/update_booking/{id}', [BookingsController::class, 'update']);
   // Route::get('/device_list', [BookingsController::class, 'deviceList']);
 
-  Route::get('companies',[CompanyController::class,'companyList']);
+  Route::post('test-companies',[CompanyController::class,'test']);
+  Route::get('companies/{sidebar?}',[CompanyController::class,'companyList']);
   Route::post('add-company',[CompanyController::class,'addCompany']);
   Route::get('/delete-company/{id}', [CompanyController::class, 'deleteCompany']);
   Route::put('/company-status-change/{id}', [CompanyController::class, 'statusChange']);

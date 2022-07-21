@@ -25,6 +25,20 @@
                       <p v-if="error" class="text-danger">{{ error }}</p>
                       <!-- hr / -->
                       <div class="row">
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                          <label class="m-r-5">Company name</label>
+                           <Select2
+                                  v-model="company"
+                                  :options="companies"
+                                  :settings="{ width: '100%' }"
+                                  placeholder="Select company"
+                                  id="company-select"
+                                />
+                          </div>
+                        </div>
+                        <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
                             <label class="control-label">Name</label>
@@ -37,6 +51,11 @@
                             />
                           </div>
                         </div>
+                      
+                      </div>
+                      <!--/row-->
+                      <!--/row-->
+                      <div class="row">
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
@@ -52,10 +71,6 @@
                           </div>
                         </div>
                         <!--/span-->
-                      </div>
-                      <!--/row-->
-                      <!--/row-->
-                      <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Longitude</label
@@ -69,20 +84,7 @@
                             />
                           </div>
                         </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Image</label>
-                            <input
-                              type="file"
-                              class="form-control"
-                              multiple
-                              accept="image/jpeg"
-                              @change="uploadImage"
-                            />
-                          </div>
-                        </div>
-                        <!--/span-->
+                       
                       </div>
                       <!--/row-->
                       <div class="row">
@@ -106,27 +108,17 @@
                             />
                           </div>
                         </div>
-                        <!--/span-->
+                       <!--/span-->
                         <div class="col-md-6">
                           <div class="form-group">
-                          <label class="m-r-5">Company name</label>
-                          <select
-                                  name="company"
-                                  class="form-select form-control"
-                                  v-model="selectedValue"
-                                  required=""
-                                  id="mobile_code"
-                                >
-                                    <option
-                                    v-bind:value="cmp.id"
-                                    v-for="cmp in companies"
-                                    :key="cmp.id"
-                                    :selected="cmp.id === device.company_id"
-
-                                  >
-                                    {{cmp.name}}
-                                  </option>
-                                </select>
+                            <label>Image</label>
+                            <input
+                              type="file"
+                              class="form-control"
+                              multiple
+                              accept="image/jpeg"
+                              @change="uploadImage"
+                            />
                           </div>
                         </div>
                         <!--/span-->
@@ -204,6 +196,8 @@ import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
+import Select2 from "v-select2-component";
+import $ from "jquery";
 
 Vue.use(Toaster, { timeout: 5000 });
 
@@ -267,6 +261,7 @@ export default {
   },
   components: {
     Nav,
+    Select2,
   },
   async created() {
     this.loading = true;
@@ -275,10 +270,18 @@ export default {
     );
     this.device = response.data.data;
 
-    const responsee = await axios.get("/api/companies");
+    const responsee = await axios.get("/api/companies/sidebar");
     this.companies = responsee.data.data;
-   // console.log(response.data.data.company_id)
-    this.selectedValue = response.data.data.company_id
+    const selectVal = this.selectedValue = response.data.data.company_id
+   
+    setTimeout(function(){  
+      $('#company-select').val(selectVal);    
+      $('#company-select').select2().trigger('change');
+        $('#company-select').select2({
+        width: '100%',
+      });
+    },1000)
+
     this.loading = false;
   },
 };

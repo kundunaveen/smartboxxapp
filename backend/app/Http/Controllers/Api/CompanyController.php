@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-// use App\Http\Request\CompanyRequest;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CompanyRequest;
 use Mail;
 
 class CompanyController extends Controller
@@ -41,17 +41,26 @@ class CompanyController extends Controller
         return response()->json($response, 201);
     }
 
-    public function companyList(){
+    public function companyList($sidebar=null){
         
         try {
             $query = Company::latest();
-        
+          
             $data = $query->get();
+
+            if (isset($sidebar)) {
+                foreach ($data as $val) {
+                    $temp['id'] = $val->id;
+                    $temp['text'] = $val->name ;
+                    $res[] = $temp;
+                }
+                return $this->sendResponse($res, 'Country List');
+            } else {
+                return $this->sendResponseError($data, 'Record not found');
+            }
             
                 return $this->sendResponse($data, 'Company list');
-            // } else {
-            //     return $this->sendResponseError($data, 'Record not found');
-            // }
+          
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error occured'], 404);
         }
@@ -298,4 +307,11 @@ class CompanyController extends Controller
             return response()->json(['error' => 'Page not found'], 404);
         }
     }
+
+    public function test(CompanyRequest $request)
+    {
+         $validatedData = $request->validated();
+         dd('code is validated');
+    }
+
 }
