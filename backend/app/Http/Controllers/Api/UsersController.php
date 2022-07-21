@@ -252,6 +252,7 @@ class UsersController extends Controller
                     $id = auth()->user()->id;
                 }
 
+                
                 $user = User::find($id);
                 if ($user) {
 
