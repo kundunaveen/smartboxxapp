@@ -65,11 +65,9 @@
                               <div class="col-lg-6">
                               
                                  <Select2
-                                  v-model="code"
+                                  v-model="user.code"
                                   :options="code_with_countries"
                                   :settings="{ width: '100%' }"
-                                  @select="onChange($event)"
-                                  id="mobcode"
                                 />
                               </div>
                               <div class="col-lg-6">
@@ -171,7 +169,7 @@
                           <div class="form-group">
                             <label>Country</label>
                              <Select2
-                              v-model="country"
+                              v-model="user.country"
                               :options="iteams"
                               :settings="{ width: '100%' }"
                               @select="onChangeCountry($event)"
@@ -260,7 +258,6 @@ import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
-import $ from "jquery";
 import Select2 from "vue3-select2-component";
 Vue.use(Toaster, { timeout: 5000 });
 
@@ -293,23 +290,8 @@ export default {
 
     const response = await axios.get(url1);
     this.user = response.data.data;
-    const selectedCountry =  this.user.country
-    const selectedCode = this.user.code
 
-    setTimeout(function(){  
-      $('#country').val(selectedCountry);    
-      $('#country').select2().trigger('change');
-        $('#country').select2({
-        width: '100%',
-      });
 
-       $('#mobcode').val(selectedCode);    
-      $('#mobcode').select2().trigger('change');
-        $('#mobcode').select2({
-        width: '100%',
-      });
-    },1000)
- 
     this.loading = false;
 
     
@@ -324,6 +306,9 @@ export default {
       this.country = val.id;
     },
     updateUser() {
+      console.clear()
+      console.log('changes')
+      console.log(this.user)
       if (`${this.$route.params.id}` !== "undefined") {
         url = `/api/update_company_user/${this.$route.params.id}`;
         axios.put(url, this.user).then(() => {

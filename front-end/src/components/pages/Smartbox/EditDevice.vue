@@ -30,11 +30,11 @@
                           <div class="form-group">
                           <label class="m-r-5">Company name</label>
                            <Select2
-                                  v-model="company"
+                                  v-model="device.company_id"
                                   :options="companies"
                                   :settings="{ width: '100%' }"
                                   placeholder="Select company"
-                                  id="company-select"
+                                 
                                 />
                           </div>
                         </div>
@@ -197,7 +197,7 @@ import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
 import Select2 from "v-select2-component";
-import $ from "jquery";
+
 
 Vue.use(Toaster, { timeout: 5000 });
 
@@ -272,16 +272,7 @@ export default {
 
     const responsee = await axios.get("/api/companies/sidebar");
     this.companies = responsee.data.data;
-    const selectVal = this.selectedValue = response.data.data.company_id
    
-    setTimeout(function(){  
-      $('#company-select').val(selectVal);    
-      $('#company-select').select2().trigger('change');
-        $('#company-select').select2({
-        width: '100%',
-      });
-    },1000)
-
     this.loading = false;
   },
 };
