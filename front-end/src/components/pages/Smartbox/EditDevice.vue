@@ -227,6 +227,7 @@ export default {
       input.append("lat", this.device.lat);
       input.append("long", this.device.long);
       input.append("address", this.device.address);
+      input.append("company", this.device.company_id);
       input.append("id", `${this.$route.params.id}`);
       axios({
         method: "post",
