@@ -347,7 +347,7 @@
                 aria-expanded="false"
               >
                 <i class="icon-user fa-fw"></i>
-                <span class="hide-menu"> Users Mgmt </span>
+                <span class="hide-menu"> Users Management </span>
               </router-link>
             </li>
              <li>
@@ -357,7 +357,7 @@
                 aria-expanded="false"
               >
                 <i class="icon-user fa-fw"></i>
-                <span class="hide-menu"> Company Mgmt </span>
+                <span class="hide-menu"> Company Management </span>
               </router-link>
             </li>
             <li>
@@ -367,7 +367,7 @@
                 aria-expanded="false"
               >
                 <i class="icon-calender fa-fw"></i>
-                <span class="hide-menu"> Booking Mgmt </span>
+                <span class="hide-menu"> Booking Management </span>
               </router-link>
             </li>
             <li>
@@ -377,7 +377,7 @@
                 aria-expanded="false"
               >
                 <i class="icon-drawar fa-fw"></i>
-                <span class="hide-menu"> SmartBoxx Mgmt </span>
+                <span class="hide-menu"> SmartBoxx Management </span>
               </router-link>
             </li>
 
