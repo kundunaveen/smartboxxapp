@@ -269,14 +269,16 @@ export default {
       countries: [],
       code_with_countries: [],
       iteams: [],
+    
     };
   },
   async created() {
+    console.log('loading'+this.loading )
     this.loading = true;
     const responsee = await axios.get("/api/country_with_code");
     this.code_with_countries = responsee.data.data;
     const responses = await axios.get("/api/country");
-    console.log('country',responses.data.data)
+ 
     this.countries = responses.data.data;
 
      const country_without_code = await axios.get("/api/country_without_code");
