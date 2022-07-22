@@ -468,6 +468,7 @@ export default {
 
     );
 
+
     document.head.appendChild(recaptchaScript);
   },
   methods: {
