@@ -116,7 +116,7 @@
                                     class="form-select form-control"
                                     v-model="startSlot"
                                     id="start_slot"
-                                   
+                                   @change="onStartChange()"
                                   >
                                     <option value="">-- Start Time--</option>
 
@@ -323,6 +323,25 @@ export default {
     },
     onChangeUser(val) {
       this.user_id = val.id;
+    },
+    onStartChange(){
+      $('#end_slot option').prop('disabled',false);
+     const start_slot =  $('#start_slot').find(':selected').val()
+     console.log(start_slot);
+     console.clear();
+     var isDisable = true;
+     $('#end_slot option').each(function(){
+        
+        
+        if(start_slot == $(this).val()){
+          $(this).prop('disabled',true);
+          isDisable = false;
+        }
+        if(isDisable == true)
+        $(this).prop('disabled',true);
+         // return false;
+        
+     })
     },
     onEndChange(event){
       console.log(event);
