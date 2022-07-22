@@ -221,7 +221,7 @@
                             <div class="form-group">
                             <label class="control-label">Description (Optional)</label>
                             <div>
-                            <textarea name="description" v-model="booking.description"></textarea>
+                            <textarea class="form-control" name="description" v-model="booking.description"></textarea>
                             </div>
                           </div>
                         </div>

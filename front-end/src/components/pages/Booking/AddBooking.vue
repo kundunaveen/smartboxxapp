@@ -204,7 +204,7 @@
                             <div class="form-group">
                             <label class="control-label">Description (Optional)</label>
                             <div>
-                            <textarea name="description" v-model="description"></textarea>
+                            <textarea class="form-control" name="description" v-model="description"></textarea>
                             </div>
                           </div>
                         </div>
