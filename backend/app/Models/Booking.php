@@ -26,11 +26,18 @@ class Booking extends Model
         'city',
         'zip',
         'country',
-        'status'
+        'status',
+        'mode',
+        'description',
+        'amount'
     ];
 
     public function device(){
         return $this->hasOne(Device::class,'id','device_id');
+
+    }
+    public function user(){
+        return $this->hasOne(User::class,'id','user_id');
 
     }
 }

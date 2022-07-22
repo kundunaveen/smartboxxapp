@@ -177,6 +177,10 @@ class BookingsController extends Controller
             $uniqueId = time() . '-' . mt_rand();
             $input['uuid'] = $uniqueId;
             $input['user_id'] = $request['user_id'];
+            $input['amount']=$request['amount'];
+            $input['mode']= $request['mode'];
+            $input['description']=$request['description'];
+            
 
             $booking = Booking::create($input);
             if ($booking) {
@@ -262,7 +266,7 @@ class BookingsController extends Controller
     {
         try {
             if ($request->isMethod('get')) {
-                $user = Booking::with('device')->find($id);
+                $user = Booking::with('device','user')->find($id);
                 if ($user) {
                     return $this->sendResponse($user, 'Booking List');
                 } else {
@@ -393,6 +397,7 @@ class BookingsController extends Controller
                 foreach ($device as $val) {
                     $temp['id'] = $val->id;
                     $temp['text'] = $val->name;
+                    $temp['data-price'] = $val->booking_cost;
                     $res[] = $temp;
                 }
                 return $this->sendResponse($res, 'device List');
@@ -586,5 +591,21 @@ class BookingsController extends Controller
         // } catch (\Exception $e) {
         //     return response()->json(['error' => 'Page not found'], 404);
         // }
+    }
+
+    public function amountCalculator(Request $request){
+        $amount = 0;
+        $time1 = $request->date.' '.$request->start_slot;
+        $time2 = $request->date.' '.$request->end_slot;
+        $startTime = Carbon::parse($time1);
+        $endTime = Carbon::parse($time2); 
+        $device = Device::find($request->device);
+        // dd($device->booking_cost);
+        $totalDuration =  $startTime->diff($endTime)->format('%H');
+        // if($device && $totalDuration){
+            $amount = $device->booking_cost*$totalDuration;
+        // }
+        return $this->sendResponse($amount, 'Amount');
+        // dd($amount);
     }
 }

@@ -106,6 +106,14 @@
                                 class="text-inverse m-r-5 btn btn-info"
                                 ><i class="ti-marker-alt"></i
                               ></router-link>
+                              <router-link
+                                :to="{
+                                  name: 'viewbooking',
+                                  params: { id: booking.id },
+                                }"
+                                class="text-inverse m-r-5 btn btn-info"
+                                ><i class="ti-eye"></i
+                              ></router-link>
                               <a
                                 href="javascript:void(0)"
                                 @click="deleteBooking(booking.id)"

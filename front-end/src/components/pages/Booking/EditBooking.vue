@@ -186,6 +186,55 @@
                       </div>
 
                       <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="control-label">Payment Mode</label>
+                            <div class="radio-list">
+                              <label class="radio-inline p-0">
+                                <div class="radio radio-info">
+                                  <input
+                                    type="radio"
+                                    name="payment_mode"
+                                    id="offline"
+                                    value="offline"
+                                    checked=""
+                                    v-model="booking.mode"
+                                  />
+                                  <label for="offline">Offline</label>
+                                </div>
+                              </label>
+                              <label class="radio-inline">
+                                <div class="radio radio-info">
+                                  <input
+                                    type="radio"
+                                    name="payment_mode"
+                                    id="online"
+                                    value="online"
+                                    v-model="booking.mode"
+                                  />
+                                  <label for="online">Online</label>
+                                </div>
+                              </label>
+                            </div>
+                            </div>
+                            <div class="form-group">
+                            <label class="control-label">Description (Optional)</label>
+                            <div>
+                            <textarea name="description" v-model="booking.description"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                             <label class="control-label">Amount ($)</label>
+                             <input type="number" name="amount" value="0" id="totalPrice" v-model="booking.amount" class="form-control">
+                            
+                          </div>
+                        </div>
+                        <!--/span-->
+                      </div>
                     </div>
                     <div class="form-actions">
                       <button

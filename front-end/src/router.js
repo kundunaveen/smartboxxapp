@@ -34,6 +34,7 @@ import Company from './components/pages/Company/list.vue'
 import AddCompany from './components/pages/Company/add-company.vue'
 import EditCompany from './components/pages/Company/edit-company.vue'
 import ChangeCompanyPass from './components/pages/Company/change-password.vue'
+import ViewBooking from './components/pages/Booking/ViewBooking.vue'
 Smartbox
 
 
@@ -73,6 +74,7 @@ export default new Router({
         {
             path:'/add-booking',component:AddBooking
         },
+       
         {
             path:'/country',component:CountryList
         },
@@ -112,6 +114,9 @@ export default new Router({
             path: '/booking-edit/:id',
             component: EditBooking
         },
+        {
+            name:"viewbooking", path:'/view-booking/:id',component:ViewBooking
+         },
         {
             name: 'device-edit',
             path: '/smartbox-edit/:id',

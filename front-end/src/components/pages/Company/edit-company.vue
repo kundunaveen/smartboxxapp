@@ -258,7 +258,7 @@ import axios from "axios";
 import Vue from "vue";
 import Toaster from "v-toaster";
 import "v-toaster/dist/v-toaster.css";
-import Select2 from "vue3-select2-component";
+import Select2 from "v-select2-component";
 Vue.use(Toaster, { timeout: 5000 });
 
 export default {

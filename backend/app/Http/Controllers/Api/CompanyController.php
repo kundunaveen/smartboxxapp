@@ -154,7 +154,7 @@ class CompanyController extends Controller
 
         try {
 
-            $query = Company::where('deleted_at', '=', '0');
+            $query = Company::where('deleted_at','=',null);
             if (isset($request['status']) && $request['status'] != null) {
 
                 $query->where('status', $request['status']);

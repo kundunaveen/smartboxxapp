@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::get('/view_booking/{id}', [BookingsController::class, 'view']);
   Route::put('/update_booking/{id}', [BookingsController::class, 'update']);
   Route::get('/device_list', [BookingsController::class, 'deviceList']);
+  Route::post('/booking-amount-calculate',[BookingsController::class, 'amountCalculator']);
   
   Route::delete('/device_delete/{id}', [BookingsController::class, 'deleteDevice']);
   Route::any('/device_list_dropdown', [BookingsController::class, 'deviceListDropDown']);
